@@ -6,4 +6,6 @@ module com.example.portefeuillefinancierisep {
     requires org.mariadb.jdbc;
     opens com.example.portefeuillefinancierisep to javafx.fxml;
     exports com.example.portefeuillefinancierisep;
+    exports Modele;
+    opens Modele to javafx.fxml;
 }

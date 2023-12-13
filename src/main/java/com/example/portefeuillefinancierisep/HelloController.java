@@ -1,54 +1,29 @@
 package com.example.portefeuillefinancierisep;
 
+import Modele.UserModele;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import java.sql.*;
+import java.sql.SQLException;
 
 
 public class HelloController {
     @FXML
     private Label welcomeText;
 
-    Connection conn = null;
-    ResultSet rs = null;
-    PreparedStatement pst = null;
+    //Il faudra déclarer les modele sql de cette manière dès qu'on veut les utiliser
+    private UserModele u =new UserModele();
+
+
 
     @FXML
     protected void onHelloButtonClick() throws SQLException {
-        initialize();
         welcomeText.setText("Welcome to JavaFX Application!");
+        //exemple d'appel au fichier modele qui fera appel à la base de données
+        u.getAllUsers();
     }
 
-    public void initialize() throws SQLException {
-        String sql = "SELECT * FROM database.user";
 
-
-        conn = ConnectDB.ConnectMariaDB();
-        Statement st = null;
-        try {
-            st = conn.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        ResultSet rs = null;
-        try {
-            rs = st.executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            while (rs.next()) {
-                System.out.println(rs.getInt("id") + " " + rs.getString("name"));
-
-            }
-        } catch(Exception  e) {
-            System.out.println("There is an Exception.");
-            System.out.println(e.getMessage());
-        }
-    }
 
 
 }

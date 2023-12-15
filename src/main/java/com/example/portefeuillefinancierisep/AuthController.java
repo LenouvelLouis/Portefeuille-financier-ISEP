@@ -1,5 +1,6 @@
 package com.example.portefeuillefinancierisep;
 
+import Info.UserInfo;
 import Modele.UserModele;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,7 +8,7 @@ import javafx.scene.control.Label;
 import java.sql.SQLException;
 
 
-public class HelloController {
+public class AuthController {
     @FXML
     private Label welcomeText;
 
@@ -20,7 +21,9 @@ public class HelloController {
     protected void onHelloButtonClick() throws SQLException {
         welcomeText.setText("Welcome to JavaFX Application!");
         //exemple d'appel au fichier modele qui fera appel à la base de données
+        u.create_user(new UserInfo("gfgdf","rzdfs","0235425","fdfdffd","redf"));
         u.getAllUsers();
+
     }
 
 

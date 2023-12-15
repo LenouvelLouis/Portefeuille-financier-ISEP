@@ -30,8 +30,8 @@ public class UserModele {
         if(this.conn==null){
             this.initConnection();
         }
-        String sql = "SELECT * FROM database.user";
-        ResultSet rs = null;
+        String sql = "SELECT * FROM wallet_db.user";
+
         try {
             rs = this.pst.executeQuery(sql);
         } catch (SQLException e) {
@@ -43,7 +43,7 @@ public class UserModele {
                 //Exemple d'utilisation de liste d'info d'un utilisateur avec une classe user qui stock les infos
                 //UserInfo u = new UserInfo(rs.getString("name"),rs.getInt("tel"),rs.getString("pays"),rs.getString("hashmdp"));
                 //listUser.add(u);
-                System.out.println(rs.getInt("id") + " " + rs.getString("name"));
+                System.out.println(rs.getInt("id") + " " + rs.getString("nom"));
 
             }
         } catch(Exception  e) {
@@ -51,5 +51,20 @@ public class UserModele {
             System.out.println(e.getMessage());
         }
         //return ListUser;
+    }
+
+    public void create_user(UserInfo user) throws SQLException {
+        if(this.conn==null){
+            this.initConnection();
+        }
+
+
+        String sql = "INSERT INTO wallet_db.user (nom, prenom, tel, mail, h_mdp) VALUES ('" + user.getNom() + "', '" + user.getPrenom() + "', '" + user.getTel() + "', '" + user.getMail() + "', '" + user.getH_mdp() + "')";
+
+        try {
+            pst.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

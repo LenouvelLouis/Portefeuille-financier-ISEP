@@ -11,7 +11,7 @@ public class ConnectDB {
     public static Connection ConnectMariaDB() {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mariadb://localhost/database","root","root");
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost/wallet_db","root","root");
             return conn;
         } catch(Exception e){
             System.out.println(e);

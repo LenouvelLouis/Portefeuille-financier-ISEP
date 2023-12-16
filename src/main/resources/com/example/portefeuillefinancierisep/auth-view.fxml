@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.portefeuillefinancierisep.AuthController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
-
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane prefHeight="361.0" prefWidth="473.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.AuthController">
+   <children>
+      <Label layoutX="72.0" layoutY="14.0" text="Se connecter" textFill="WHITE">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="72.0" layoutY="67.0" text="Vous n'avez pas de compte ?" textFill="WHITE" />
+      <Hyperlink layoutX="226.0" layoutY="64.0" onAction="#InscriptionButtonClick" text="S'inscrire &gt;" textFill="#f5cba7" />
+      <TextField layoutX="72.0" layoutY="123.0" prefHeight="25.0" prefWidth="323.0" promptText="Votre email" />
+      <Button layoutX="71.0" layoutY="279.0" mnemonicParsing="false" onAction="#ConnexionButtonClick" prefHeight="36.0" prefWidth="323.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Se connecter">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <PasswordField layoutX="71.0" layoutY="199.0" prefHeight="25.0" prefWidth="323.0" promptText="Mot de passe" />
+      <Label layoutX="72.0" layoutY="241.0" prefHeight="17.0" prefWidth="323.0" text="Message error" textFill="#fc0000" />
+   </children>
+</AnchorPane>

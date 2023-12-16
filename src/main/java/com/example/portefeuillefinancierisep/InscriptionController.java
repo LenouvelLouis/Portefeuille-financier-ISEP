@@ -7,23 +7,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AuthController {
-
+public class InscriptionController {
     @FXML
-    protected void InscriptionButtonClick() throws IOException {
+    protected void SeConnecterButtonClick() throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("inscription-view.fxml"));
+        loader.setLocation(this.getClass().getResource("auth-view.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
-        stage.setTitle("Inscription");
+        stage.setTitle("Connexion");
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
 
     }
     @FXML
-    protected void ConnexionButtonClick() throws IOException {
+    protected void CreationCompteButtonClick() throws IOException {
 
 
     }

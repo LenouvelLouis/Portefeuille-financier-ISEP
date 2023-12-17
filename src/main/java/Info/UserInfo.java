@@ -1,5 +1,7 @@
 package Info;
 
+import java.util.List;
+
 public class UserInfo {
     String nom,prenom,tel,mail,h_mdp;
 
@@ -22,6 +24,7 @@ public class UserInfo {
     public String getH_mdp() {
         return h_mdp;
     }
+
 
     public UserInfo(String nom, String prenom, String tel, String mail, String h_mdp){
         this.nom=nom;

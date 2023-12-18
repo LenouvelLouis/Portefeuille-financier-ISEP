@@ -57,6 +57,8 @@ public class DashboardController {
         listwallet.getChildren().clear();
         for(WalletInfo w:walletInfoList){
             Label walletlabel=new Label(w.getName());
+            String color = "-fx-text-fill: white;";
+            walletlabel.setStyle(color);
             walletlabel.setOnMouseClicked(e->{
                 try {
                     this.displaywallet();
@@ -73,7 +75,7 @@ public class DashboardController {
         double crypto=0;
         double total;
         for(WalletInfo w :  walletInfoList){
-            if(w.getType()=="action")
+            if(w.getType().equals("action"))
                 action+=w.getWalletValueInfoList().getFirst().getValue();
             else
                 crypto+= w.getWalletValueInfoList().getFirst().getValue();
@@ -81,18 +83,22 @@ public class DashboardController {
         total=action+crypto;
         double actionPercentage =(action*100)/total;
         double cryptoPercentage = (crypto*100)/total;
+        String color = "-fx-text-fill: white;";
+        Label percentageLabelActions = new Label("Actions \u00B7 " +actionPercentage +"%");
+        Label percentageLabelCrypto = new Label("Crypto \u00B7 " +cryptoPercentage +"%");
+        percentageLabelActions.setStyle(color);
+        percentageLabelCrypto.setStyle(color);
 
-        Label percentageLabelActions = new Label("Actions" + " : " + actionPercentage + "%");
-        Label percentageLabelCrypto = new Label("Crypto" + " : " + cryptoPercentage + "%");
         StackPane blockActions = new StackPane();
-        StackPane blockCrypto = new StackPane();
-        blockActions.setStyle("-fx-background-color: black; -fx-padding: 10px;");
+        blockActions.setStyle("-fx-background-color: #3d888e; -fx-padding: 10px;");
         blockActions.getChildren().add(percentageLabelActions);
-        blockCrypto.setStyle("-fx-background-color: black; -fx-padding: 10px;");
+        blockActions.setMaxWidth(110);
+        StackPane blockCrypto = new StackPane();
+        blockCrypto.setStyle("-fx-background-color: #6f50e5; -fx-padding: 10px;");
         blockCrypto.getChildren().add(percentageLabelCrypto);
-        blockActions.setMinWidth(actionPercentage*5);  // Vous devrez ajuster ce facteur selon vos besoins
-        blockCrypto.setMinWidth(cryptoPercentage*5);  // Vous devrez ajuster ce facteur selon vos besoins
-        allocation.getChildren().addAll(blockActions,blockCrypto);
+        blockCrypto.setMaxWidth(110);
+        allocation.getChildren().add(blockCrypto);
+        allocation.getChildren().add(blockActions);
     }
 
 }

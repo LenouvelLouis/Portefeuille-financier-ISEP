@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.AddWalletController">
+   <children>
+      <Label layoutX="175.0" layoutY="27.0" text="Création de portefeuille">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Label layoutX="246.0" layoutY="118.0" text="Nom du portefeuille" />
+      <TextField fx:id="name" layoutX="226.0" layoutY="151.0" />
+      <Label layoutX="242.0" layoutY="213.0" text="Apport du portefeuille" />
+      <TextField fx:id="apport" layoutX="226.0" layoutY="242.0" />
+      <Button layoutX="274.0" layoutY="279.0" mnemonicParsing="false" onAction="#Submit" text="Submit" />
+      <MenuButton layoutX="405.0" layoutY="242.0" mnemonicParsing="false" text="Monnaie">
+        <items>
+          <MenuItem mnemonicParsing="false" text="€" />
+          <MenuItem mnemonicParsing="false" text="\$" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

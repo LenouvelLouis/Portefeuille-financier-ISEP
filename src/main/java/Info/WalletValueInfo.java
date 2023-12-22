@@ -6,6 +6,11 @@ import java.sql.Date;
 public class WalletValueInfo {
 
     private Date date;
+    String type;
+
+    public String getType() {
+        return type;
+    }
 
     @Override
     public String toString() {
@@ -26,8 +31,9 @@ public class WalletValueInfo {
         return value;
     }
 
-    public WalletValueInfo(Date d, double v){
+    public WalletValueInfo(Date d, double v,String type){
         this.date=d;
         this.value=v;
+        this.type=type;
     }
 }

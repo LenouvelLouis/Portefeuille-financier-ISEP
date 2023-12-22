@@ -8,11 +8,6 @@ public class WalletInfo {
 
     String name;
 
-    public String getType() {
-        return type;
-    }
-
-    String type;
 
     @Override
     public String toString() {
@@ -35,10 +30,9 @@ public class WalletInfo {
         return name;
     }
 
-    public WalletInfo(int id, String nom, List<WalletValueInfo> list,String t){
+    public WalletInfo(int id, String nom, List<WalletValueInfo> list){
         this.id=id;
         this.name=nom;
         this.walletValueInfoList=list;
-        this.type=t;
     }
 }

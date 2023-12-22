@@ -45,14 +45,14 @@ public class WalletModele {
                 int walletId = rs.getInt("wallet_value.id_wallet");
                 double walletValue = rs.getDouble("wallet_value.value");
                 Date walletDate = rs.getDate("wallet_value.date");
-                String type=rs.getString("wallet_user.type");
+                String type=rs.getString("wallet_value.type");
                 WalletInfo walletInfo = findWalletById(walletInfoList, walletId);
 
                 if (walletInfo == null) {
-                    walletInfo = new WalletInfo(walletId, walletname, new ArrayList<>(),type);
+                    walletInfo = new WalletInfo(walletId, walletname, new ArrayList<>());
                     walletInfoList.add(walletInfo);
                 }
-                WalletValueInfo walletValueInfo = new WalletValueInfo(walletDate,walletValue);
+                WalletValueInfo walletValueInfo = new WalletValueInfo(walletDate,walletValue,type);
                 walletInfo.getWalletValueInfoList().add(walletValueInfo);
             }
         } catch(Exception  e) {

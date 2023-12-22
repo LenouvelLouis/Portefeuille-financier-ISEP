@@ -11,14 +11,19 @@
             <Font size="36.0" />
          </font></Label>
       <Label layoutX="76.0" layoutY="67.0" prefHeight="17.0" prefWidth="108.0" text="J'ai déja un compte." textFill="WHITE" />
-      <Hyperlink layoutX="184.0" layoutY="64.0" onAction="#SeConnecterButtonClick" text="Se connecter &gt;" />
-      <TextField layoutX="76.0" layoutY="127.0" prefHeight="25.0" prefWidth="378.0" promptText="Votre email" />
-      <TextField layoutX="76.0" layoutY="188.0" prefHeight="25.0" prefWidth="181.0" promptText="Prénom" />
-      <TextField layoutX="272.0" layoutY="188.0" prefHeight="25.0" prefWidth="181.0" promptText="Nom" />
-      <PasswordField layoutX="76.0" layoutY="248.0" prefHeight="25.0" prefWidth="378.0" promptText="Mot de passe" />
-      <Button layoutX="76.0" layoutY="309.0" mnemonicParsing="false" onAction="#CreationCompteButtonClick" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Créer mon compte">
+      <Hyperlink layoutX="184.0" layoutY="64.0" onAction="#SeConnecterButtonClick" text="Se connecter &gt;" textFill="#f5cba7" />
+      <TextField fx:id="email_text" layoutX="76.0" layoutY="127.0" prefHeight="25.0" prefWidth="378.0" promptText="Votre email" />
+      <TextField fx:id="prenom_text" layoutX="76.0" layoutY="188.0" prefHeight="25.0" prefWidth="181.0" promptText="Prénom" />
+      <TextField fx:id="nom_text" layoutX="272.0" layoutY="188.0" prefHeight="25.0" prefWidth="181.0" promptText="Nom" />
+      <PasswordField fx:id="password_text" layoutX="272.0" layoutY="247.0" prefHeight="25.0" prefWidth="181.0" promptText="Mot de passe" />
+      <Button layoutX="76.0" layoutY="329.0" mnemonicParsing="false" onAction="#CreationCompteButtonClick" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Créer mon compte">
          <font>
             <Font size="14.0" />
          </font></Button>
+      <TextField fx:id="tel_text" layoutX="76.0" layoutY="247.0" prefHeight="25.0" prefWidth="181.0" promptText="Téléphone" />
+      <Label fx:id="msg_error" layoutX="76.0" layoutY="292.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>

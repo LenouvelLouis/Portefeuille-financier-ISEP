@@ -13,11 +13,7 @@ import java.sql.SQLException;
 
 
 public class HomeController {
-    @FXML
-    private Label welcomeText;
 
-    //Il faudra déclarer les modele sql de cette manière dès qu'on veut les utiliser
-    private UserModele u =new UserModele();
     @FXML
     protected void ConnexionButtonClick() throws IOException {
 

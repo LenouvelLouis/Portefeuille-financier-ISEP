@@ -20,6 +20,6 @@
          </font>
       </Button>
       <PasswordField layoutX="71.0" layoutY="199.0" prefHeight="25.0" prefWidth="323.0" promptText="Mot de passe" />
-      <Label layoutX="72.0" layoutY="241.0" prefHeight="17.0" prefWidth="323.0" text="Message error" textFill="#fc0000" />
+      <Label fx:id="msg_error" layoutX="72.0" layoutY="241.0" prefHeight="17.0" prefWidth="323.0" textFill="#fc0000" />
    </children>
 </AnchorPane>

@@ -2,9 +2,10 @@ package Modele;
 
 import Info.UserInfo;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class UserModele {
     Connection conn = null;
@@ -60,5 +61,32 @@ public class UserModele {
         }
 
         return false;
+    }
+
+    public boolean is_login_valid(String mail, String password) throws SQLException {
+
+        if(this.conn==null){
+            this.initConnection();
+        }
+
+        String sql = "SELECT * FROM wallet_db.user WHERE mail ='"+mail+"' AND h_mdp = '"+password+"'";
+
+        try {
+            rs = this.pst.executeQuery(sql);
+
+            if(rs.last())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
     }
 }

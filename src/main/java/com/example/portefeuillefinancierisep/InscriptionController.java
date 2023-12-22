@@ -11,13 +11,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InscriptionController {
 
-    private UserModele user =new UserModele();
+    private UserModele user = new UserModele();
 
     @FXML
     TextField email_text;
@@ -32,11 +36,10 @@ public class InscriptionController {
     @FXML
     Label msg_error;
 
-    String email, nom, prenom, password,tel;
+    String email, nom, prenom, password, tel;
 
     @FXML
     protected void SeConnecterButtonClick() throws IOException {
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("auth-view.fxml"));
         Scene scene = new Scene(loader.load());
@@ -45,74 +48,84 @@ public class InscriptionController {
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
-
     }
+
     @FXML
     protected void CreationCompteButtonClick() throws SQLException {
-
         email = email_text.getText();
         nom = nom_text.getText();
         prenom = prenom_text.getText();
         password = password_text.getText();
         tel = tel_text.getText();
 
-        if(!isChampNotEmpty())
-        {
+        if (!isChampNotEmpty()) {
             msg_error.setTextFill(Color.RED);
-            msg_error.setText("Veuillez saisir tout les champs");
+            msg_error.setText("Veuillez saisir tous les champs");
             return;
         }
 
-        if(!isValidFormatEmail())
-        {
+        if (!isValidFormatEmail()) {
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Adresse mail non valide");
             return;
         }
 
-        if(!isValidFormatNomPrenom())
-        {
+        if (!isValidFormatNomPrenom()) {
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Nom ou prénom non valide");
             return;
         }
 
-        if(!isValidPhoneNumber())
-        {
+        if (!isValidPhoneNumber()) {
             msg_error.setTextFill(Color.RED);
-            msg_error.setText("Numéros de téléphone non valide");
+            msg_error.setText("Numéro de téléphone non valide");
             return;
         }
 
-        if(user.is_user_create(email))
-        {
+        if (user.is_user_create(email)) {
             msg_error.setTextFill(Color.RED);
-            msg_error.setText("Ce compte exixste déja");
+            msg_error.setText("Ce compte existe déjà");
             return;
         }
 
-        user.create_user(new UserInfo(nom,prenom,tel,email,password));
+        // Génération du sel
+        String salt = generateSalt(7);
+
+        // Hachage du mot de passe avec le sel
+        password = hashPassword(password, salt);
+
+        user.create_user(new UserInfo(nom, prenom, tel, email, password, salt));
         msg_error.setTextFill(Color.GREEN);
-        msg_error.setText("Votre compte a bien été créer");
+        msg_error.setText("Votre compte a bien été créé");
 
-        email_text.clear();
-        nom_text.clear();
-        prenom_text.clear();
-        password_text.clear();
-        tel_text.clear();
-
+        clearFormFields();
     }
 
-    public boolean isValidFormatEmail()
-    {
+    private String hashPassword(String passwordToHash, String salt) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest((salt + passwordToHash).getBytes());
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Erreur lors du hachage du mot de passe", e);
+        }
+    }
+
+    private String generateSalt(int length) {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[length];
+        random.nextBytes(salt);
+        return Base64.getEncoder().encodeToString(salt).substring(0, length);
+    }
+
+    public boolean isValidFormatEmail() {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
-    public boolean isValidFormatNomPrenom()
-    {
+    public boolean isValidFormatNomPrenom() {
         String regex = "^[a-zA-Z ]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher_nom = pattern.matcher(nom);
@@ -121,15 +134,21 @@ public class InscriptionController {
     }
 
     public boolean isValidPhoneNumber() {
-
         String regex = "^[0-9]{10}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(tel);
         return matcher.matches();
     }
 
-    public boolean isChampNotEmpty()
-    {
+    public boolean isChampNotEmpty() {
         return !email.isEmpty() && !nom.isEmpty() && !prenom.isEmpty() && !password.isEmpty() && !tel.isEmpty();
+    }
+
+    private void clearFormFields() {
+        email_text.clear();
+        nom_text.clear();
+        prenom_text.clear();
+        password_text.clear();
+        tel_text.clear();
     }
 }

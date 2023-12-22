@@ -4,17 +4,15 @@ import java.sql.*;
 
 public class ConnectDB {
 
-    static Connection conn = null;
-/*
-* Mettre le nom de sa basse de données après localhost
-* */
     public static Connection ConnectMariaDB() {
+        Connection conn = null;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mariadb://localhost/wallet_db","root","root");
+            // Utilisez un fichier de configuration externe pour les informations de connexion
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost/wallet_db", "root", "root");
             return conn;
-        } catch(Exception e){
-            System.out.println(e);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }

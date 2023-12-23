@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.AddApportView">
+   <children>
+      <Label layoutX="22.0" layoutY="44.0" text="Bienvenue sur la page d'ajout d'apport, où vous pouvez renforcer &#10;et optimiser la croissance de votre portefeuille financier en toute simplicité." wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Spinner editable="true" min="1" max="10000" amountToStepBy="100" initialValue="500" layoutX="213.0" layoutY="188.0" />
+      <MenuButton layoutX="399.0" layoutY="188.0" mnemonicParsing="false" text="Monnaie">
+        <items>
+          <MenuItem mnemonicParsing="false" text="€" />
+          <MenuItem mnemonicParsing="false" text="\$" />
+        </items>
+      </MenuButton>
+      <Button layoutX="262.0" layoutY="268.0" mnemonicParsing="false" text="Ajout" />
+      <Label layoutX="231.0" layoutY="156.0" text="Montant de l'apport" />
+   </children>
+</AnchorPane>

@@ -73,12 +73,6 @@ public class DashboardController {
         double action=0;
         double crypto=0;
         double total;
-        /*for(WalletInfo w :  walletInfoList){
-            if(w.getType().equals("action"))
-                action+=w.getWalletValueInfoList().getFirst().getValue();
-            else
-                crypto+= w.getWalletValueInfoList().getFirst().getValue();
-        }*/
         total=action+crypto;
         double actionPercentage =(action*100)/total;
         double cryptoPercentage = (crypto*100)/total;

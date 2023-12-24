@@ -13,13 +13,13 @@
       </Label>
       <Label layoutX="72.0" layoutY="67.0" text="Vous n'avez pas de compte ?" textFill="WHITE" />
       <Hyperlink layoutX="226.0" layoutY="64.0" onAction="#InscriptionButtonClick" text="S'inscrire &gt;" textFill="#f5cba7" />
-      <TextField layoutX="72.0" layoutY="123.0" prefHeight="25.0" prefWidth="323.0" promptText="Votre email" />
+      <TextField fx:id="email_text" layoutX="72.0" layoutY="123.0" prefHeight="25.0" prefWidth="323.0" promptText="Votre email" />
       <Button layoutX="71.0" layoutY="279.0" mnemonicParsing="false" onAction="#ConnexionButtonClick" prefHeight="36.0" prefWidth="323.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Se connecter">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <PasswordField layoutX="71.0" layoutY="199.0" prefHeight="25.0" prefWidth="323.0" promptText="Mot de passe" />
+      <PasswordField fx:id="mdp_text" layoutX="71.0" layoutY="199.0" prefHeight="25.0" prefWidth="323.0" promptText="Mot de passe" />
       <Label fx:id="msg_error" layoutX="72.0" layoutY="241.0" prefHeight="17.0" prefWidth="323.0" textFill="#fc0000" />
    </children>
 </AnchorPane>

@@ -20,7 +20,7 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <TextField fx:id="tel_text" layoutX="76.0" layoutY="247.0" prefHeight="25.0" prefWidth="181.0" promptText="Téléphone" />
+      <TextField fx:id="tel_text" layoutX="76.0" layoutY="247.0" prefHeight="26.0" prefWidth="182.0" promptText="Téléphone" />
       <Label fx:id="msg_error" layoutX="76.0" layoutY="292.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
          <font>
             <Font size="14.0" />

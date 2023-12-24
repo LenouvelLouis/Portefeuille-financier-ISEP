@@ -4,8 +4,15 @@ import Info.UserInfo;
 import java.sql.*;
 import java.util.Arrays;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class UserModele {
-    private Connection conn = null;
+    Connection conn = null;
+    ResultSet rs = null;
+    Statement pst = null;
 
     private void initConnection() throws SQLException {
         this.conn = ConnectDB.ConnectMariaDB();
@@ -47,5 +54,32 @@ public class UserModele {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean is_login_valid(String mail, String password) throws SQLException {
+
+        if(this.conn==null){
+            this.initConnection();
+        }
+
+        String sql = "SELECT * FROM wallet_db.user WHERE mail ='"+mail+"' AND h_mdp = '"+password+"'";
+
+        try {
+            rs = this.pst.executeQuery(sql);
+
+            if(rs.last())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
     }
 }

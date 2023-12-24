@@ -14,7 +14,7 @@
          </children></AnchorPane>
       <ImageView fitHeight="327.0" fitWidth="840.0" layoutY="50.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/Windows/Documents/GitHub/Portefeuille-financier-ISEP/src/main/Image/Home.png" />
+            <Image url="@../../../../Image/Home.png" />
          </image></ImageView>
       <Label layoutX="34.0" layoutY="131.0" prefHeight="115.0" prefWidth="457.0" text="Centralisez votre patrimoine" textFill="WHITE">
          <font>

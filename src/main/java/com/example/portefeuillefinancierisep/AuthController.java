@@ -14,6 +14,7 @@ public class AuthController {
 
     private UserModele user =new UserModele();
 
+    @FXML
     protected void InscriptionButtonClick() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -39,6 +40,7 @@ public class AuthController {
     String email, mdp;
 
 
+    @FXML
     protected void ConnexionButtonClick() throws SQLException {
 
             mdp = mdp_text.getText();

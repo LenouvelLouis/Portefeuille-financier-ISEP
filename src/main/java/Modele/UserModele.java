@@ -14,8 +14,14 @@ public class UserModele {
     ResultSet rs = null;
     Statement pst = null;
 
-    private void initConnection() throws SQLException {
+    private void initConnection() {
         this.conn = ConnectDB.ConnectMariaDB();
+        try {
+            assert conn != null;
+            this.pst = conn.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error : UserModel -> initConnection");
+        }
     }
 
     public void create_user(UserInfo user) {
@@ -33,8 +39,8 @@ public class UserModele {
                 pst.setString(6, user.getSalt());
                 pst.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : UserModel -> create_user");
         }
     }
 
@@ -50,36 +56,31 @@ public class UserModele {
                     return rs.last();
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : UserModel -> is_user_create");
         }
-        return false;
     }
 
     public boolean is_login_valid(String mail, String password) throws SQLException {
-
-        if(this.conn==null){
-            this.initConnection();
-        }
-
-        String sql = "SELECT * FROM wallet_db.user WHERE mail ='"+mail+"' AND h_mdp = '"+password+"'";
-
         try {
-            rs = this.pst.executeQuery(sql);
+            if (this.conn == null) {
+                this.initConnection();
+            }
 
-            if(rs.last())
-            {
-                return true;
+            String sql = "SELECT * FROM wallet_db.user WHERE mail ='" + mail + "' AND h_mdp = '" + password + "'";
+
+            try {
+                rs = this.pst.executeQuery(sql);
+
+                if (rs.last()) {
+                    return true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            else
-            {
-                return false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error : UserModel -> is_login_valid");
         }
-
         return false;
-
     }
 }

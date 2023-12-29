@@ -12,9 +12,9 @@ import java.sql.SQLException;
 
 public class AuthController {
 
-<<<<<<< Updated upstream
     private UserModele user =new UserModele();
 
+    @FXML
     protected void InscriptionButtonClick() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -28,32 +28,8 @@ public class AuthController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-=======
-    @FXML
-    protected void InscriptionButtonClick() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("inscription-view.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Inscription");
-        stage.setScene(scene);
-        stage.show();
-        stage.setResizable(false);
     }
 
-    @FXML
-    protected void ConnexionButtonClick() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("auth-view.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Connexion");
-        stage.setScene(scene);
-        stage.show();
-        stage.setResizable(false);
->>>>>>> Stashed changes
-    }
     @FXML
     Label msg_error;
     @FXML
@@ -64,11 +40,10 @@ public class AuthController {
     String email, mdp;
 
 
+    @FXML
     protected void ConnexionButtonClick() throws SQLException {
-
             mdp = mdp_text.getText();
             email = email_text.getText();
-
             if (user.is_login_valid(email, mdp)) {
                 msg_error.setText("Connexion ok");
                 try {

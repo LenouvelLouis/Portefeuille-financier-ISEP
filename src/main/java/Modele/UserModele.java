@@ -15,6 +15,8 @@ public class UserModele {
 
     private void initConnection() throws SQLException {
         this.conn = ConnectDB.ConnectMariaDB();
+        assert conn != null;
+        this.pst = conn.createStatement();
     }
 
     public void create_user(UserInfo user) {
@@ -55,7 +57,6 @@ public class UserModele {
         return false;
     }
 
-<<<<<<< Updated upstream
     public boolean is_login_valid(String mail, String password) throws SQLException {
 
         if(this.conn==null){
@@ -74,7 +75,13 @@ public class UserModele {
             else
             {
                 return false;
-=======
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
     public String getUserSalt(String email) {
         try {
             if (this.conn == null) {
@@ -88,18 +95,11 @@ public class UserModele {
                         return rs.getString("salt");
                     }
                 }
->>>>>>> Stashed changes
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-<<<<<<< Updated upstream
-
-        return false;
-
-    }
-=======
         return null;
+    }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean checkUserPassword(String email, String hashedPassword) {
@@ -122,6 +122,4 @@ public class UserModele {
         }
         return false;
     }
-
->>>>>>> Stashed changes
 }

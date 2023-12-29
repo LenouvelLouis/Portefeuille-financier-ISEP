@@ -25,7 +25,7 @@ public class UserInfo {
     public String getH_mdp() { return h_mdp; }
     public String getSalt() { return salt; }
 
-    // Setters (avec validation si nécessaire)
+    // Setters
     public void setNom(String nom) { this.nom = nom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }
     public void setTel(String tel) { this.tel = tel; }

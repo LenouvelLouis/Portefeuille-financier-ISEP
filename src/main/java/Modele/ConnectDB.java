@@ -8,7 +8,7 @@ public class ConnectDB {
         Connection conn = null;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            // Utilisez un fichier de configuration externe pour les informations de connexion
+            // Assurez-vous que les informations de connexion sont correctes
             conn = DriverManager.getConnection("jdbc:mariadb://localhost/wallet_db", "root", "root");
             return conn;
         } catch (ClassNotFoundException | SQLException e) {

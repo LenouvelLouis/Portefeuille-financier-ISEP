@@ -31,7 +31,7 @@ public class ConnexionController {
         String password = mdp_text.getText();
         String userSalt = user.getUserSalt(email);
         String hashedPassword = hashPassword(password, userSalt);
-
+        try{
         if (user.checkUserPassword(email, hashedPassword)) {
             msg_error.setTextFill(Color.GREEN);
             msg_error.setText("Connexion réussie.");
@@ -47,7 +47,8 @@ public class ConnexionController {
         } else {
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Échec de la connexion. Vérifiez vos identifiants.");
-        }
+        }} catch (RuntimeException e) {
+            msg_error.setText("Erreur de connexion avec la base de données");        }
     }
     @FXML
     protected void InscriptionButtonClick() {

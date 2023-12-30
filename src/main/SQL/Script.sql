@@ -39,9 +39,9 @@ create or replace table wallet_user
         primary key,
     name          varchar(50)     not null,
     mail_user     varchar(50)     not null,
-    totale        float           not null,
-    totale_action float default 0 null,
-    totale_crypto float default 0 null
+    totale        float default 0 not null,
+    totale_action float default 0 not null,
+    totale_crypto float default 0 not null
 );
 ALTER TABLE wallet_user
     ADD CONSTRAINT wallet_user_user_mail_fk

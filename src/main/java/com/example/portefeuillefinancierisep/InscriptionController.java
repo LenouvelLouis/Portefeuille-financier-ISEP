@@ -46,12 +46,13 @@ public class InscriptionController {
         Stage stage = new Stage();
         stage.setTitle("Connexion");
         stage.setScene(scene);
+        ((Stage) this.email_text.getScene().getWindow()).close();
         stage.show();
         stage.setResizable(false);
     }
 
     @FXML
-    protected void CreationCompteButtonClick() throws SQLException {
+    protected void CreationCompteButtonClick() throws IOException {
         email = email_text.getText();
         nom = nom_text.getText();
         prenom = prenom_text.getText();
@@ -97,8 +98,8 @@ public class InscriptionController {
         user.create_user(new UserInfo(nom, prenom, tel, email, password, salt));
         msg_error.setTextFill(Color.GREEN);
         msg_error.setText("Votre compte a bien été créé");
-
         clearFormFields();
+        this.SeConnecterButtonClick();
     }
 
     private String hashPassword(String passwordToHash, String salt) {

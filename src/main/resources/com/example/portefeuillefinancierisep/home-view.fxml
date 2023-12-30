@@ -9,12 +9,12 @@
    <children>
       <AnchorPane prefHeight="50.0" prefWidth="840.0" style="-fx-background-color: #2B2B2B;">
          <children>
-            <Button layoutX="702.0" layoutY="13.0" mnemonicParsing="false" onAction="#InscriptionButtonClick" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #F5CBA7; -fx-background-radius: 90;" text="S'inscrire" />
-            <Button layoutX="620.0" layoutY="12.0" mnemonicParsing="false" onAction="#ConnexionButtonClick" prefHeight="27.0" prefWidth="76.0" style="-fx-background-color: #2B2B2B; -fx-border-radius: 90; -fx-border-color: #F5CBA7;" text="Connexion" textFill="#f5cba7" />
+            <Button layoutX="702.0" layoutY="13.0" mnemonicParsing="false"  onAction="#InscriptionButtonClick" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #F5CBA7; -fx-background-radius: 90;" text="S'inscrire" />
+            <Button layoutX="620.0" layoutY="12.0" mnemonicParsing="false" fx:id="auth" onAction="#ConnexionButtonClick" prefHeight="27.0" prefWidth="76.0" style="-fx-background-color: #2B2B2B; -fx-border-radius: 90; -fx-border-color: #F5CBA7;" text="Connexion" textFill="#f5cba7" />
          </children></AnchorPane>
       <ImageView fitHeight="327.0" fitWidth="840.0" layoutY="50.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../Image/Home.png" />
+            <Image url="file:src/main/Image/Home.png" />
          </image></ImageView>
       <Label layoutX="34.0" layoutY="131.0" prefHeight="115.0" prefWidth="457.0" text="Centralisez votre patrimoine" textFill="WHITE">
          <font>

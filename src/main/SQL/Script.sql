@@ -1,29 +1,51 @@
+create or replace table crypto
+(
+    nom varchar(50) not null
+        primary key
+);
+
+create or replace table entreprise
+(
+    nom varchar(50) not null
+        primary key
+);
+
+INSERT INTO entreprise (nom) VALUES ('Total');
+INSERT INTO entreprise (nom) VALUES ('Cocacola');
+INSERT INTO entreprise (nom) VALUES ('Mcdonalds');
+INSERT INTO entreprise (nom) VALUES ('Nike');
+INSERT INTO entreprise (nom) VALUES ('Samsung');
+INSERT INTO crypto (nom) VALUES ('BNB');
+INSERT INTO crypto (nom) VALUES ('BTC');
+INSERT INTO crypto (nom) VALUES ('ETH');
+INSERT INTO crypto (nom) VALUES ('SOL');
+INSERT INTO crypto (nom) VALUES ('STETH');
+
 create or replace table user
 (
-    id     int auto_increment
-        primary key,
-    nom    varchar(50)  not null,
-    prenom varchar(50)  not null,
-    tel    varchar(50)  not null,
-    mail   varchar(50)  not null,
-    h_mdp  text         not null,
-    salt   varchar(100) not null,
-    apport float        not null,
-    constraint user_pk2
-        unique (mail)
+    nom    varchar(50)     not null,
+    prenom varchar(50)     not null,
+    tel    varchar(50)     not null,
+    mail   varchar(50)     not null
+        primary key ,
+    h_mdp  text            not null,
+    salt   varchar(100)    not null,
+    apport float default 0 not null
 );
 
 create or replace table wallet_user
 (
-    id        int auto_increment
+    id            int auto_increment
         primary key,
-    name      varchar(50) not null,
-    mail_user varchar(50) not null,
-    totale    float       not null,
-    constraint wallet_user_user_mail_fk
-        foreign key (mail_user) references user (mail)
+    name          varchar(50)     not null,
+    mail_user     varchar(50)     not null,
+    totale        float           not null,
+    totale_action float default 0 null,
+    totale_crypto float default 0 null
 );
-
+ALTER TABLE wallet_user
+    ADD CONSTRAINT wallet_user_user_mail_fk
+        FOREIGN KEY (mail_user) REFERENCES user (mail);
 create or replace table transaction
 (
     id_wallet int                        not null,
@@ -33,4 +55,3 @@ create or replace table transaction
     constraint wallet_value_wallet_user_id_fk
         foreign key (id_wallet) references wallet_user (id)
 );
-

@@ -38,10 +38,10 @@ public class ConnexionController {
             msg_error.setText("Connexion réussie.");
             UserInfo u = user.getUserInfo(email);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("add-wallet-view.fxml"));
+            loader.setLocation(this.getClass().getResource("profile-view.fxml"));
             Scene scene = new Scene(loader.load());
-            AddWalletController addWalletController = loader.getController();
-            addWalletController.initializeUser(u);
+            ProfileController ProfileController = loader.getController();
+            ProfileController.initializeUser(u);
             Stage stage = new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);
@@ -52,7 +52,8 @@ public class ConnexionController {
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Échec de la connexion. Vérifiez vos identifiants.");
         }} catch (RuntimeException e) {
-            msg_error.setText("Erreur de connexion avec la base de données");        }
+            msg_error.setText("Erreur de connexion avec la base de données");
+        }
     }
     @FXML
     protected void InscriptionButtonClick() {

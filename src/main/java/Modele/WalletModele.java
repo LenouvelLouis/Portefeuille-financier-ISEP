@@ -1,8 +1,11 @@
 package Modele;
 
 import Info.UserInfo;
+import Info.WalletInfo;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WalletModele {
 
@@ -52,6 +55,33 @@ public class WalletModele {
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException("Error : WalletModele -> create_wallet : "+e.getMessage());
         }
+    }
+
+    public List<WalletInfo> getWalletInfo(UserInfo u){
+        ArrayList walletInfoList = new ArrayList<WalletInfo>();
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT * FROM wallet_db.wallet_user WHERE mail_user = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, u.getMail());
+                try (ResultSet rs = pst.executeQuery()) {
+                    while (rs.next()){
+                        String nom = rs.getString("name");
+                        String mail_user = rs.getString("mail_user");
+                        float totale = rs.getFloat("totale");
+                        float totale_action = rs.getFloat("totale_action");
+                        float totale_crypto= rs.getFloat("totale_crypto");
+                        WalletInfo w = new WalletInfo(nom,mail_user,totale,totale_action,totale_crypto);
+                        walletInfoList.add(w);
+                    }
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> getWalletInfo : "+e.getMessage());
+        }
+        return walletInfoList;
     }
 
 }

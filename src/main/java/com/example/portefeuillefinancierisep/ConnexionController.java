@@ -1,5 +1,6 @@
 package com.example.portefeuillefinancierisep;
 
+import Info.UserInfo;
 import Modele.UserModele;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,9 +36,12 @@ public class ConnexionController {
         if (user.checkUserPassword(email, hashedPassword)) {
             msg_error.setTextFill(Color.GREEN);
             msg_error.setText("Connexion réussie.");
+            UserInfo u = user.getUserInfo(email);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("home-view.fxml"));
+            loader.setLocation(this.getClass().getResource("add-wallet-view.fxml"));
             Scene scene = new Scene(loader.load());
+            AddWalletController addWalletController = loader.getController();
+            addWalletController.initializeUser(u);
             Stage stage = new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);
@@ -59,6 +63,7 @@ public class ConnexionController {
             Stage stage = new Stage();
             stage.setTitle("Inscription");
             stage.setScene(scene);
+            ((Stage) this.email_text.getScene().getWindow()).close();
             stage.show();
             stage.setResizable(false);
         } catch (IOException e) {

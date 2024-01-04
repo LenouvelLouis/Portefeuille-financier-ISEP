@@ -19,7 +19,7 @@ public class UserModele {
             assert conn != null;
             this.pst = conn.createStatement();
         } catch (SQLException e) {
-            throw new RuntimeException("Error : UserModel -> initConnection");
+            throw new RuntimeException("Error : UserModel -> initConnection : "+e.getMessage());
         }
     }
 
@@ -39,8 +39,39 @@ public class UserModele {
                 pst.executeUpdate();
             }
         } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> create_user");
+            throw new RuntimeException("Error : UserModel -> create_user : "+e.getMessage());
         }
+    }
+
+    public UserInfo getUserInfo(String mail){
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT * FROM wallet_db.user WHERE mail = ?";
+            try {
+                try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                    pst.setString(1, mail);
+                    try (ResultSet rs = pst.executeQuery()) {
+                        if(rs.next()){
+                        String nom =rs.getString("nom");
+                        String prenom = rs.getString("prenom");
+                        String tel = rs.getString("tel");
+                        String u_mail = rs.getString("mail");
+                        String hmpd= rs.getString("h_mdp");
+                        String salt = rs.getString("salt");
+                        UserInfo u = new UserInfo(nom,prenom,tel,u_mail,hmpd,salt);
+                        return u;
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch ( RuntimeException e) {
+            throw new RuntimeException("Error : getUserInfo -> is_user_create : "+e.getMessage());
+        }
+        return null;
     }
 
     public boolean is_user_create(String mail) {
@@ -56,7 +87,7 @@ public class UserModele {
                 }
             }
         } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> is_user_create");
+            throw new RuntimeException("Error : UserModel -> is_user_create : "+e.getMessage());
         }
     }
 
@@ -78,7 +109,7 @@ public class UserModele {
                 e.printStackTrace();
             }
         } catch (RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> is_login_valid");
+            throw new RuntimeException("Error : UserModel -> is_login_valid : "+e.getMessage());
         }
         return false;
     }

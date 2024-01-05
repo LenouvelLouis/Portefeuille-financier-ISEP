@@ -28,7 +28,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "INSERT INTO wallet_db.user (nom, prenom, tel, mail, h_mdp, salt) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user (nom, prenom, tel, mail, h_mdp, salt) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
@@ -43,12 +43,30 @@ public class UserModele {
         }
     }
 
+    public void updateUserInfo(UserInfo user){
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "UPDATE wallet_db.user SET nom=?, prenom=?, tel=? WHERE mail=?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, user.getNom());
+                pst.setString(2, user.getPrenom());
+                pst.setString(3, user.getTel());
+                pst.setString(4, user.getMail());
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : UserModel -> updateUserInfo : "+e.getMessage());
+        }
+    }
+
     public UserInfo getUserInfo(String mail){
         try {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "SELECT * FROM wallet_db.user WHERE mail = ?";
+            String sql = "SELECT * FROM user WHERE mail = ?";
             try {
                 try (PreparedStatement pst = conn.prepareStatement(sql)) {
                     pst.setString(1, mail);

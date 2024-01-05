@@ -57,6 +57,7 @@ public class WalletModele {
         }
     }
 
+
     public List<WalletInfo> getWalletInfo(UserInfo u){
         ArrayList walletInfoList = new ArrayList<WalletInfo>();
         try {
@@ -83,5 +84,6 @@ public class WalletModele {
         }
         return walletInfoList;
     }
+
 
 }

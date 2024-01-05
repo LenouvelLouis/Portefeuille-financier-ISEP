@@ -9,17 +9,6 @@ public class WalletInfo {
 
     private float totale_action;
 
-    @Override
-    public String toString() {
-        return "WalletInfo{" +
-                "nom='" + nom + '\'' +
-                ", mail_user='" + mail_user + '\'' +
-                ", totale=" + totale +
-                ", totale_action=" + totale_action +
-                ", totale_crypto=" + totale_crypto +
-                '}';
-    }
-
     public String getNom() {
         return nom;
     }

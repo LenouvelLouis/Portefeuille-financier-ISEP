@@ -52,6 +52,7 @@ public class ConnexionController {
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Échec de la connexion. Vérifiez vos identifiants.");
         }} catch (RuntimeException e) {
+            msg_error.setTextFill(Color.RED);
             msg_error.setText("Erreur de connexion avec la base de données");
         }
     }

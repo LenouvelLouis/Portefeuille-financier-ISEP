@@ -1,6 +1,8 @@
 package Info;
 
 public class UserInfo {
+
+    private int id;
     private String nom;
     private String prenom;
     private String tel;
@@ -8,6 +10,19 @@ public class UserInfo {
     private String h_mdp; // Mot de passe haché
     private String salt; // Sel sous forme de chaîne de caractères
 
+    public int getId() {
+        return id;
+    }
+
+    public UserInfo(int id, String nom, String prenom, String tel, String mail, String h_mdp, String salt) {
+        this.id=id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
+        this.mail = mail;
+        this.h_mdp = h_mdp;
+        this.salt = salt;
+    }
     public UserInfo(String nom, String prenom, String tel, String mail, String h_mdp, String salt) {
         this.nom = nom;
         this.prenom = prenom;

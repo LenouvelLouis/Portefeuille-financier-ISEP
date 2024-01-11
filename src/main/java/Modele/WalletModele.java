@@ -29,9 +29,9 @@ public class WalletModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "SELECT * FROM wallet_db.wallet_user WHERE mail_user = ? AND name = ?";
+            String sql = "SELECT * FROM wallet_db.wallet_user WHERE id_user = ? AND name = ?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
-                pst.setString(1, u.getMail());
+                pst.setInt(1, u.getId());
                 pst.setString(2, name);
                 try (ResultSet rs = pst.executeQuery()) {
                     return rs.last();
@@ -46,10 +46,10 @@ public class WalletModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "INSERT INTO wallet_db.wallet_user (name, mail_user) VALUES (?, ?)";
+            String sql = "INSERT INTO wallet_db.wallet_user (name, id_user) VALUES (?, ?)";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, name);
-                pst.setString(2, user.getMail());
+                pst.setInt(2, user.getId());
                 pst.executeUpdate();
             }
         } catch (SQLException | RuntimeException e) {
@@ -64,17 +64,17 @@ public class WalletModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "SELECT * FROM wallet_db.wallet_user WHERE mail_user = ?";
+            String sql = "SELECT * FROM wallet_db.wallet_user WHERE id_user = ?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
-                pst.setString(1, u.getMail());
+                pst.setInt(1, u.getId());
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()){
                         String nom = rs.getString("name");
-                        String mail_user = rs.getString("mail_user");
+                        int id_user = rs.getInt("id_user");
                         float totale = rs.getFloat("totale");
                         float totale_action = rs.getFloat("totale_action");
                         float totale_crypto= rs.getFloat("totale_crypto");
-                        WalletInfo w = new WalletInfo(nom,mail_user,totale,totale_action,totale_crypto);
+                        WalletInfo w = new WalletInfo(nom,id_user,totale,totale_action,totale_crypto);
                         walletInfoList.add(w);
                     }
                 }

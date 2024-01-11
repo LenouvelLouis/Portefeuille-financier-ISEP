@@ -18,7 +18,7 @@
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <TextField fx:id="tel_text" layoutX="176.0" layoutY="222.0" prefHeight="26.0" prefWidth="182.0" promptText="Téléphone" />
+        <TextField fx:id="tel_text" layoutX="275.0" layoutY="224.0" prefHeight="26.0" prefWidth="182.0" promptText="Téléphone" />
         <Label fx:id="msg_error" layoutX="78.0" layoutY="423.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
             <font>
                 <Font size="14.0" />
@@ -41,10 +41,13 @@
         <TextField fx:id="wallettotale_action" editable="false" layoutX="305.0" layoutY="379.0" prefHeight="25.0" prefWidth="181.0" promptText="Crypto" />
       <Label layoutX="146.0" layoutY="146.0" text="Prénom" textFill="WHITE" />
       <Label layoutX="352.0" layoutY="146.0" text="Nom" textFill="WHITE" />
-      <Label layoutX="239.0" layoutY="199.0" text="Téléphone" textFill="WHITE" />
+      <Label layoutX="338.0" layoutY="200.0" text="Téléphone" textFill="WHITE" />
       <Label fx:id="labelAction" layoutX="140.0" layoutY="358.0" text="Action" textFill="WHITE" />
       <Label fx:id="labelCrypto" layoutX="378.0" layoutY="358.0" text="Crypto" textFill="WHITE" />
       <Label fx:id="labelTotale" layoutX="380.0" layoutY="311.0" text="Totale" textFill="WHITE" />
+      <TextField fx:id="mail_text" layoutX="76.0" layoutY="225.0" prefHeight="25.0" prefWidth="181.0" promptText="email" />
+      <Label layoutX="153.0" layoutY="200.0" text="Email" textFill="WHITE" />
+      <Button layoutX="431.0" layoutY="28.0"  onAction="#homeredirection" mnemonicParsing="false" text="Déconnexion" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;"/>
 
     </children>
 </AnchorPane>

@@ -26,7 +26,7 @@ public class ProfileController {
     private UserModele user = new UserModele();
 
     private WalletModele wallet =new WalletModele();
-    String nom, prenom, tel;
+    String nom, prenom, tel,mail;
     @FXML
     TextField nom_text;
     @FXML
@@ -57,6 +57,8 @@ public class ProfileController {
     Label labelCrypto;
     @FXML
     Label labelTotale;
+    @FXML
+    TextField mail_text;
 
 
     public void initializeUser(UserInfo user) {
@@ -64,6 +66,7 @@ public class ProfileController {
         nom_text.setText(this.u.getNom());
         prenom_text.setText(this.u.getPrenom());
         tel_text.setText(this.u.getTel());
+        mail_text.setText(this.u.getMail());
         this.displayWalletInfo();
     }
 
@@ -105,6 +108,7 @@ public class ProfileController {
         nom = nom_text.getText();
         prenom = prenom_text.getText();
         tel = tel_text.getText();
+        mail = mail_text.getText();
         if (!isChampNotEmpty()) {
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Veuillez saisir tous les champs");
@@ -121,10 +125,23 @@ public class ProfileController {
             msg_error.setText("Numéro de téléphone non valide");
             return;
         }
+
+        if (!isValidFormatEmail()) {
+            msg_error.setTextFill(Color.RED);
+            msg_error.setText("Adresse mail non valide");
+            return;
+        }
+
+        if (!this.u.getMail().equals(mail) && user.is_user_create(mail)) {
+            msg_error.setTextFill(Color.RED);
+            msg_error.setText("Ce compte existe déjà");
+            return;
+        }
         try {
-            this.u.setNom(nom_text.getText());
-            this.u.setPrenom(prenom_text.getText());
-            this.u.setTel(tel_text.getText());
+            this.u.setMail(mail);
+            this.u.setNom(nom);
+            this.u.setPrenom(prenom);
+            this.u.setTel(tel);
             this.user.updateUserInfo(this.u);
             msg_error.setTextFill(Color.GREEN);
             msg_error.setText("Mise à jour des informations !");
@@ -132,6 +149,7 @@ public class ProfileController {
         }catch (RuntimeException | IOException e){
             msg_error.setTextFill(Color.RED);
             msg_error.setText("Erreur lors de la mise à jour de vos données");
+            System.out.println(e.getMessage());
         }
 
 
@@ -182,7 +200,26 @@ public class ProfileController {
         return matcher.matches();
     }
 
+    public boolean isValidFormatEmail() {
+        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(mail);
+        return matcher.matches();
+    }
+
     public boolean isChampNotEmpty() {
         return !nom.isEmpty() && !prenom.isEmpty() && !tel.isEmpty();
+    }
+
+    public void homeredirection() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(this.getClass().getResource("home-view.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Home");
+        stage.setScene(scene);
+        ((Stage) this.nom_text.getScene().getWindow()).close();
+        stage.show();
+        stage.setResizable(false);
     }
 }

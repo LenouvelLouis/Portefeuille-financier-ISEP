@@ -48,12 +48,13 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "UPDATE wallet_db.user SET nom=?, prenom=?, tel=? WHERE mail=?";
+            String sql = "UPDATE wallet_db.user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
                 pst.setString(3, user.getTel());
                 pst.setString(4, user.getMail());
+                pst.setInt(5, user.getId());
                 pst.executeUpdate();
             }
         } catch (SQLException | RuntimeException e) {
@@ -72,14 +73,15 @@ public class UserModele {
                     pst.setString(1, mail);
                     try (ResultSet rs = pst.executeQuery()) {
                         if(rs.next()){
-                        String nom =rs.getString("nom");
-                        String prenom = rs.getString("prenom");
-                        String tel = rs.getString("tel");
-                        String u_mail = rs.getString("mail");
-                        String hmpd= rs.getString("h_mdp");
-                        String salt = rs.getString("salt");
-                        UserInfo u = new UserInfo(nom,prenom,tel,u_mail,hmpd,salt);
-                        return u;
+                            int id = rs.getInt("id");
+                            String nom =rs.getString("nom");
+                            String prenom = rs.getString("prenom");
+                            String tel = rs.getString("tel");
+                            String u_mail = rs.getString("mail");
+                            String hmpd= rs.getString("h_mdp");
+                            String salt = rs.getString("salt");
+                            UserInfo u = new UserInfo(id,nom,prenom,tel,u_mail,hmpd,salt);
+                            return u;
                         }
                     }
                 }

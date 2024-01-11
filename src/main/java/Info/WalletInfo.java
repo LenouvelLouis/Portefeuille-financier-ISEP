@@ -3,7 +3,7 @@ package Info;
 public class WalletInfo {
     private String nom;
 
-    private String mail_user;
+    private int id_user;
 
     private float totale;
 
@@ -13,8 +13,8 @@ public class WalletInfo {
         return nom;
     }
 
-    public String getMail_user() {
-        return mail_user;
+    public int getId_user() {
+        return id_user;
     }
 
     public float getTotale() {
@@ -31,9 +31,9 @@ public class WalletInfo {
 
     private float totale_crypto;
 
-    public WalletInfo(String nom, String mail_user, float totale, float totale_action, float totale_crypto) {
+    public WalletInfo(String nom, int id_user, float totale, float totale_action, float totale_crypto) {
         this.nom = nom;
-        this.mail_user = mail_user;
+        this.id_user = id_user;
         this.totale = totale;
         this.totale_action = totale_action;
         this.totale_crypto = totale_crypto;

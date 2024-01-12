@@ -3,23 +3,19 @@ package Modele;
 import Info.UserInfo;
 import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 public class UserModele {
-    Connection conn = null;
-    ResultSet rs = null;
-    Statement pst = null;
+    private Connection conn = null;
+    private ResultSet rs = null;
+    private Statement pst = null;
 
     private void initConnection() {
-        this.conn = ConnectDB.ConnectMariaDB();
         try {
+            this.conn = ConnectDB.ConnectMariaDB();
             assert conn != null;
             this.pst = conn.createStatement();
         } catch (SQLException e) {
-            throw new RuntimeException("Error : UserModel -> initConnection : "+e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error : UserModel -> initConnection : " + e.getMessage());
         }
     }
 
@@ -38,8 +34,8 @@ public class UserModele {
                 pst.setString(6, user.getSalt());
                 pst.executeUpdate();
             }
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> create_user : "+e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error : UserModel -> create_user : " + e.getMessage());
         }
     }
 
@@ -48,7 +44,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "UPDATE wallet_db.user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
+            String sql = "UPDATE user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
@@ -57,8 +53,8 @@ public class UserModele {
                 pst.setInt(5, user.getId());
                 pst.executeUpdate();
             }
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> updateUserInfo : "+e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error : UserModel -> updateUserInfo : " + e.getMessage());
         }
     }
 
@@ -68,32 +64,27 @@ public class UserModele {
                 this.initConnection();
             }
             String sql = "SELECT * FROM user WHERE mail = ?";
-            try {
-                try (PreparedStatement pst = conn.prepareStatement(sql)) {
-                    pst.setString(1, mail);
-                    try (ResultSet rs = pst.executeQuery()) {
-                        if(rs.next()){
-                            int id = rs.getInt("id");
-                            String nom =rs.getString("nom");
-                            String prenom = rs.getString("prenom");
-                            String tel = rs.getString("tel");
-                            String u_mail = rs.getString("mail");
-                            String hmpd= rs.getString("h_mdp");
-                            String salt = rs.getString("salt");
-                            UserInfo u = new UserInfo(id,nom,prenom,tel,u_mail,hmpd,salt);
-                            return u;
-                        }
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, mail);
+                try (ResultSet rs = pst.executeQuery()) {
+                    if(rs.next()){
+                        return new UserInfo(
+                                rs.getInt("id"),
+                                rs.getString("nom"),
+                                rs.getString("prenom"),
+                                rs.getString("tel"),
+                                rs.getString("mail"),
+                                rs.getString("h_mdp"),
+                                rs.getString("salt")
+                        );
                     }
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-        } catch ( RuntimeException e) {
-            throw new RuntimeException("Error : getUserInfo -> is_user_create : "+e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
-
     public boolean is_user_create(String mail) {
         try {
             if (this.conn == null) {
@@ -106,8 +97,8 @@ public class UserModele {
                     return rs.last();
                 }
             }
-        } catch (SQLException | RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> is_user_create : "+e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error : UserModel -> is_user_create : " + e.getMessage());
         }
     }
 
@@ -116,23 +107,14 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-
             String sql = "SELECT * FROM wallet_db.user WHERE mail ='" + mail + "' AND h_mdp = '" + password + "'";
-
-            try {
-                rs = this.pst.executeQuery(sql);
-
-                if (rs.last()) {
-                    return true;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Error : UserModel -> is_login_valid : "+e.getMessage());
+            rs = this.pst.executeQuery(sql);
+            return rs.last();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error : UserModel -> is_login_valid : " + e.getMessage());
         }
-        return false;
     }
+
     public String getUserSalt(String email) {
         try {
             if (this.conn == null) {
@@ -146,11 +128,11 @@ public class UserModele {
                         return rs.getString("salt");
                     }
                 }
-        return null;
-    }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public boolean checkUserPassword(String email, String hashedPassword) {
@@ -173,4 +155,21 @@ public class UserModele {
         }
         return false;
     }
+
+    public void updateFunds(int userId, float amount) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "UPDATE user SET apport = apport + ? WHERE id = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setFloat(1, amount);
+                pst.setInt(2, userId);
+                pst.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error: UserModele -> updateFunds : " + e.getMessage());
+        }
+    }
 }
+

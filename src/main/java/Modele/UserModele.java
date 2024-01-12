@@ -24,7 +24,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "INSERT INTO user (nom, prenom, tel, mail, h_mdp, salt) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO wallet_db.user (nom, prenom, tel, mail, h_mdp, salt) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
@@ -44,7 +44,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "UPDATE user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
+            String sql = "UPDATE wallet_db.user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
@@ -63,7 +63,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "SELECT * FROM user WHERE mail = ?";
+            String sql = "SELECT * FROM wallet_db.user WHERE mail = ?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, mail);
                 try (ResultSet rs = pst.executeQuery()) {

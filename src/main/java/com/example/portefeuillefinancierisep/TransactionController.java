@@ -186,7 +186,7 @@ public class TransactionController {
                 this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale()+buyValue);
             }
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()+buyValue);
-            this.userModele.updatefonds(this.user,this.user.getFond()-buyValue);
+            this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue);
             this.transaction.addTransaction(t);
         }
         catch (RuntimeException e){
@@ -226,7 +226,7 @@ public class TransactionController {
                 this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale()-sellValue);
             }
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()-sellValue);
-            this.userModele.updatefonds(this.user, this.user.getFond() + sellValue);
+            this.userModele.updateFunds(this.user.getId(), this.user.getFond() + sellValue);
             this.transaction.addTransaction(t);
         }
         catch (RuntimeException e){

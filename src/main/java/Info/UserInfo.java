@@ -10,11 +10,17 @@ public class UserInfo {
     private String h_mdp; // Mot de passe haché
     private String salt; // Sel sous forme de chaîne de caractères
 
+    private Float fond;
+
+    public Float getFond() {
+        return fond;
+    }
+
     public int getId() {
         return id;
     }
 
-    public UserInfo(int id, String nom, String prenom, String tel, String mail, String h_mdp, String salt) {
+    public UserInfo(int id, String nom, String prenom, String tel, String mail, String h_mdp, String salt,Float f) {
         this.id=id;
         this.nom = nom;
         this.prenom = prenom;
@@ -22,6 +28,7 @@ public class UserInfo {
         this.mail = mail;
         this.h_mdp = h_mdp;
         this.salt = salt;
+        this.fond=f;
     }
     public UserInfo(String nom, String prenom, String tel, String mail, String h_mdp, String salt) {
         this.nom = nom;

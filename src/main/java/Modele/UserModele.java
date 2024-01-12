@@ -80,7 +80,8 @@ public class UserModele {
                             String u_mail = rs.getString("mail");
                             String hmpd= rs.getString("h_mdp");
                             String salt = rs.getString("salt");
-                            UserInfo u = new UserInfo(id,nom,prenom,tel,u_mail,hmpd,salt);
+                            Float fond = rs.getFloat("apport");
+                            UserInfo u = new UserInfo(id,nom,prenom,tel,u_mail,hmpd,salt,fond);
                             return u;
                         }
                     }
@@ -172,5 +173,21 @@ public class UserModele {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void updatefonds(UserInfo user, float v) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "UPDATE wallet_db.user SET apport=? WHERE id=?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setFloat(1, v);
+                pst.setInt(2, user.getId());
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : UserModel -> updatefonds : "+e.getMessage());
+        }
     }
 }

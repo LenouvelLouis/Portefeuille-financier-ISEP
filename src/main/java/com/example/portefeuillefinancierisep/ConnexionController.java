@@ -38,10 +38,10 @@ public class ConnexionController {
             msg_error.setText("Connexion réussie.");
             UserInfo u = user.getUserInfo(email);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("profile-view.fxml"));
+            loader.setLocation(this.getClass().getResource("transaction-view.fxml"));
             Scene scene = new Scene(loader.load());
-            ProfileController ProfileController = loader.getController();
-            ProfileController.initializeUser(u);
+            TransactionController TransactionController = loader.getController();
+            TransactionController.initializeUser(u);
             Stage stage = new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);

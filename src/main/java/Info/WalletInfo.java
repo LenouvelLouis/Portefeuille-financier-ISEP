@@ -1,7 +1,13 @@
 package Info;
 
 public class WalletInfo {
+
+    private int id;
     private String nom;
+
+    public int getId() {
+        return id;
+    }
 
     private int id_user;
 
@@ -31,7 +37,8 @@ public class WalletInfo {
 
     private float totale_crypto;
 
-    public WalletInfo(String nom, int id_user, float totale, float totale_action, float totale_crypto) {
+    public WalletInfo(int id,String nom, int id_user, float totale, float totale_action, float totale_crypto) {
+        this.id=id;
         this.nom = nom;
         this.id_user = id_user;
         this.totale = totale;

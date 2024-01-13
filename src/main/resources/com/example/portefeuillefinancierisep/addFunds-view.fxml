@@ -12,8 +12,8 @@
                 <Font size="30.0" />
             </font>
         </Label>
-        <TextField fx:id="fundsField" layoutX="76.0" layoutY="120.0" prefHeight="25.0" prefWidth="200.0" promptText="Montant en euros" />
-        <Button fx:id="addFundsButton" layoutX="76.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleAddFunds" prefHeight="36.0" prefWidth="200.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Ajouter">
+        <TextField fx:id="fundsField" layoutX="295.0" layoutY="172.0" prefHeight="25.0" prefWidth="200.0" promptText="Montant en euros" />
+        <Button fx:id="addFundsButton" layoutX="295.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleAddFunds" prefHeight="36.0" prefWidth="200.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Ajouter">
             <font>
                 <Font size="14.0" />
             </font>

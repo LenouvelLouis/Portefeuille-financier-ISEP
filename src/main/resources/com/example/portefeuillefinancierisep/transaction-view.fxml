@@ -4,40 +4,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="paneGlobale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="533.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.TransactionController">
+<AnchorPane fx:id="paneGlobale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="790.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.TransactionController">
     <children>
-        <Label layoutX="76.0" layoutY="14.0" prefHeight="53.0" prefWidth="303.0" text="Transaction" textFill="WHITE">
+        <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="157.0" text="Transaction" textFill="WHITE">
             <font>
                 <Font size="30.0" />
             </font></Label>
-        <Label fx:id="msg_error" layoutX="78.0" layoutY="398.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
+        <Label fx:id="msg_error" layoutX="251.0" layoutY="338.0" prefHeight="20.0" prefWidth="291.0" textAlignment="CENTER" textFill="#171717">
             <font>
                 <Font size="14.0" />
             </font></Label>
-      <AnchorPane fx:id="paneTransaction" layoutX="47.0" layoutY="56.0" prefHeight="310.0" prefWidth="414.0">
-         <children>
-              <Button fx:id="acheter" onAction="#sell" layoutX="18.0" layoutY="278.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Vendre">
-                  <font>
-                      <Font size="14.0" />
-                  </font>
-            </Button>
-             <Button fx:id="vendre" onAction="#buy" layoutX="18.0" layoutY="230.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Acheter">
-                 <font>
-                     <Font size="14.0" />
-                 </font>
-             </Button>
-            <Label layoutX="18.0" layoutY="37.0" text="Veuillez selectionné un wallet" textFill="WHITE" />
-            <ComboBox fx:id="wallet" layoutX="36.0" layoutY="68.0" prefWidth="150.0" promptText="Vos portefeuilles" />
-            <ComboBox fx:id="listtype" layoutX="272.0" layoutY="68.0" onAction="#selectType" prefHeight="25.0" prefWidth="111.0" promptText="Type" />
-            <Label layoutX="314.0" layoutY="37.0" text="Type" textFill="WHITE" />
-            <Label layoutX="88.0" layoutY="108.0" text="Montant" textFill="WHITE" />
-            <ComboBox fx:id="libelle_type" layoutX="252.0" layoutY="132.0" prefWidth="150.0" />
-            <Label fx:id="labeltype" layoutX="304.0" layoutY="108.0" text="Entrprise" textFill="WHITE" />
-            <Label fx:id="labelrealvalue" layoutX="293.0" layoutY="169.0" text="Montant réel" textFill="WHITE" visible="false" />
-            <TextField fx:id="realvalue" editable="false" layoutX="253.0" layoutY="192.0" visible="false" />
-            <Button fx:id="btnRealvalue" layoutX="43.0" layoutY="192.0" mnemonicParsing="false" onAction="#displayRealValue" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Afiicher montant réel ?" />
-            <TextField fx:id="value" layoutX="37.0" layoutY="132.0" />
-         </children>
-      </AnchorPane>
+      <ComboBox fx:id="listtype" layoutX="340.0" layoutY="115.0" onAction="#selectType" prefHeight="25.0" prefWidth="111.0" promptText="Type" />
+      <ComboBox fx:id="libelle_type" layoutX="596.0" layoutY="115.0" prefHeight="25.0" prefWidth="137.0" promptText="Entreprise" AnchorPane.rightAnchor="96.0" />
+        <Button fx:id="acheter" layoutX="442.0" layoutY="366.0" mnemonicParsing="false" onAction="#sell" prefHeight="36.0" prefWidth="307.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Vendre" AnchorPane.rightAnchor="41.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+      </Button>
+       <Button fx:id="vendre" layoutX="39.0" layoutY="366.0" mnemonicParsing="false" onAction="#buy" prefHeight="36.0" prefWidth="307.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Acheter" AnchorPane.leftAnchor="41.0">
+           <font>
+               <Font size="14.0" />
+           </font>
+       </Button>
+      <Button fx:id="btnRealvalue" layoutX="324.0" layoutY="304.0" mnemonicParsing="false" onAction="#displayRealValue" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Afiicher le montant réel " />
+      <TextField fx:id="realvalue" editable="false" layoutX="378.0" layoutY="253.0" visible="false" />
+      <Label fx:id="labelrealvalue" layoutX="208.0" layoutY="257.0" text="Montant réel de la transaction :" textFill="WHITE" visible="false" />
+      <TextField fx:id="value" layoutX="378.0" layoutY="209.0" promptText="Montant" />
+      <ComboBox fx:id="wallet" layoutX="96.0" layoutY="115.0" prefHeight="25.0" prefWidth="150.0" promptText="Vos portefeuilles" AnchorPane.leftAnchor="96.0" />
+      <Label layoutX="232.0" layoutY="213.0" text="Veuillez saisir un montant :" textFill="WHITE" />
     </children>
 </AnchorPane>

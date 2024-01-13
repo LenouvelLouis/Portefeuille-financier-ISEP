@@ -139,7 +139,6 @@ public class DashboardController {
         for (WalletInfo walletInfo : walletInfos) {
             ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
             XYChart.Series<String, Float> series = new XYChart.Series<>();
-            System.out.println("transactionInfo");
             for (TransactionInfo transactionInfo : transactionInfos) {
                 Float value = this.historiqueWallet(transactionInfo,transactionInfos);
                 String date = transactionInfo.getDate().toString();

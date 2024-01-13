@@ -21,6 +21,8 @@ INSERT INTO crypto (nom) VALUES ('ETH');
 INSERT INTO crypto (nom) VALUES ('SOL');
 INSERT INTO crypto (nom) VALUES ('STETH');
 
+
+
 create or replace table user
 (
     id     int auto_increment
@@ -53,34 +55,30 @@ create or replace table wallet_user
 
 create or replace table transaction
 (
-    id_wallet int                        not null,
-    value     float                      null,
-    date      date                       not null,
-    type      enum ('actions', 'crypto') not null,
+    id_wallet    int                        not null,
+    value        float                      null,
+    date         date                       not null,
+    type         enum ('actions', 'crypto') not null,
+    libelle_type varchar(50)                not null,
     constraint wallet_value_wallet_user_id_fk
         foreign key (id_wallet) references wallet_user (id)
 );
--- Transactions pour le wallet 'wallettest'
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 500.0, '2023-01-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -200.0, '2023-02-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 300.0, '2023-03-01', 'crypto', 'BTC');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -100.0, '2023-04-01', 'crypto', 'BTC');
 
--- Transactions pour le wallet 'test'
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, 1000.0, '2023-01-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, -400.0, '2023-02-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, 600.0, '2023-03-01', 'crypto', 'BTC');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, -200.0, '2023-04-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 30, '2023-01-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -20, '2023-02-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 50, '2023-03-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -10, '2023-04-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, 1000, '2023-01-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, -400, '2023-02-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, 600, '2023-03-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (9, -200, '2023-04-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, 200, '2023-01-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, -100, '2023-02-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, 150, '2023-03-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, -50, '2023-04-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, 300, '2023-01-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, -150, '2023-02-01', 'actions', 'Total');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, 250, '2023-03-01', 'crypto', 'BTC');
+INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, -100, '2023-04-01', 'crypto', 'BTC');
 
--- Transactions  le wallet 'new'
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, 200.0, '2023-01-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, -100.0, '2023-02-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, 150.0, '2023-03-01', 'crypto', 'BTC');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (10, -50.0, '2023-04-01', 'crypto', 'BTC');
-
--- Transactions pour le wallet 'louis'
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, 300.0, '2023-01-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, -150.0, '2023-02-01', 'actions', 'Total');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, 250.0, '2023-03-01', 'crypto', 'BTC');
-INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (11, -100.0, '2023-04-01', 'crypto', 'BTC');
 

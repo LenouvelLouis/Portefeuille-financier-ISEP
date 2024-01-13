@@ -85,4 +85,32 @@ public class TransactionModele {
             throw new RuntimeException("Error : TransactionModele -> addTransaction : "+e.getMessage());
         }
     }
+
+    public ArrayList<TransactionInfo> getTransactionByWallet(int id) {
+        ArrayList<TransactionInfo> transactionInfos = new ArrayList<TransactionInfo>();
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT * FROM wallet_db.transaction WHERE id_wallet = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setInt(1, id);
+                try (ResultSet rs = pst.executeQuery()) {
+                    while (rs.next()) {
+
+                        int id_wallet = rs.getInt("id_wallet");
+                        float value = rs.getFloat("value");
+                        Date date = rs.getDate("date");
+                        String type = rs.getString("type");
+                        String libelle_type = rs.getString("libelle_type");
+                        TransactionInfo t = new TransactionInfo(id_wallet,value, date, type, libelle_type);
+                        transactionInfos.add(t);
+                    }
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : TransactionModele -> getTransactionByWallet : "+e.getMessage());
+        }
+        return transactionInfos;
+    }
 }

@@ -22,6 +22,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TransactionController {
+    @FXML
+    Label walletmsg;
+    @FXML
+    Button acheter;
+    @FXML
+    Button vendre;
     private UserInfo user;
 
     private TransactionModele transaction = new TransactionModele();
@@ -46,9 +52,6 @@ public class TransactionController {
     ComboBox<String> libelle_type;
 
     @FXML
-    Label labeltype;
-
-    @FXML
     TextField value;
 
     @FXML
@@ -58,10 +61,6 @@ public class TransactionController {
     Label labelrealvalue;
     @FXML
     Label msg_error;
-    @FXML
-    AnchorPane paneTransaction;
-    @FXML
-    AnchorPane paneGlobale;
 
     private final ArrayList<String> type = new ArrayList<>(Arrays.asList("actions", "crypto"));
     private List<WalletInfo> w;
@@ -80,20 +79,32 @@ public class TransactionController {
 
     private void displayTransactionInterface(){
         if(this.w.isEmpty()){
-            this.paneTransaction.setVisible(false);
-            msg_display(Color.RED,"Veulliez jouter un nouveau wallet");
+            this.HideTransactionInterface();
+            msg_display(Color.RED,"Veulliez ajouter un nouveau wallet");
             this.rezizeTransactionInterface();
         }
         else if(this.user.getFond()==0){
-            this.paneTransaction.setVisible(false);
+            this.HideTransactionInterface();
             msg_display(Color.RED,"Veuillez ajouter des fonds");
             this.rezizeTransactionInterface();
         }
     }
 
+    private void HideTransactionInterface(){
+        this.libelle_type.setVisible(false);
+        this.value.setVisible(false);
+        this.btnRealvalue.setVisible(false);
+        this.realvalue.setVisible(false);
+        this.labelrealvalue.setVisible(false);
+        this.wallet.setVisible(false);
+        this.listtype.setVisible(false);
+        this.acheter.setVisible(false);
+        this.vendre.setVisible(false);
+        this.walletmsg.setVisible(false);
+    }
+
     private void rezizeTransactionInterface(){
         msg_error.layoutYProperty().setValue(150);
-        paneGlobale.setPrefHeight(200);
     }
 
     public void selectType() {
@@ -128,7 +139,6 @@ public class TransactionController {
     }
 
     private void initCrypto(){
-        labeltype.setText("Crypto");
         for(TransactionTypeInfo s : crypto){
             libelle_type.getItems().add(s.getName());
         }
@@ -136,7 +146,6 @@ public class TransactionController {
     }
 
     private void initEntreprise(){
-        labeltype.setText("Entreprise");
         for(TransactionTypeInfo s : entreprise){
             libelle_type.getItems().add(s.getName());
         }
@@ -177,10 +186,10 @@ public class TransactionController {
         TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,new java.sql.Date(today.getTime()),typeInfo,libele);
         try {
             if(typeInfo.equals("actions")){
-                this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale()+buyValue);
+                this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()+buyValue);
             }
             if(typeInfo.equals("crypto")){
-                this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale()+buyValue);
+                this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale_crypto()+buyValue);
             }
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()+buyValue);
             this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue);
@@ -214,10 +223,10 @@ public class TransactionController {
         TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,new java.sql.Date(today.getTime()),typeInfo,libele);
         try {
             if(typeInfo.equals("actions")){
-                this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale()-sellValue);
+                this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()-sellValue);
             }
             if(typeInfo.equals("crypto")){
-                this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale()-sellValue);
+                this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale_crypto()-sellValue);
             }
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()-sellValue);
             this.userModele.updateFunds(this.user.getId(), this.user.getFond() + sellValue);

@@ -58,7 +58,7 @@ public class WalletModele {
     }
 
 
-    public List<WalletInfo> getWalletInfo(UserInfo u){
+    public ArrayList<WalletInfo> getWalletInfo(UserInfo u){
         ArrayList walletInfoList = new ArrayList<WalletInfo>();
         try {
             if (this.conn == null) {

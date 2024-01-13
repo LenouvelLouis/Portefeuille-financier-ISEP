@@ -1,42 +1,71 @@
 package com.example.portefeuillefinancierisep;
 
 import Info.UserInfo;
+import Info.WalletInfo;
+import Modele.WalletModele;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BarreNavigationController {
+    @FXML
+    ComboBox<String> walletList;
+    @FXML
+    Label labelUser;
     @FXML
     private AnchorPane FenetreAffichage;
     private UserInfo user;
 
+    private WalletModele walletModele=new WalletModele();
+
+    private ArrayList<WalletInfo> walletInfos;
+
     @FXML
     public void Affichage_Add_Wallet() throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("add-wallet-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("add-wallet-view.fxml"));
+        AnchorPane anchorPane = loader.load();
+        AddWalletController controller = loader.getController();
+        controller.initializeUser(this.user);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
     public void Affichage_Dashboard() throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("dashboard-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard-view.fxml"));
+        AnchorPane anchorPane = loader.load();
+        DashboardController controller = loader.getController();
+        controller.initializeUser(this.user,this.walletInfos);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
     public void Affichage_Profile() throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("profile-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+        AnchorPane anchorPane = loader.load();
+        ProfileController controller = loader.getController();
+        controller.initializeUser(this.user);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
     public void Affichage_Add_fond() throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("addFunds-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addFunds-view.fxml"));
+        AnchorPane anchorPane = loader.load();
+        FundsController controller = loader.getController();
+        controller.initializeUser(this.user);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
     public void Affichage_transasction() throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("transaction-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("transaction-view.fxml"));
+        AnchorPane anchorPane = loader.load();
+        TransactionController controller = loader.getController();
+        controller.initializeUser(this.user);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
@@ -55,6 +84,49 @@ public class BarreNavigationController {
 
     public void initializeUser(UserInfo u) throws IOException {
         this.user=u;
-        this.Affichage_Dashboard();
+        this.walletInfos=walletModele.getWalletInfo(this.user);
+        this.displayWallet();
+        if(this.labelUser!=null){
+            this.labelUser.setText(this.user.getNom()+" "+this.user.getPrenom());
+        }
+        if(this.walletInfos.isEmpty()){
+            FenetreAffichage.setVisible(false);
+            walletList.setVisible(false);
+        }
+
+    }
+
+    private void displayWallet() {
+        if(this.walletList!=null){
+            if(this.walletInfos.isEmpty()){
+                this.walletList.setVisible(false);
+            }
+            this.walletList.getItems().clear();
+            this.walletList.setValue(this.walletInfos.getFirst().getNom());
+            for(WalletInfo w:this.walletInfos){
+                this.walletList.getItems().add(w.getNom());
+            }
+        }
+    }
+
+    public void selectWallet(ActionEvent actionEvent) throws IOException {
+        String name =walletList.getValue();
+        WalletInfo walletInfo = this.findWallet(name);
+        ArrayList<WalletInfo> w = new ArrayList<>();
+        w.add(walletInfo);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard-view.fxml"));
+        AnchorPane anchorPane = loader.load();
+        DashboardController controller = loader.getController();
+        controller.initializeUser(this.user,w);
+        FenetreAffichage.getChildren().setAll(anchorPane);
+    }
+
+    private WalletInfo findWallet(String name) {
+        for(WalletInfo w:this.walletInfos){
+            if(w.getNom().equals(name)){
+                return w;
+            }
+        }
+        return null;
     }
 }

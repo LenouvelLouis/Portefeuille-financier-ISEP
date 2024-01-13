@@ -37,7 +37,6 @@ public class AddWalletController {
 
 
     public void create_wallet(ActionEvent event) throws IOException {
-        Button boutonClique = (Button) event.getSource();
         String name=this.nameWallet.getText().toLowerCase();
         if(name.isEmpty()){
             msg_display(Color.RED,"Veuillez saisir un nom de portefeuille");
@@ -52,28 +51,8 @@ public class AddWalletController {
         walletModele.create_wallet(this.userInfo, name);
         msg_display(Color.GREEN,"Votre portefeuille a bien été créé");
         nameWallet.clear();
-        if(boutonClique==createWallet){
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("auth-view.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Connexion");
-            stage.setScene(scene);
-            ((Stage) this.msg_error.getScene().getWindow()).close();
-            stage.show();  
-            stage.setResizable(false);
-        }
-        else {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("inscription-view.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Connexion");
-            stage.setScene(scene);
-            ((Stage) this.msg_error.getScene().getWindow()).close();
-            stage.show();
-            stage.setResizable(false);
-        }
+        BarreNavigationController barreNavigationController = new BarreNavigationController();
+        barreNavigationController.initializeUser(this.userInfo);
     }
 
     private void msg_display(Paint color, String msg)

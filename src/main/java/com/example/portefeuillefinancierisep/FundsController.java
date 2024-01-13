@@ -23,12 +23,11 @@ public class FundsController {
     protected void handleAddFunds() {
         try {
             float amount = this.u.getFond()+Float.parseFloat(fundsField.getText());
-
-            // Obtient l'ID de l'utilisateur connecté à partir de la classe Session
             int userId = this.u.getId();
-
             userModel.updateFunds(userId, amount);
-
+            this.u.setFond(amount);
+            BarreNavigationController barreNavigationController = new BarreNavigationController();
+            barreNavigationController.initializeUser(this.u);
             msg_display(Color.GREEN,"Fonds ajoutés : " + amount + " €");
         } catch (NumberFormatException e) {
             msg_display(Color.RED,"Veuillez entrer un montant valide");

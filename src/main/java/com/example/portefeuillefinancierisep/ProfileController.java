@@ -100,9 +100,7 @@ public class ProfileController {
         labelTotale.setVisible(false);
         msg_error.layoutXProperty().setValue(76);
         msg_error.layoutYProperty().setValue(247);
-        buttonSave.layoutXProperty().setValue(76);
         buttonSave.layoutYProperty().setValue(329);
-        paneProfile.setPrefHeight(400);
     }
 
     public void editInformation(){
@@ -140,7 +138,8 @@ public class ProfileController {
             this.u.setTel(tel);
             this.user.updateUserInfo(this.u);
             msg_display(Color.GREEN,"Mise à jour des informations !");
-            this.redirection();
+            BarreNavigationController barreNavigationController = new BarreNavigationController();
+            barreNavigationController.initializeUser(this.u);
         }catch (RuntimeException | IOException e){
             msg_display(Color.RED,"Erreur lors de la mise à jour de vos données");
             System.out.println(e.getMessage());
@@ -149,17 +148,6 @@ public class ProfileController {
 
     }
 
-    public void redirection() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("home-view.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        ((Stage) this.nom_text.getScene().getWindow()).close();
-        stage.show();
-        stage.setResizable(false);
-    }
 
     public void selectWallet() {
         String nom = listwallet.getValue().toString();

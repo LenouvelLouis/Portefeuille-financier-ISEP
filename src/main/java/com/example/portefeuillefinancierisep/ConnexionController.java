@@ -51,13 +51,13 @@ public class ConnexionController {
             Stage stage = new Stage();
             BarreNavigationController controller = loader.getController();
             controller.initializeUser(u);
+            controller.Affichage_Dashboard();
             stage.setTitle("Dashboard");
             stage.setScene(scene);
             ((Stage) this.email_text.getScene().getWindow()).close();
             stage.show();
             stage.setResizable(false);
         } else {
-
             msg_display(Color.RED,"Échec de la connexion. Vérifiez vos identifiants");
         }} catch (RuntimeException e) {
             msg_display(Color.RED,"Erreur de connexion avec la base de données");

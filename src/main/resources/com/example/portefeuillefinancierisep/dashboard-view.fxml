@@ -9,7 +9,7 @@
    <children>
       <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="440.0" prefWidth="519.0" style="-fx-background-color: #262424; -fx-background-radius: 10;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="257.0" AnchorPane.topAnchor="14.0">
          <children>
-            <LineChart layoutY="26.0" prefHeight="407.0" prefWidth="519.0">
+            <LineChart fx:id="chart" layoutY="26.0" prefHeight="407.0" prefWidth="519.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -17,13 +17,13 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-            <Label layoutX="14.0" layoutY="13.0" text="Valeur patrimoine " textFill="WHITE">
+            <Label fx:id="Totale" layoutX="14.0" layoutY="13.0" text="Valeur patrimoine " textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="392.0" layoutY="14.0" text="Date début - Date fin" textFill="WHITE" />
-            <Label layoutX="221.0" layoutY="14.0" text="Valeur de gain" textFill="WHITE" />
+            <Label fx:id="labelDate" layoutX="392.0" layoutY="14.0" text="Date début - Date fin" textFill="WHITE" />
+            <Label fx:id="Gain" layoutX="221.0" layoutY="14.0" text="Valeur de gain" textFill="WHITE" />
          </children></AnchorPane>
       <AnchorPane layoutX="541.0" layoutY="14.0" prefHeight="440.0" prefWidth="240.0" style="-fx-background-color: #262424; -fx-background-radius: 10;">
          <children>
@@ -34,7 +34,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="83.0" layoutY="105.0" text="Valeur" />
+                  <Label fx:id="valueCrypto" layoutX="83.0" layoutY="105.0" textFill="WHITE" text="Valeur" />
                </children></AnchorPane>
             <AnchorPane layoutX="20.0" layoutY="226.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #148F77; -fx-background-radius: 10;">
                <children>
@@ -42,7 +42,7 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label layoutX="83.0" layoutY="105.0" text="Valeur" />
+                  <Label fx:id="valueAction" layoutX="83.0" layoutY="105.0" textFill="WHITE" text="Valeur" />
                </children></AnchorPane>
          </children>
       </AnchorPane>

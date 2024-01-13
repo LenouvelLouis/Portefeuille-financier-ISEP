@@ -38,6 +38,9 @@
         <TextField fx:id="wallettotale_crypto" editable="false" layoutX="115.0" layoutY="319.0" prefHeight="25.0" prefWidth="181.0" promptText="Action" />
         <TextField fx:id="wallettotale_action" editable="false" layoutX="336.0" layoutY="319.0" prefHeight="25.0" prefWidth="181.0" promptText="Crypto" />
       <TextField fx:id="mail_text" layoutX="235.0" layoutY="167.0" prefHeight="25.0" prefWidth="181.0" promptText="email" />
+      <Label fx:id="labelAction" layoutX="188.0" layoutY="302.0" text="Action" textFill="WHITE" />
+      <Label fx:id="labelCrypto" layoutX="408.0" layoutY="302.0" text="Crypto" textFill="WHITE" />
+      <Label fx:id="labelTotale" layoutX="600.0" layoutY="302.0" text="Totale" textFill="WHITE" />
 
     </children>
 </AnchorPane>

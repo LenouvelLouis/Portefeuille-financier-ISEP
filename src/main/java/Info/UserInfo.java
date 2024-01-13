@@ -54,4 +54,8 @@ public class UserInfo {
     public void setMail(String mail) { this.mail = mail; }
     public void setH_mdp(String h_mdp) { this.h_mdp = h_mdp; }
     public void setSalt(String salt) { this.salt = salt; }
+
+    public void setFond(float amount) {
+        this.fond = amount;
+    }
 }

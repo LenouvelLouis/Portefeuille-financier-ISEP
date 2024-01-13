@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,19 +27,26 @@ public class ConnexionController {
     @FXML
     private Label msg_error;
 
+    String email, password;
+
     @FXML
     private void ConnexionButtonClick() throws IOException {
-        String email = email_text.getText();
-        String password = mdp_text.getText();
+        email = email_text.getText();
+        password = mdp_text.getText();
+
+        if (!isChampNotEmpty()) {
+            msg_display(Color.RED,"Veuillez saisir tous les champs");
+            return;
+        }
+
         String userSalt = user.getUserSalt(email);
         String hashedPassword = hashPassword(password, userSalt);
+
         try{
         if (user.checkUserPassword(email, hashedPassword)) {
-            msg_error.setTextFill(Color.GREEN);
-            msg_error.setText("Connexion réussie.");
             UserInfo u = user.getUserInfo(email);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("addFunds-view.fxml"));
+            loader.setLocation(this.getClass().getResource("barre-navigation-view.fxml"));
             Scene scene = new Scene(loader.load());
             FundsController FundsController = loader.getController();
             FundsController.initializeUser(u);
@@ -49,11 +57,10 @@ public class ConnexionController {
             stage.show();
             stage.setResizable(false);
         } else {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Échec de la connexion. Vérifiez vos identifiants.");
+
+            msg_display(Color.RED,"Échec de la connexion. Vérifiez vos identifiants");
         }} catch (RuntimeException e) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur de connexion avec la base de données");
+            msg_display(Color.RED,"Erreur de connexion avec la base de données");
         }
     }
     @FXML
@@ -81,5 +88,15 @@ public class ConnexionController {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Erreur lors du hachage du mot de passe", e);
         }
+    }
+
+    public boolean isChampNotEmpty() {
+        return !email.isEmpty() && !password.isEmpty();
+    }
+
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
 }

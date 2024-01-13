@@ -4,50 +4,40 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="paneProfile" prefHeight="500.0" prefWidth="533.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.ProfileController">
+<AnchorPane fx:id="paneProfile" prefHeight="468.0" prefWidth="790.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.ProfileController">
     <children>
-        <Label layoutX="76.0" layoutY="14.0" prefHeight="53.0" prefWidth="303.0" text="Mon profile" textFill="WHITE">
+        <Label layoutX="15.0" layoutY="14.0" prefHeight="54.0" prefWidth="191.0" text="Mon profile" textFill="WHITE">
             <font>
                 <Font size="36.0" />
             </font></Label>
-        <Label layoutX="76.0" layoutY="67.0" prefHeight="17.0" prefWidth="240.0" text="Je ne veux pas changer mes informations." textFill="WHITE" />
-        <Hyperlink layoutX="300.0" layoutY="64.0" text="Retour au dashboard &gt;" textFill="#f5cba7" />
-        <TextField fx:id="prenom_text" layoutX="76.0" layoutY="163.0" prefHeight="25.0" prefWidth="181.0" promptText="Prénom" />
-        <TextField fx:id="nom_text" layoutX="275.0" layoutY="163.0" prefHeight="25.0" prefWidth="181.0" promptText="Nom" />
-        <Button fx:id="buttonSave" layoutX="79.0" layoutY="450.0" mnemonicParsing="false" onAction="#editInformation" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Sauvegarder">
+        <TextField fx:id="prenom_text" layoutX="235.0" layoutY="105.0" prefHeight="25.0" prefWidth="181.0" promptText="Prénom" />
+        <TextField fx:id="nom_text" layoutX="434.0" layoutY="105.0" prefHeight="25.0" prefWidth="181.0" promptText="Nom" />
+        <Button fx:id="buttonSave" layoutX="238.0" layoutY="397.0" mnemonicParsing="false" onAction="#editInformation" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Sauvegarder">
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <TextField fx:id="tel_text" layoutX="275.0" layoutY="224.0" prefHeight="26.0" prefWidth="182.0" promptText="Téléphone" />
-        <Label fx:id="msg_error" layoutX="78.0" layoutY="423.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
+        <TextField fx:id="tel_text" layoutX="434.0" layoutY="166.0" prefHeight="26.0" prefWidth="182.0" promptText="Téléphone" />
+        <Label fx:id="msg_error" layoutX="245.0" layoutY="369.0" prefHeight="17.0" prefWidth="378.0" textAlignment="CENTER" textFill="#171717">
             <font>
                 <Font size="14.0" />
             </font></Label>
-      <ComboBox fx:id="listwallet" layoutX="76.0" layoutY="328.0" onAction="#selectWallet" prefHeight="25.0" prefWidth="181.0" promptText="Vos portefeuilles" />
-      <TextField fx:id="wallettotale" editable="false" layoutX="306.0" layoutY="328.0" prefHeight="25.0" prefWidth="181.0" promptText="Totale" />
-      <Label layoutX="154.0" layoutY="93.0" text="Informations personnelles" textFill="#f5cba7">
+      <ComboBox fx:id="listwallet" layoutX="335.0" layoutY="266.0" onAction="#selectWallet" prefHeight="25.0" prefWidth="181.0" promptText="Vos portefeuilles" />
+      <TextField fx:id="wallettotale" editable="false" layoutX="548.0" layoutY="319.0" prefHeight="25.0" prefWidth="181.0" promptText="Totale" />
+      <Label layoutX="313.0" layoutY="30.0" text="Informations personnelles" textFill="#f5cba7">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Separator layoutX="79.0" layoutY="130.0" prefHeight="0.0" prefWidth="378.0" style="-fx-border-color:#f5cba7; -fx-background-color: #f5cba7 " />
-      <Label fx:id="labelWallet" layoutX="219.0" layoutY="270.0" text="Portefeuilles" textFill="#f5cba7">
+      <Separator layoutX="238.0" layoutY="67.0" prefHeight="0.0" prefWidth="378.0" style="-fx-border-color:#f5cba7; -fx-background-color: #f5cba7 " />
+      <Label fx:id="labelWallet" layoutX="378.0" layoutY="212.0" text="Portefeuilles" textFill="#f5cba7">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-        <Separator fx:id="separatorWallet" layoutX="78.0" layoutY="297.0" prefHeight="0.0" prefWidth="378.0" style="-fx-border-color:#f5cba7; -fx-background-color: #f5cba7 " />
-        <TextField fx:id="wallettotale_crypto" editable="false" layoutX="76.0" layoutY="379.0" prefHeight="25.0" prefWidth="181.0" promptText="Action" />
-        <TextField fx:id="wallettotale_action" editable="false" layoutX="305.0" layoutY="379.0" prefHeight="25.0" prefWidth="181.0" promptText="Crypto" />
-      <Label layoutX="146.0" layoutY="146.0" text="Prénom" textFill="WHITE" />
-      <Label layoutX="352.0" layoutY="146.0" text="Nom" textFill="WHITE" />
-      <Label layoutX="338.0" layoutY="200.0" text="Téléphone" textFill="WHITE" />
-      <Label fx:id="labelAction" layoutX="140.0" layoutY="358.0" text="Action" textFill="WHITE" />
-      <Label fx:id="labelCrypto" layoutX="378.0" layoutY="358.0" text="Crypto" textFill="WHITE" />
-      <Label fx:id="labelTotale" layoutX="380.0" layoutY="311.0" text="Totale" textFill="WHITE" />
-      <TextField fx:id="mail_text" layoutX="76.0" layoutY="225.0" prefHeight="25.0" prefWidth="181.0" promptText="email" />
-      <Label layoutX="153.0" layoutY="200.0" text="Email" textFill="WHITE" />
-      <Button layoutX="431.0" layoutY="28.0"  onAction="#homeredirection" mnemonicParsing="false" text="Déconnexion" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;"/>
+        <Separator fx:id="separatorWallet" layoutX="237.0" layoutY="247.0" prefHeight="0.0" prefWidth="378.0" style="-fx-border-color:#f5cba7; -fx-background-color: #f5cba7 " />
+        <TextField fx:id="wallettotale_crypto" editable="false" layoutX="115.0" layoutY="319.0" prefHeight="25.0" prefWidth="181.0" promptText="Action" />
+        <TextField fx:id="wallettotale_action" editable="false" layoutX="336.0" layoutY="319.0" prefHeight="25.0" prefWidth="181.0" promptText="Crypto" />
+      <TextField fx:id="mail_text" layoutX="235.0" layoutY="167.0" prefHeight="25.0" prefWidth="181.0" promptText="email" />
 
     </children>
 </AnchorPane>

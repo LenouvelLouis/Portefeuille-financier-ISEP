@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,20 +40,17 @@ public class AddWalletController {
         Button boutonClique = (Button) event.getSource();
         String name=this.nameWallet.getText().toLowerCase();
         if(name.isEmpty()){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Veuillez saisir un nom de portefeuille");
+            msg_display(Color.RED,"Veuillez saisir un nom de portefeuille");
             return;
         }
 
         if (walletModele.is_wallet_create(this.userInfo,name)) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Ce portefeuille existe déjà");
+            msg_display(Color.RED,"Ce portefeuille existe déjà");
             return;
         }
 
         walletModele.create_wallet(this.userInfo, name);
-        msg_error.setTextFill(Color.GREEN);
-        msg_error.setText("Votre portefeuille a bien été créé");
+        msg_display(Color.GREEN,"Votre portefeuille a bien été créé");
         nameWallet.clear();
         if(boutonClique==createWallet){
             FXMLLoader loader = new FXMLLoader();
@@ -62,7 +60,7 @@ public class AddWalletController {
             stage.setTitle("Connexion");
             stage.setScene(scene);
             ((Stage) this.msg_error.getScene().getWindow()).close();
-            stage.show();
+            stage.show();  
             stage.setResizable(false);
         }
         else {
@@ -76,6 +74,12 @@ public class AddWalletController {
             stage.show();
             stage.setResizable(false);
         }
+    }
+
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
 
 }

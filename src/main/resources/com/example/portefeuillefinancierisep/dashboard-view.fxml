@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="468.0" prefWidth="790.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.DashboardController">
+   <children>
+      <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="440.0" prefWidth="519.0" style="-fx-background-color: #262424; -fx-background-radius: 10;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="257.0" AnchorPane.topAnchor="14.0">
+         <children>
+            <LineChart layoutY="26.0" prefHeight="407.0" prefWidth="519.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <Label layoutX="14.0" layoutY="13.0" text="Valeur patrimoine " textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="392.0" layoutY="14.0" text="Date début - Date fin" textFill="WHITE" />
+            <Label layoutX="221.0" layoutY="14.0" text="Valeur de gain" textFill="WHITE" />
+         </children></AnchorPane>
+      <AnchorPane layoutX="541.0" layoutY="14.0" prefHeight="440.0" prefWidth="240.0" style="-fx-background-color: #262424; -fx-background-radius: 10;">
+         <children>
+            <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #9B59B6; -fx-background-radius: 10;">
+               <children>
+                  <Label layoutX="76.0" layoutY="78.0" text="Cypto" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="83.0" layoutY="105.0" text="Valeur" />
+               </children></AnchorPane>
+            <AnchorPane layoutX="20.0" layoutY="226.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #148F77; -fx-background-radius: 10;">
+               <children>
+                  <Label layoutX="74.0" layoutY="78.0" text="Action" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Label layoutX="83.0" layoutY="105.0" text="Valeur" />
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane style="-fx-background-color: #000000;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="533.0" xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.portefeuillefinancierisep.AddWalletController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="790.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.AddWalletController">
     <children>
-        <Label layoutX="76.0" layoutY="14.0" prefHeight="53.0" prefWidth="303.0" text="Créer mon portefeuille" textFill="WHITE">
+        <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="303.0" text="Créer mon portefeuille" textFill="WHITE">
             <font>
                 <Font size="30.0" />
             </font></Label>
-        <Label layoutX="76.0" layoutY="67.0" prefHeight="17.0" prefWidth="140.0" text="J'ai déja un portefeuille ?" textFill="WHITE" />
-        <Hyperlink layoutX="218.0" layoutY="64.0" text="Retour au dashboard &gt;" textFill="#f5cba7" />
-        <TextField fx:id="nameWallet" layoutX="76.0" layoutY="127.0" prefHeight="25.0" prefWidth="378.0" promptText="Nom de votre portefeuille" />
-        <Button layoutX="76.0" layoutY="200.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;"  onAction="#create_wallet" text="Effectuer un premier achat">
+        <TextField fx:id="nameWallet" alignment="CENTER" layoutX="206.0" layoutY="176.0" prefHeight="25.0" prefWidth="378.0" promptText="Nom de votre portefeuille" />
+        <Button layoutX="91.0" layoutY="256.0" mnemonicParsing="false" onAction="#create_wallet" prefHeight="36.0" prefWidth="229.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Effectuer un premier achat">
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <Button fx:id="createWallet" layoutX="76.0" layoutY="300.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="378.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" onAction="#create_wallet" text="Créer mon portefeuille">
+        <Button fx:id="createWallet" layoutX="469.0" layoutY="256.0" mnemonicParsing="false" onAction="#create_wallet" prefHeight="36.0" prefWidth="230.0" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Créer mon portefeuille">
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <Label fx:id="msg_error" layoutX="76.0" layoutY="350.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
+        <Label fx:id="msg_error" layoutX="206.0" layoutY="213.0" prefHeight="17.0" prefWidth="378.0" textFill="#171717">
             <font>
                 <Font size="14.0" />
             </font></Label>

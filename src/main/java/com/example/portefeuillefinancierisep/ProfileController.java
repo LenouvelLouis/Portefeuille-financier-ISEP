@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -110,31 +111,26 @@ public class ProfileController {
         tel = tel_text.getText();
         mail = mail_text.getText();
         if (!isChampNotEmpty()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Veuillez saisir tous les champs");
+            msg_display(Color.RED,"Veuillez saisir tous les champs");
             return;
         }
         if (!isValidFormatNomPrenom()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Nom ou prénom non valide");
+            msg_display(Color.RED,"Nom ou prénom non valide");
             return;
         }
 
         if (!isValidPhoneNumber()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Numéro de téléphone non valide");
+            msg_display(Color.RED,"Numéro de téléphone non valide");
             return;
         }
 
         if (!isValidFormatEmail()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Adresse mail non valide");
+            msg_display(Color.RED,"Adresse mail non valide");
             return;
         }
 
         if (!this.u.getMail().equals(mail) && user.is_user_create(mail)) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Ce compte existe déjà");
+            msg_display(Color.RED,"Ce compte existe déjà");
             return;
         }
         try {
@@ -143,12 +139,10 @@ public class ProfileController {
             this.u.setPrenom(prenom);
             this.u.setTel(tel);
             this.user.updateUserInfo(this.u);
-            msg_error.setTextFill(Color.GREEN);
-            msg_error.setText("Mise à jour des informations !");
+            msg_display(Color.GREEN,"Mise à jour des informations !");
             this.redirection();
         }catch (RuntimeException | IOException e){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur lors de la mise à jour de vos données");
+            msg_display(Color.RED,"Erreur lors de la mise à jour de vos données");
             System.out.println(e.getMessage());
         }
 
@@ -211,15 +205,10 @@ public class ProfileController {
         return !nom.isEmpty() && !prenom.isEmpty() && !tel.isEmpty();
     }
 
-    public void homeredirection() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(this.getClass().getResource("home-view.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        ((Stage) this.nom_text.getScene().getWindow()).close();
-        stage.show();
-        stage.setResizable(false);
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
+
 }

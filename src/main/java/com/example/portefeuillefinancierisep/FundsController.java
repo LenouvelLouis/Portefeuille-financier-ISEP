@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import Modele.UserModele;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class FundsController {
 
@@ -12,7 +14,7 @@ public class FundsController {
     private TextField fundsField;
 
     @FXML
-    private Label msgLabel;
+    private Label msg_error;
 
     private UserModele userModel = new UserModele();
     private UserInfo u;
@@ -27,12 +29,18 @@ public class FundsController {
 
             userModel.updateFunds(userId, amount);
 
-            msgLabel.setText("Fonds ajoutés : " + amount + " €");
+            msg_display(Color.GREEN,"Fonds ajoutés : " + amount + " €");
         } catch (NumberFormatException e) {
-            msgLabel.setText("Veuillez entrer un montant valide.");
+            msg_display(Color.RED,"Veuillez entrer un montant valide");
         } catch (Exception e) {
-            msgLabel.setText("Erreur lors de la mise à jour des fonds.");
+            msg_display(Color.RED,"Erreur lors de la mise à jour des fonds");
         }
+    }
+
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
 
     public void initializeUser(UserInfo u) {

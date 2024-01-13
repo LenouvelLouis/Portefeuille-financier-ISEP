@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -59,32 +60,27 @@ public class InscriptionController {
         tel = tel_text.getText();
 
         if (!isChampNotEmpty()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Veuillez saisir tous les champs");
+            msg_display(Color.RED,"Veuillez saisir tous les champs");
             return;
         }
 
         if (!isValidFormatEmail()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Adresse mail non valide");
+            msg_display(Color.RED,"Adresse mail non valide");
             return;
         }
 
         if (!isValidFormatNomPrenom()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Nom ou prénom non valide");
+            msg_display(Color.RED,"Nom ou prénom non valide");
             return;
         }
 
         if (!isValidPhoneNumber()) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Numéro de téléphone non valide");
+            msg_display(Color.RED,"Numéro de téléphone non valide");
             return;
         }
 
         if (user.is_user_create(email)) {
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Ce compte existe déjà");
+            msg_display(Color.RED,"Ce compte existe déjà");
             return;
         }
 
@@ -95,8 +91,7 @@ public class InscriptionController {
         password = hashPassword(password, salt);
 
         user.create_user(new UserInfo(nom, prenom, tel, email, password, salt));
-        msg_error.setTextFill(Color.GREEN);
-        msg_error.setText("Votre compte a bien été créé");
+        msg_display(Color.GREEN,"Votre compte a bien été créé");
         clearFormFields();
         this.SeConnecterButtonClick();
     }
@@ -150,5 +145,11 @@ public class InscriptionController {
         prenom_text.clear();
         password_text.clear();
         tel_text.clear();
+    }
+
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
 }

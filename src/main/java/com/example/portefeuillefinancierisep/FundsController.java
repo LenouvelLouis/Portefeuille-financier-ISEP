@@ -22,7 +22,7 @@ public class FundsController {
     @FXML
     protected void handleAddFunds() {
         try {
-            float amount = Float.parseFloat(fundsField.getText());
+            float amount = this.u.getFond()+Float.parseFloat(fundsField.getText());
 
             // Obtient l'ID de l'utilisateur connecté à partir de la classe Session
             int userId = this.u.getId();

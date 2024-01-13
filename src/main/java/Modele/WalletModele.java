@@ -69,12 +69,13 @@ public class WalletModele {
                 pst.setInt(1, u.getId());
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()){
+                        int id = rs.getInt("id");
                         String nom = rs.getString("name");
                         int id_user = rs.getInt("id_user");
                         float totale = rs.getFloat("totale");
                         float totale_action = rs.getFloat("totale_action");
                         float totale_crypto= rs.getFloat("totale_crypto");
-                        WalletInfo w = new WalletInfo(nom,id_user,totale,totale_action,totale_crypto);
+                        WalletInfo w = new WalletInfo(id,nom,id_user,totale,totale_action,totale_crypto);
                         walletInfoList.add(w);
                     }
                 }
@@ -86,4 +87,51 @@ public class WalletModele {
     }
 
 
+    public void updateTotal(WalletInfo walletInfo, float v) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "UPDATE wallet_db.wallet_user SET totale=? WHERE id=?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setFloat(1, v);
+                pst.setInt(2, walletInfo.getId());
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> updateTotal : "+e.getMessage());
+        }
+    }
+
+    public void updateTotaleActions(WalletInfo walletInfo, float v) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "UPDATE wallet_db.wallet_user SET totale_action=? WHERE id=?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setFloat(1, v);
+                pst.setInt(2, walletInfo.getId());
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> updateTotaleActions : "+e.getMessage());
+        }
+    }
+
+    public void updateTotaleCrypto(WalletInfo walletInfo, float v) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "UPDATE wallet_db.wallet_user SET totale_crypto=? WHERE id=?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setFloat(1, v);
+                pst.setInt(2, walletInfo.getId());
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> updateTotaleCrypto : "+e.getMessage());
+        }
+    }
 }

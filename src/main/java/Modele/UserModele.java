@@ -24,7 +24,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "INSERT INTO user (nom, prenom, tel, mail, h_mdp, salt) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO wallet_db.user (nom, prenom, tel, mail, h_mdp, salt) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
@@ -44,7 +44,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "UPDATE user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
+            String sql = "UPDATE wallet_db.user SET nom=?, prenom=?, tel=?, mail=? WHERE id=?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, user.getNom());
                 pst.setString(2, user.getPrenom());
@@ -63,7 +63,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "SELECT * FROM user WHERE mail = ?";
+            String sql = "SELECT * FROM wallet_db.user WHERE mail = ?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, mail);
                 try (ResultSet rs = pst.executeQuery()) {
@@ -75,7 +75,8 @@ public class UserModele {
                                 rs.getString("tel"),
                                 rs.getString("mail"),
                                 rs.getString("h_mdp"),
-                                rs.getString("salt")
+                                rs.getString("salt"),
+                                rs.getFloat("apport")
                         );
                     }
                 }
@@ -102,18 +103,6 @@ public class UserModele {
         }
     }
 
-    public boolean is_login_valid(String mail, String password) {
-        try {
-            if (this.conn == null) {
-                this.initConnection();
-            }
-            String sql = "SELECT * FROM wallet_db.user WHERE mail ='" + mail + "' AND h_mdp = '" + password + "'";
-            rs = this.pst.executeQuery(sql);
-            return rs.last();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error : UserModel -> is_login_valid : " + e.getMessage());
-        }
-    }
 
     public String getUserSalt(String email) {
         try {
@@ -161,7 +150,7 @@ public class UserModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "UPDATE user SET apport = apport + ? WHERE id = ?";
+            String sql = "UPDATE wallet_db.user SET apport=? WHERE id=?";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setFloat(1, amount);
                 pst.setInt(2, userId);

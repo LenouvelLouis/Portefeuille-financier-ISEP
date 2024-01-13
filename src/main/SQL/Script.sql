@@ -63,6 +63,12 @@ create or replace table transaction
     constraint wallet_value_wallet_user_id_fk
         foreign key (id_wallet) references wallet_user (id)
 );
+INSERT INTO user (nom, prenom, tel, mail, h_mdp, salt) VALUES ('Lenouvel','Louis',9876543210,'Louis@gg.fr','AG28eWuHs9+rlejUiOtjv25WhXjf95+lEoVkN5RQP84=','8VgE/7F');
+INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('wallettest', 50, 1, 10, 40);
+INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('test', 1000, 1, 600, 400);
+INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('new', 200, 1, 100, 100);
+INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('louis', 300, 1, 150, 150);
+
 
 INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 30, '2023-01-01', 'actions', 'Total');
 INSERT INTO transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -20, '2023-02-01', 'actions', 'Total');

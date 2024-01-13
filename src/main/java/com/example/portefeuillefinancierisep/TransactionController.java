@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -80,14 +81,12 @@ public class TransactionController {
     private void displayTransactionInterface(){
         if(this.w.isEmpty()){
             this.paneTransaction.setVisible(false);
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur : ajouter un nouveau wallet");
+            msg_display(Color.RED,"Veulliez jouter un nouveau wallet");
             this.rezizeTransactionInterface();
         }
         else if(this.user.getFond()==0){
             this.paneTransaction.setVisible(false);
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur : ajouter des fonds");
+            msg_display(Color.RED,"Veuillez ajouter des fonds");
             this.rezizeTransactionInterface();
         }
     }
@@ -123,8 +122,7 @@ public class TransactionController {
             Float.parseFloat(value.getText());
             return true;
         }catch (RuntimeException e){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur : veuillez saisir une valeur numérique");
+            msg_display(Color.RED,"Veuillez saisir une valeur numérique");
             return false;
         }
     }
@@ -167,8 +165,7 @@ public class TransactionController {
         }
         Float buyValue = Float.parseFloat(value.getText());
         if(this.user.getFond()-buyValue<0){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur : fonds insufisants");
+            msg_display(Color.RED,"Fonds insufisants");
             return;
         }
         String nomWallet = wallet.getValue();
@@ -190,8 +187,7 @@ public class TransactionController {
             this.transaction.addTransaction(t);
         }
         catch (RuntimeException e){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur lors de la transaction");
+            msg_display(Color.RED,"Erreur lors de la transaction");
         }
 
     }
@@ -205,13 +201,11 @@ public class TransactionController {
         WalletInfo walletInfo = this.findWalletByName(nomWallet);
         String typeInfo = listtype.getValue();
         if(typeInfo.equals("actions") && walletInfo.getTotale_action()-sellValue<0){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur : fonds insufisants sur votre wallet");
+            msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
         if(typeInfo.equals("crypto") && walletInfo.getTotale_crypto()-sellValue<0){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur : fonds insufisants sur votre wallet");
+            msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
         String libele=libelle_type.getValue();
@@ -230,8 +224,7 @@ public class TransactionController {
             this.transaction.addTransaction(t);
         }
         catch (RuntimeException e){
-            msg_error.setTextFill(Color.RED);
-            msg_error.setText("Erreur lors de la transaction");
+            msg_display(Color.RED,"Erreur lors de la transaction");
         }
     }
 
@@ -242,5 +235,11 @@ public class TransactionController {
             }
         }
         return null;
+    }
+
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
 }

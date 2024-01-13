@@ -6,9 +6,9 @@
 
 <AnchorPane fx:id="paneProfile" prefHeight="468.0" prefWidth="790.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.ProfileController">
     <children>
-        <Label layoutX="15.0" layoutY="14.0" prefHeight="54.0" prefWidth="191.0" text="Mon profile" textFill="WHITE">
+        <Label layoutX="15.0" layoutY="14.0" prefHeight="27.0" prefWidth="160.0" text="Mon profile" textFill="WHITE">
             <font>
-                <Font size="36.0" />
+                <Font size="30.0" />
             </font></Label>
         <TextField fx:id="prenom_text" layoutX="235.0" layoutY="105.0" prefHeight="25.0" prefWidth="181.0" promptText="Prénom" />
         <TextField fx:id="nom_text" layoutX="434.0" layoutY="105.0" prefHeight="25.0" prefWidth="181.0" promptText="Nom" />

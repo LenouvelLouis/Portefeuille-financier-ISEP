@@ -20,14 +20,14 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="55.0" layoutY="102.0" mnemonicParsing="false" onAction="#Affichage_Dashboard" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="Dashboard" textFill="WHITE">
+            <Button layoutX="44.0" layoutY="103.0" mnemonicParsing="false" onAction="#Affichage_Dashboard" prefHeight="25.0" prefWidth="113.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="       Dashboard" textFill="WHITE">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
-            <ComboBox layoutX="55.0" layoutY="134.0" prefHeight="25.0" prefWidth="90.0" promptText="Wallet" style="-fx-background-color: #000000; -fx-background-radius: 50;" />
-            <Button layoutX="55.0" layoutY="167.0" mnemonicParsing="false" onAction="#Affichage_Add_Wallet" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="New wallet" textFill="WHITE" />
-            <Button layoutX="55.0" layoutY="198.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="Transaction" textFill="WHITE" />
-            <Button layoutX="55.0" layoutY="231.0" mnemonicParsing="false" onAction="#Affichage_Add_fond" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="Ajout de fond" textFill="WHITE" />
+            <ComboBox layoutX="44.0" layoutY="135.0" prefHeight="25.0" prefWidth="113.0" promptText="         Wallet" style="-fx-background-color: #000000; -fx-background-radius: 50;" />
+            <Button layoutX="50.0" layoutY="167.0" mnemonicParsing="false" onAction="#Affichage_Add_Wallet" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="      New wallet" textFill="WHITE" />
+            <Button layoutX="50.0" layoutY="198.0" mnemonicParsing="false" onAction="#Affichage_transasction" prefHeight="25.0" prefWidth="101.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="       Transaction" textFill="WHITE" />
+            <Button layoutX="38.0" layoutY="233.0" mnemonicParsing="false" onAction="#Affichage_Add_fond" prefHeight="25.0" prefWidth="126.0" style="-fx-background-color: #000000; -fx-background-radius: 50;" text="        Ajout de fond" textFill="WHITE" AnchorPane.topAnchor="230.0" />
             <Label layoutX="53.0" layoutY="434.0" prefHeight="17.0" prefWidth="81.0" text="Utilisateur" textFill="WHITE" AnchorPane.bottomAnchor="10.0" />
             <ImageView fitHeight="25.0" fitWidth="22.0" layoutX="14.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="10.0">
                <image>
@@ -41,6 +41,30 @@
             <ImageView fitHeight="25.0" fitWidth="22.0" layoutX="134.0" layoutY="428.0" onMousePressed="#Redirection_Home" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0">
                <image>
                   <Image url="file:src/main/Image/icons-log-out.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="53.0" layoutY="107.0" pickOnBounds="true">
+               <image>
+                  <Image url="file:src/main/Image/icons-histogramme.png" />
+               </image></ImageView>
+            <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="53.0" layoutY="139.0" pickOnBounds="true">
+               <image>
+                  <Image url="file:src/main/Image/icons-portefeuille.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="59.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:src/main/Image/icons-ajouter.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="22.0" layoutX="59.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:src/main/Image/icons-transfert.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="47.0" layoutY="233.0" pickOnBounds="true" AnchorPane.topAnchor="230.0">
+               <image>
+                  <Image url="file:src/main/Image/icons-ajout-fond.png" />
                </image>
             </ImageView>
          </children>

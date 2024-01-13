@@ -35,6 +35,11 @@ public class BarreNavigationController {
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
+    public void Affichage_transasction() throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("transaction-view.fxml"));
+        FenetreAffichage.getChildren().setAll(anchorPane);
+    }
+
     public void Redirection_Home() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("home-view.fxml"));

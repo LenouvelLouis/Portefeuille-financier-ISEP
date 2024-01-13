@@ -1,5 +1,6 @@
 package com.example.portefeuillefinancierisep;
 
+import Info.UserInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import java.io.IOException;
 public class BarreNavigationController {
     @FXML
     private AnchorPane FenetreAffichage;
+    private UserInfo user;
 
     @FXML
     public void Affichage_Add_Wallet() throws IOException {
@@ -46,4 +48,8 @@ public class BarreNavigationController {
     }
 
 
+    public void initializeUser(UserInfo u) throws IOException {
+        this.user=u;
+        this.Affichage_Dashboard();
+    }
 }

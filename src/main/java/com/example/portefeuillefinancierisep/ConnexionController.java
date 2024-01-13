@@ -48,10 +48,10 @@ public class ConnexionController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("barre-navigation-view.fxml"));
             Scene scene = new Scene(loader.load());
-            FundsController FundsController = loader.getController();
-            FundsController.initializeUser(u);
             Stage stage = new Stage();
-            stage.setTitle("Home");
+            BarreNavigationController controller = loader.getController();
+            controller.initializeUser(u);
+            stage.setTitle("Dashboard");
             stage.setScene(scene);
             ((Stage) this.email_text.getScene().getWindow()).close();
             stage.show();

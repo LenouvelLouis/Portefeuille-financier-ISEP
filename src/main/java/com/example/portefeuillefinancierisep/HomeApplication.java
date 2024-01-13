@@ -9,7 +9,7 @@ import java.io.IOException;
 public class HomeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("barre-navigation-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Home");
         stage.setScene(scene);

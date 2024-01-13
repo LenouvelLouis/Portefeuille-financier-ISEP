@@ -8,11 +8,19 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
 public class DashboardController {
+    @FXML
+    AnchorPane PanePercent;
+    @FXML
+    AnchorPane PaneChart;
+    @FXML
+    Label msg_error;
     @FXML
     Label valueCrypto;
     @FXML
@@ -33,11 +41,21 @@ public class DashboardController {
     public void initializeUser(UserInfo user, ArrayList<WalletInfo> walletInfos) {
         this.user = user;
         this.walletInfos = walletInfos;
+        if(this.walletInfos.isEmpty()){
+            this.displaywithoutWallet();
+            this.msg_display(Paint.valueOf("red"), "Vous n'avez pas de portefeuille");
+            return;
+        }
         this.initDataPoints();
         this.iniTotale();
         this.initDate();
         this.initGain();
         this.initPercent();
+    }
+
+    private void displaywithoutWallet() {
+        PanePercent.setVisible(false);
+        PaneChart.setVisible(false);
     }
 
     private void initPercent() {
@@ -57,6 +75,11 @@ public class DashboardController {
         for (Float cryptosPercent : cryptosPercents) {
             percentCrypto += cryptosPercent;
         }
+        if(isEmptyWallet()){
+            valueAction.setText("0%");
+            valueCrypto.setText("0%");
+            return;
+        }
         percentAction = percentAction/actionsPercents.size();
         percentCrypto = percentCrypto/cryptosPercents.size();
         valueAction.setText(percentAction.toString() + "%");
@@ -67,6 +90,9 @@ public class DashboardController {
         ArrayList<Float> gains = new ArrayList<>();
         for (WalletInfo walletInfo : walletInfos) {
             ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            if(transactionInfos.isEmpty()){
+                continue;
+            }
             float départ = transactionInfos.getFirst().getValue();
             float arrivée = walletInfo.getTotale();
             float gain = ((arrivée - départ) / (float) départ)*100 ;
@@ -77,20 +103,38 @@ public class DashboardController {
             value += gain;
         }
         value = value/gains.size();
+        if(isEmptyWallet()){
+            Gain.setText("0%");
+            Gain.setStyle("-fx-text-fill: white;");
+            return;
+        }
+
         if(value<0){
             Gain.setText("- "+value + "%");
             Gain.setStyle("-fx-text-fill: red;");
         }
-        else {
+        else{
             Gain.setText("+ "+value + "%");
             Gain.setStyle("-fx-text-fill: green;");
         }
     }
-
     private void initDate() {
+        if(isEmptyWallet()){
+            labelDate.setText("Aucune transaction");
+            return;
+        }
         Date lastDate = this.getLastDate();
         Date firstDate = this.getFirstDate();
         labelDate.setText(firstDate.toString() + " - " + lastDate.toString());
+    }
+
+    private boolean isEmptyWallet() {
+        for(WalletInfo walletInfo : walletInfos) {
+            if(!transactionModele.getTransactionByWallet(walletInfo.getId()).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private Date getFirstDate() {
@@ -125,6 +169,12 @@ public class DashboardController {
             totale += walletInfo.getTotale();
         }
         Totale.setText(totale.toString() + " €");
+    }
+
+    private void msg_display(Paint color, String msg)
+    {
+        msg_error.setTextFill(color);
+        msg_error.setText(msg);
     }
 
     private void initDataPoints() {

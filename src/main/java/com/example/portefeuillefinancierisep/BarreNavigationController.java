@@ -33,7 +33,7 @@ public class BarreNavigationController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("add-wallet-view.fxml"));
         AnchorPane anchorPane = loader.load();
         AddWalletController controller = loader.getController();
-        controller.initializeUser(this.user);
+        controller.initializeUser(this.user,this);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
@@ -89,17 +89,13 @@ public class BarreNavigationController {
         if(this.labelUser!=null){
             this.labelUser.setText(this.user.getNom()+" "+this.user.getPrenom());
         }
-        if(this.walletInfos.isEmpty()){
-            FenetreAffichage.setVisible(false);
-            walletList.setVisible(false);
-        }
-
     }
 
     private void displayWallet() {
         if(this.walletList!=null){
             if(this.walletInfos.isEmpty()){
-                this.walletList.setVisible(false);
+                this.walletList.getItems().add("Aucun portefeuille");
+                return;
             }
             this.walletList.getItems().clear();
             this.walletList.setValue(this.walletInfos.getFirst().getNom());
@@ -110,10 +106,14 @@ public class BarreNavigationController {
     }
 
     public void selectWallet(ActionEvent actionEvent) throws IOException {
+        if(this.walletInfos.isEmpty()){
+            return;
+        }
         String name =walletList.getValue();
         WalletInfo walletInfo = this.findWallet(name);
         ArrayList<WalletInfo> w = new ArrayList<>();
         w.add(walletInfo);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard-view.fxml"));
         AnchorPane anchorPane = loader.load();
         DashboardController controller = loader.getController();

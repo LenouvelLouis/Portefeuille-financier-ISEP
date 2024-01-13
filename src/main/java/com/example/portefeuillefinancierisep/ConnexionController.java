@@ -41,7 +41,6 @@ public class ConnexionController {
 
         String userSalt = user.getUserSalt(email);
         String hashedPassword = hashPassword(password, userSalt);
-
         try{
         if (user.checkUserPassword(email, hashedPassword)) {
             UserInfo u = user.getUserInfo(email);

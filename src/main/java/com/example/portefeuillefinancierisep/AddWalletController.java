@@ -30,9 +30,11 @@ public class AddWalletController {
     Button createWallet;
 
     private WalletModele walletModele = new WalletModele();
+    private BarreNavigationController barreNavigationController;
 
-    public void initializeUser(UserInfo u) {
+    public void initializeUser(UserInfo u, BarreNavigationController barreNavigationController) {
         this.userInfo = u;
+        this.barreNavigationController = barreNavigationController;
     }
 
 
@@ -51,7 +53,6 @@ public class AddWalletController {
         walletModele.create_wallet(this.userInfo, name);
         msg_display(Color.GREEN,"Votre portefeuille a bien été créé");
         nameWallet.clear();
-        BarreNavigationController barreNavigationController = new BarreNavigationController();
         barreNavigationController.initializeUser(this.userInfo);
     }
 

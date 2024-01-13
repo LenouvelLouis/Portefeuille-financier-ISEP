@@ -194,6 +194,7 @@ public class TransactionController {
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()+buyValue);
             this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue);
             this.transaction.addTransaction(t);
+            msg_display(Color.GREEN,"Transaction effectuée");
         }
         catch (RuntimeException e){
             msg_display(Color.RED,"Erreur lors de la transaction");
@@ -231,6 +232,7 @@ public class TransactionController {
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()-sellValue);
             this.userModele.updateFunds(this.user.getId(), this.user.getFond() + sellValue);
             this.transaction.addTransaction(t);
+            msg_display(Color.GREEN,"Transaction effectuée");
         }
         catch (RuntimeException e){
             msg_display(Color.RED,"Erreur lors de la transaction");

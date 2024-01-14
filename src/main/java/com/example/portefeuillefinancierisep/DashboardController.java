@@ -217,7 +217,9 @@ public class DashboardController {
                 String date = transactionInfo.getDate().toString();
                 series.getData().add(new XYChart.Data<>(date, value));
             }
-
+            if(transactionInfos.isEmpty()){
+               return;
+            }
             chart.getData().add(series);
         }
     }

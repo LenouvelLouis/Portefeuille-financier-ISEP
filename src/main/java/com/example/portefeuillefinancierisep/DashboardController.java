@@ -34,14 +34,14 @@ public class DashboardController {
     @FXML
     LineChart<String, Float> chart;
     private UserInfo user;
-    private ArrayList<WalletInfo> walletInfos;
+    private ArrayList<WalletInfo> walletInfos = new ArrayList<>();
 
     private TransactionModele transactionModele= new TransactionModele();
 
     public void initializeUser(UserInfo user, ArrayList<WalletInfo> walletInfos) {
         this.user = user;
         this.walletInfos = walletInfos;
-        if(this.walletInfos.isEmpty()){
+        if(walletInfos.isEmpty()){
             this.displaywithoutWallet();
             this.msg_display(Paint.valueOf("red"), "Vous n'avez pas de portefeuille");
             return;
@@ -109,6 +109,12 @@ public class DashboardController {
             return;
         }
 
+        if (this.walletInfos.size()==1 && isOneTransaction()) {
+            Gain.setText("0%");
+            Gain.setStyle("-fx-text-fill: white;");
+            return;
+        }
+
         if(value<0){
             Gain.setText("- "+value + "%");
             Gain.setStyle("-fx-text-fill: red;");
@@ -118,6 +124,16 @@ public class DashboardController {
             Gain.setStyle("-fx-text-fill: green;");
         }
     }
+
+    private boolean isOneTransaction() {
+        for(WalletInfo walletInfo : walletInfos) {
+            if(transactionModele.getTransactionByWallet(walletInfo.getId()).size() != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void initDate() {
         if(isEmptyWallet()){
             labelDate.setText("Aucune transaction");
@@ -164,6 +180,10 @@ public class DashboardController {
     }
 
     private void iniTotale() {
+        if (walletInfos.isEmpty()) {
+            Totale.setText("0 €");
+            return;
+        }
         Float totale = 0f;
         for (WalletInfo walletInfo : walletInfos) {
             totale += walletInfo.getTotale();
@@ -180,6 +200,9 @@ public class DashboardController {
     private void initDataPoints() {
         chart.lookup(".chart-title").setStyle("-fx-text-fill: white;");
         chart.setStyle("-fx-tick-mark-fill: white; -fx-text-fill: white;");
+        if(walletInfos.isEmpty()){
+            return;
+        }
         if(walletInfos.size() == 1) {
             chart.setTitle("Evolution du portefeuille");
         }

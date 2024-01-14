@@ -1,5 +1,7 @@
 package Info;
 
+import java.util.ArrayList;
+
 public class WalletInfo {
 
     private int id;
@@ -14,6 +16,8 @@ public class WalletInfo {
     private float totale;
 
     private float totale_action;
+
+    private ArrayList<TransactionInfo> transactionInfos;
 
     public String getNom() {
         return nom;
@@ -33,6 +37,10 @@ public class WalletInfo {
 
     public float getTotale_crypto() {
         return totale_crypto;
+    }
+
+    public void setTransactionInfos(ArrayList<TransactionInfo> transactionInfos) {
+        this.transactionInfos = transactionInfos;
     }
 
     private float totale_crypto;

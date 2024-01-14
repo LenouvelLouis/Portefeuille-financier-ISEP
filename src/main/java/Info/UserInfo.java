@@ -1,5 +1,7 @@
 package Info;
 
+import java.util.ArrayList;
+
 public class UserInfo {
 
     private int id;
@@ -11,6 +13,10 @@ public class UserInfo {
     private String salt; // Sel sous forme de chaîne de caractères
 
     private Float fond;
+
+
+
+    private ArrayList<WalletInfo> walletInfos;
 
     public Float getFond() {
         return fond;
@@ -54,6 +60,13 @@ public class UserInfo {
     public void setMail(String mail) { this.mail = mail; }
     public void setH_mdp(String h_mdp) { this.h_mdp = h_mdp; }
     public void setSalt(String salt) { this.salt = salt; }
+    public void setWalletInfos(ArrayList<WalletInfo> walletInfos) {
+        this.walletInfos = walletInfos;
+    }
+
+    public ArrayList<WalletInfo> getWalletInfos() {
+        return walletInfos;
+    }
 
     public void setFond(float amount) {
         this.fond = amount;

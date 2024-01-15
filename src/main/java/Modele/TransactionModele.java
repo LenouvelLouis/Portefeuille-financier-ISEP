@@ -76,7 +76,7 @@ public class TransactionModele {
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setInt(1, t.getId_wallet());
                 pst.setFloat(2, t.getValue());
-                pst.setDate(3, t.getDate());
+                pst.setTimestamp(3, t.getDate());
                 pst.setString(4,t.getType());
                 pst.setString(5,t.getLibelle_type());
                 pst.executeUpdate();
@@ -100,7 +100,7 @@ public class TransactionModele {
 
                         int id_wallet = rs.getInt("id_wallet");
                         float value = rs.getFloat("value");
-                        Date date = rs.getDate("date");
+                        Timestamp date = rs.getTimestamp("date");
                         String type = rs.getString("type");
                         String libelle_type = rs.getString("libelle_type");
                         TransactionInfo t = new TransactionInfo(id_wallet,value, date, type, libelle_type);

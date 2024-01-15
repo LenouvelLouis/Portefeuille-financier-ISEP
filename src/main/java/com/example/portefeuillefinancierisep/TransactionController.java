@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -181,9 +182,8 @@ public class TransactionController {
         WalletInfo walletInfo = this.findWalletByName(nomWallet);
         String typeInfo = listtype.getValue();
         String libele=libelle_type.getValue();
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date today = calendar.getTime();
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,new java.sql.Date(today.getTime()),typeInfo,libele);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele);
         try {
             if(typeInfo.equals("actions")){
                 this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()+buyValue);
@@ -219,9 +219,8 @@ public class TransactionController {
             return;
         }
         String libele=libelle_type.getValue();
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date today = calendar.getTime();
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,new java.sql.Date(today.getTime()),typeInfo,libele);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,date,typeInfo,libele);
         try {
             if(typeInfo.equals("actions")){
                 this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()-sellValue);

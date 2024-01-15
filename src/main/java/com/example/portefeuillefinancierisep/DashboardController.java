@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class DashboardController {
@@ -135,13 +136,15 @@ public class DashboardController {
     }
 
     private void initDate() {
-        if(isEmptyWallet()){
+        if (isEmptyWallet()) {
             labelDate.setText("Aucune transaction");
             return;
         }
-        Date lastDate = this.getLastDate();
-        Date firstDate = this.getFirstDate();
-        labelDate.setText(firstDate.toString() + " - " + lastDate.toString());
+        Timestamp lastDate = this.getLastDate();
+        Timestamp firstDate = this.getFirstDate();
+        Date datefirst = new Date(firstDate.getTime());
+        Date datelast = new Date(lastDate.getTime());
+        labelDate.setText(datefirst.toString() + " - " + datelast.toString());
     }
 
     private boolean isEmptyWallet() {
@@ -153,8 +156,8 @@ public class DashboardController {
         return true;
     }
 
-    private Date getFirstDate() {
-        Date date = new Date(Date.parse("13/01/3000"));
+    private Timestamp getFirstDate() {
+        Timestamp date = new Timestamp(System.currentTimeMillis());
         for (WalletInfo walletInfo : walletInfos) {
             ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
             for (TransactionInfo transactionInfo : transactionInfos) {
@@ -166,8 +169,8 @@ public class DashboardController {
         return date;
     }
 
-    private Date getLastDate() {
-        Date date = new Date(0);
+    private Timestamp getLastDate() {
+        Timestamp date =new Timestamp(0);
         for (WalletInfo walletInfo : walletInfos) {
             ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
             for (TransactionInfo transactionInfo : transactionInfos) {

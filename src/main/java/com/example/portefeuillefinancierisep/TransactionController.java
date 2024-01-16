@@ -17,12 +17,13 @@ import javafx.scene.paint.Paint;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 public class TransactionController {
+    @FXML
+    ComboBox comboBoxSellAction;
+    @FXML
+    Label lableSellAction;
     @FXML
     Label walletmsg;
     @FXML
@@ -38,6 +39,8 @@ public class TransactionController {
     private UserModele userModele=new UserModele();
     private ArrayList<TransactionTypeInfo> entreprise;
     private ArrayList<TransactionTypeInfo> crypto;
+
+    private HashMap<String,HashMap<String,Float>> sellActionByWalletvalaible = new HashMap<>();
 
     private Boolean realvalueDisplay = false;
 
@@ -75,7 +78,31 @@ public class TransactionController {
         this.initWallet();
         this.initType();
         this.initEntreprise();
+        this.initSellActionByWallet();
         this.value.setText("10");
+    }
+
+    private void initSellActionByWallet() {
+        for(WalletInfo w : this.w){
+            ArrayList<TransactionInfo> transactionInfos = transaction.getTransactionByWallet(w.getId());
+            HashMap sellAction=new HashMap<String,Float>();
+            for (TransactionInfo t : transactionInfos){
+                Float value = this.historyValue(t,transactionInfos,sellAction);
+                sellAction.put(t.getLibelle_type(),value);
+            }
+
+            this.sellActionByWalletvalaible.put(w.getNom(),sellAction);
+        }
+    }
+
+    private Float historyValue(TransactionInfo t, ArrayList<TransactionInfo> transactionInfos, HashMap sellAction) {
+        Float value =0f;
+        for(TransactionInfo t2 : transactionInfos){
+            if(t2.getLibelle_type().equals(t.getLibelle_type()) && t2.getType().equals(t.getType())){
+                value=value+t2.getValue();
+            }
+        }
+        return value;
     }
 
     private void displayTransactionInterface(){
@@ -218,6 +245,13 @@ public class TransactionController {
             msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
+        if(!this.checkSellAction(sellValue,nomWallet,typeInfo)){
+            this.initSellActionCombo();
+            this.comboBoxSellAction.setVisible(true);
+            this.lableSellAction.setVisible(true);
+            msg_display(Color.RED,"Vous ne pouvez pas vendre cette action");
+            return;
+        }
         String libele=libelle_type.getValue();
         Timestamp date = new Timestamp(System.currentTimeMillis());
         TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,date,typeInfo,libele);
@@ -236,6 +270,32 @@ public class TransactionController {
         catch (RuntimeException e){
             msg_display(Color.RED,"Erreur lors de la transaction");
         }
+    }
+
+    private void initSellActionCombo() {
+        this.comboBoxSellAction.getItems().clear();
+        String nomWallet = wallet.getValue();
+        HashMap<String,Float> sellAction = this.sellActionByWalletvalaible.get(nomWallet);
+        for (Map.Entry<String, Float> entry : sellAction.entrySet()) {
+            String key = entry.getKey();
+            Float value = entry.getValue();
+            if(value>0){
+                this.comboBoxSellAction.getItems().add(key+" : "+value+"€");
+            }
+        }
+        this.comboBoxSellAction.setValue("Vos actions");
+    }
+
+    private boolean checkSellAction(Float sellValue, String nomWallet, String typeInfo) {
+        HashMap<String,Float> sellAction = this.sellActionByWalletvalaible.get(nomWallet);
+        Float value = sellAction.get(libelle_type.getValue());
+        if(value==null){
+            return false;
+        }
+        if(value<sellValue){
+            return false;
+        }
+        return true;
     }
 
     public WalletInfo findWalletByName(String name){

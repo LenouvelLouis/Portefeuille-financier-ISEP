@@ -6,7 +6,7 @@
 
 <AnchorPane fx:id="paneGlobale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="790.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.portefeuillefinancierisep.TransactionController">
     <children>
-        <Label  layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="157.0" text="Transaction" textFill="WHITE">
+        <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="157.0" text="Transaction" textFill="WHITE">
             <font>
                 <Font size="30.0" />
             </font></Label>
@@ -32,5 +32,7 @@
       <TextField fx:id="value" layoutX="378.0" layoutY="209.0" promptText="Montant" />
       <ComboBox fx:id="wallet" layoutX="96.0" layoutY="115.0" prefHeight="25.0" prefWidth="150.0" promptText="Vos portefeuilles" AnchorPane.leftAnchor="96.0" />
       <Label fx:id="walletmsg" layoutX="232.0" layoutY="213.0" text="Veuillez saisir un montant :" textFill="WHITE" />
+      <ComboBox fx:id="comboBoxSellAction" layoutX="582.0" layoutY="209.0" prefWidth="150.0" visible="false" />
+      <Label fx:id="lableSellAction" layoutX="584.0" layoutY="179.0" text="Action disponible à la vente" textFill="WHITE" visible="false" />
     </children>
 </AnchorPane>

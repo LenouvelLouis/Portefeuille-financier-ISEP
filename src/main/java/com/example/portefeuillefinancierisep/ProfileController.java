@@ -4,15 +4,11 @@ import Info.UserInfo;
 import Info.WalletInfo;
 import Modele.UserModele;
 import Modele.WalletModele;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,14 +56,16 @@ public class ProfileController {
     Label labelTotale;
     @FXML
     TextField mail_text;
+    private BarreNavigationController barreNavigationController;
 
 
-    public void initializeUser(UserInfo user) {
+    public void initializeUser(UserInfo user, BarreNavigationController barreNavigationController) {
         this.u=user;
         nom_text.setText(this.u.getNom());
         prenom_text.setText(this.u.getPrenom());
         tel_text.setText(this.u.getTel());
         mail_text.setText(this.u.getMail());
+        this.barreNavigationController=barreNavigationController;
         this.displayWalletInfo();
     }
 
@@ -138,7 +136,6 @@ public class ProfileController {
             this.u.setTel(tel);
             this.user.updateUserInfo(this.u);
             msg_display(Color.GREEN,"Mise à jour des informations !");
-            BarreNavigationController barreNavigationController = new BarreNavigationController();
             barreNavigationController.initializeUser(this.u);
         }catch (RuntimeException | IOException e){
             msg_display(Color.RED,"Erreur lors de la mise à jour de vos données");

@@ -1,18 +1,14 @@
 package com.example.portefeuillefinancierisep;
 
 import Info.UserInfo;
-import Modele.UserModele;
 import Modele.WalletModele;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -29,9 +25,9 @@ public class AddWalletController {
     @FXML
     Button createWallet;
 
-    private WalletModele walletModele = new WalletModele();
     private BarreNavigationController barreNavigationController;
 
+    private WalletModele walletModele = new WalletModele();
     public void initializeUser(UserInfo u, BarreNavigationController barreNavigationController) {
         this.userInfo = u;
         this.barreNavigationController = barreNavigationController;
@@ -51,9 +47,9 @@ public class AddWalletController {
         }
 
         walletModele.create_wallet(this.userInfo, name);
+        this.barreNavigationController.add_wallet();
         msg_display(Color.GREEN,"Votre portefeuille a bien été créé");
         nameWallet.clear();
-        barreNavigationController.initializeUser(this.userInfo);
     }
 
     private void msg_display(Paint color, String msg)

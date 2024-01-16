@@ -49,7 +49,7 @@ public class BarreNavigationController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
         AnchorPane anchorPane = loader.load();
         ProfileController controller = loader.getController();
-        controller.initializeUser(this.user);
+        controller.initializeUser(this.user,this);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
@@ -128,5 +128,10 @@ public class BarreNavigationController {
             }
         }
         return null;
+    }
+
+    public void add_wallet() {
+        this.walletInfos=walletModele.getWalletInfo(this.user);
+        this.displayWallet();
     }
 }

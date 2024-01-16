@@ -134,4 +134,58 @@ public class WalletModele {
             throw new RuntimeException("Error : WalletModele -> updateTotaleCrypto : "+e.getMessage());
         }
     }
+
+    public float getTotale(int id) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT totale FROM wallet_db.wallet_user WHERE id = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setInt(1, id);
+                try (ResultSet rs = pst.executeQuery()) {
+                    rs.next();
+                    return rs.getFloat("totale");
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> getTotale : "+e.getMessage());
+        }
+    }
+
+    public float getTotaleAction(int id) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT totale_action FROM wallet_db.wallet_user WHERE id = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setInt(1, id);
+                try (ResultSet rs = pst.executeQuery()) {
+                    rs.next();
+                    return rs.getFloat("totale_action");
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> getTotaleAction : "+e.getMessage());
+        }
+    }
+
+    public float getTotaleCrypto(int id) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT totale_crypto FROM wallet_db.wallet_user WHERE id = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setInt(1, id);
+                try (ResultSet rs = pst.executeQuery()) {
+                    rs.next();
+                    return rs.getFloat("totale_crypto");
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> getTotaleCrypto : "+e.getMessage());
+        }
+    }
 }

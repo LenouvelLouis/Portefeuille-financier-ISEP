@@ -39,8 +39,16 @@ public class WalletInfo {
         return totale_crypto;
     }
 
-    public void setTransactionInfos(ArrayList<TransactionInfo> transactionInfos) {
-        this.transactionInfos = transactionInfos;
+    public void setTotale(float totale) {
+        this.totale = totale;
+    }
+
+    public void setTotale_action(float totale_action) {
+        this.totale_action = totale_action;
+    }
+
+    public void setTotale_crypto(float totale_crypto) {
+        this.totale_crypto = totale_crypto;
     }
 
     private float totale_crypto;

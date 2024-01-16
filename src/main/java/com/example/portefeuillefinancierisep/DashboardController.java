@@ -4,6 +4,7 @@ import Info.TransactionInfo;
 import Info.UserInfo;
 import Info.WalletInfo;
 import Modele.TransactionModele;
+import Modele.WalletModele;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -39,6 +40,8 @@ public class DashboardController {
 
     private TransactionModele transactionModele= new TransactionModele();
 
+    private WalletModele walletModele = new WalletModele();
+
     public void initializeUser(UserInfo user, ArrayList<WalletInfo> walletInfos) {
         this.user = user;
         this.walletInfos = walletInfos;
@@ -47,11 +50,20 @@ public class DashboardController {
             this.msg_display(Paint.valueOf("red"), "Vous n'avez pas de portefeuille");
             return;
         }
+        this.updateInfoWallet();
         this.initDataPoints();
         this.iniTotale();
         this.initDate();
         this.initGain();
         this.initPercent();
+    }
+
+    private void updateInfoWallet() {
+        for (WalletInfo walletInfo : walletInfos) {
+            walletInfo.setTotale(walletModele.getTotale(walletInfo.getId()));
+            walletInfo.setTotale_action(walletModele.getTotaleAction(walletInfo.getId()));
+            walletInfo.setTotale_crypto(walletModele.getTotaleCrypto(walletInfo.getId()));
+        }
     }
 
     private void displaywithoutWallet() {

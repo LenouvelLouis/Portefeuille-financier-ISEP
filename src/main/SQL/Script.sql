@@ -57,7 +57,7 @@ create or replace table transaction
 (
     id_wallet    int                        not null,
     value        float                      null,
-    date         date                       not null,
+    date         timestamp                      not null,
     type         enum ('actions', 'crypto') not null,
     libelle_type varchar(50)                not null,
     constraint wallet_value_wallet_user_id_fk

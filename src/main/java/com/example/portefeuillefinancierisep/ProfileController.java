@@ -33,7 +33,7 @@ public class ProfileController {
     @FXML
     Label msg_error;
     @FXML
-    ComboBox listwallet;
+    ComboBox<String> listwallet;
     @FXML
     TextField wallettotale;
     @FXML
@@ -56,9 +56,11 @@ public class ProfileController {
     Label labelTotale;
     @FXML
     TextField mail_text;
-    private BarreNavigationController barreNavigationController;
+    private BarreNavigationController barreNavigationController; // Controleur de la barre de navigation
 
-
+    /**
+     * Méthode appelée lors du clic sur l'engrenage
+     */
     public void initializeUser(UserInfo user, BarreNavigationController barreNavigationController) {
         this.u=user;
         nom_text.setText(this.u.getNom());
@@ -69,6 +71,9 @@ public class ProfileController {
         this.displayWalletInfo();
     }
 
+    /**
+     * Méthode qui affiche les informations du wallet
+     */
     public void displayWalletInfo(){
         this.walletInfoList=wallet.getWalletInfo(this.u);
         if(!walletInfoList.isEmpty()){
@@ -86,6 +91,10 @@ public class ProfileController {
 
     }
 
+
+    /**
+     * Méthode qui fait disparaitre les informations du wallet
+     */
     public void displayWithoutWallet(){
         listwallet.setVisible(false);
         wallettotale.setVisible(false);
@@ -101,41 +110,44 @@ public class ProfileController {
         buttonSave.layoutYProperty().setValue(329);
     }
 
+    /**
+     * Méthode appelée lors du clic sur le bouton "Sauvegarder"
+     */
     public void editInformation(){
         nom = nom_text.getText();
         prenom = prenom_text.getText();
         tel = tel_text.getText();
         mail = mail_text.getText();
-        if (!isChampNotEmpty()) {
+        if (!isChampNotEmpty()) { // Vérification que tous les champs sont remplis
             msg_display(Color.RED,"Veuillez saisir tous les champs");
             return;
         }
-        if (!isValidFormatNomPrenom()) {
+        if (!isValidFormatNomPrenom()) { // Vérification du format du nom et du prénom
             msg_display(Color.RED,"Nom ou prénom non valide");
             return;
         }
 
-        if (!isValidPhoneNumber()) {
+        if (!isValidPhoneNumber()) { // Vérification du format du numéro de téléphone
             msg_display(Color.RED,"Numéro de téléphone non valide");
             return;
         }
 
-        if (!isValidFormatEmail()) {
+        if (!isValidFormatEmail()) { // Vérification du format de l'adresse mail
             msg_display(Color.RED,"Adresse mail non valide");
             return;
         }
 
-        if (!this.u.getMail().equals(mail) && user.is_user_create(mail)) {
+        if (!this.u.getMail().equals(mail) && user.is_user_create(mail)) { // Vérification que le compte n'existe pas déjà
             msg_display(Color.RED,"Ce compte existe déjà");
             return;
         }
         try {
-            this.u.setMail(mail);
+            this.u.setMail(mail); // Récupération des données saisies
             this.u.setNom(nom);
             this.u.setPrenom(prenom);
             this.u.setTel(tel);
-            this.user.updateUserInfo(this.u);
-            msg_display(Color.GREEN,"Mise à jour des informations !");
+            this.user.updateUserInfo(this.u); // Mise à jour des données dans la base de données
+            msg_display(Color.GREEN,"Mise à jour des informations !"); // Affichage d'un message de succès
             barreNavigationController.initializeUser(this.u);
         }catch (RuntimeException | IOException e){
             msg_display(Color.RED,"Erreur lors de la mise à jour de vos données");
@@ -145,15 +157,20 @@ public class ProfileController {
 
     }
 
-
+    /**
+     * Méthode appelée lors de la sélection d'un wallet dans la liste déroulante "listwallet"
+     */
     public void selectWallet() {
-        String nom = listwallet.getValue().toString();
-        WalletInfo w = this.findWalletByName(nom);
+        String nom = listwallet.getValue().toString(); // Récupération du nom du wallet sélectionné
+        WalletInfo w = this.findWalletByName(nom); // Recherche du wallet dans la liste des wallets
         wallettotale.setText(String.valueOf(w.getTotale()));
-        wallettotale_action.setText(String.valueOf(w.getTotale_action()));
+        wallettotale_action.setText(String.valueOf(w.getTotale_action())); // Affichage des informations du wallet
         wallettotale_crypto.setText(String.valueOf(w.getTotale_crypto()));
     }
 
+    /**
+     * Méthode utilisée pour trouver un wallet dans la liste des wallets
+     */
     public WalletInfo findWalletByName(String name){
         for (WalletInfo w :walletInfoList){
             if(w.getNom().equals(name)){
@@ -164,6 +181,9 @@ public class ProfileController {
     }
 
 
+    /**
+     * Méthode de vérification du format du nom et du prénom
+     */
     public boolean isValidFormatNomPrenom() {
         String regex = "^[a-zA-Z ]+$";
         Pattern pattern = Pattern.compile(regex);
@@ -172,6 +192,9 @@ public class ProfileController {
         return matcher_nom.matches() && matcher_prenom.matches();
     }
 
+    /**
+     * Méthode de vérification du format du numéro de téléphone
+     */
     public boolean isValidPhoneNumber() {
         String regex = "^[0-9]{10}$";
         Pattern pattern = Pattern.compile(regex);
@@ -179,6 +202,9 @@ public class ProfileController {
         return matcher.matches();
     }
 
+    /**
+     * Méthode de vérification du format de l'adresse mail
+     */
     public boolean isValidFormatEmail() {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(regex);
@@ -186,10 +212,16 @@ public class ProfileController {
         return matcher.matches();
     }
 
+    /**
+     * Méthode de vérification que tous les champs sont remplis
+     */
     public boolean isChampNotEmpty() {
         return !nom.isEmpty() && !prenom.isEmpty() && !tel.isEmpty();
     }
 
+    /**
+     * Méthode permettant d'afficher un message d'erreur
+     */
     private void msg_display(Paint color, String msg)
     {
         msg_error.setTextFill(color);

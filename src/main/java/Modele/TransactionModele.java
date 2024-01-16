@@ -6,12 +6,17 @@ import Info.UserInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * Class qui permet de de faire les requêtes sur la table transaction
+ */
 public class TransactionModele {
     Connection conn = null;
     ResultSet rs = null;
     Statement pst = null;
 
+    /**
+     * Fonction qui permet de se connecter à la base de données
+     */
     private void initConnection() {
         this.conn = ConnectDB.ConnectMariaDB();
         try {
@@ -22,28 +27,36 @@ public class TransactionModele {
         }
     }
 
+    /**
+     * Fonction qui permet de récupérer les entreprises
+     * @return ArrayList<TransactionTypeInfo>
+     */
     public ArrayList<TransactionTypeInfo> getEntreprise(){
         ArrayList<TransactionTypeInfo> transactionTypeInfoList = new ArrayList<TransactionTypeInfo>();
         try {
-            if (this.conn == null) {
+            if (this.conn == null) { // Si la connexion n'est pas initialisé
                 this.initConnection();
             }
-            String sql = "SELECT * FROM wallet_db.entreprise";
-            try (PreparedStatement pst = conn.prepareStatement(sql)) {
-                try (ResultSet rs = pst.executeQuery()) {
-                    while (rs.next()){
+            String sql = "SELECT * FROM wallet_db.entreprise"; // Requête SQL
+            try (PreparedStatement pst = conn.prepareStatement(sql)) { // On prépare la requête
+                try (ResultSet rs = pst.executeQuery()) { // On exécute la requête
+                    while (rs.next()){ // On parcours les résultats
                         String nom = rs.getString("nom");
                         TransactionTypeInfo w = new TransactionTypeInfo(nom);
-                        transactionTypeInfoList.add(w);
+                        transactionTypeInfoList.add(w); // On ajoute les résultats dans une liste
                     }
                 }
             }
-        } catch (SQLException | RuntimeException e) {
+        } catch (SQLException | RuntimeException e) { // Si il y a une erreur
             throw new RuntimeException("Error : TransactionModele -> getEntreprise : "+e.getMessage());
         }
         return transactionTypeInfoList;
     }
 
+    /**
+     * Fonction qui permet de récupérer les crypto monnaies
+     * @return ArrayList<TransactionTypeInfo>
+     */
     public ArrayList<TransactionTypeInfo> getCrypto(){
         ArrayList<TransactionTypeInfo> transactionTypeInfoList = new ArrayList<TransactionTypeInfo>();
         try {
@@ -66,7 +79,9 @@ public class TransactionModele {
         return transactionTypeInfoList;
     }
 
-
+    /**
+     * Fonction qui permet d'ajouter une transaction
+     */
     public void addTransaction(TransactionInfo t) {
         try {
             if (this.conn == null) {
@@ -86,6 +101,11 @@ public class TransactionModele {
         }
     }
 
+    /**
+     * Fonction qui permet de récupérer les transactions d'un wallet
+     * @param id
+     * @return ArrayList<TransactionInfo>
+     */
     public ArrayList<TransactionInfo> getTransactionByWallet(int id) {
         ArrayList<TransactionInfo> transactionInfos = new ArrayList<TransactionInfo>();
         try {

@@ -4,6 +4,10 @@ import java.sql.*;
 
 public class ConnectDB {
 
+    /**
+     * Fonction qui permet de se connecter à la base de données
+     * @return Connection
+     */
     public static Connection ConnectMariaDB() {
         Connection conn = null;
         try {

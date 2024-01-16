@@ -37,6 +37,10 @@ public class BarreNavigationController {
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
+    /**
+     * Affichage de la page d'accueil
+     * @throws IOException
+     */
     public void Affichage_Dashboard() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard-view.fxml"));
         AnchorPane anchorPane = loader.load();
@@ -45,6 +49,10 @@ public class BarreNavigationController {
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
+    /**
+     * Affichage de la page de profil
+     * @throws IOException
+     */
     public void Affichage_Profile() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
         AnchorPane anchorPane = loader.load();
@@ -52,15 +60,22 @@ public class BarreNavigationController {
         controller.initializeUser(this.user,this);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
-
+    /**
+     * Affichage de la page de profil
+     * @throws IOException
+     */
     public void Affichage_Add_fond() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("addFunds-view.fxml"));
         AnchorPane anchorPane = loader.load();
         FundsController controller = loader.getController();
-        controller.initializeUser(this.user);
+        controller.initializeUser(this.user,this);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
+    /**
+     * Affichage de la page de profil
+     * @throws IOException
+     */
     public void Affichage_transasction() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("transaction-view.fxml"));
         AnchorPane anchorPane = loader.load();
@@ -69,6 +84,10 @@ public class BarreNavigationController {
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
+    /**
+     * Affichage de la page de profil
+     * @throws IOException
+     */
     public void Redirection_Home() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("home-view.fxml"));
@@ -82,6 +101,10 @@ public class BarreNavigationController {
     }
 
 
+    /**
+     * Affichage de la page de profil
+     * @throws IOException
+     */
     public void initializeUser(UserInfo u) throws IOException {
         this.user=u;
         this.user.setWalletInfos(walletModele.getWalletInfo(this.user));
@@ -92,6 +115,10 @@ public class BarreNavigationController {
         }
     }
 
+    /**
+     * Affichage de la page de profil
+     * @throws IOException
+     */
     private void displayWallet() {
         if(this.walletList!=null){
             if(this.walletInfos.isEmpty()){
@@ -106,6 +133,10 @@ public class BarreNavigationController {
         }
     }
 
+    /**
+     * Selection d'un portefeuille
+     * @throws IOException
+     */
     public void selectWallet(ActionEvent actionEvent) throws IOException {
         if(this.walletInfos.isEmpty()){
             return;
@@ -121,6 +152,9 @@ public class BarreNavigationController {
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
+    /**
+     * recherche d'un portefeuille
+     */
     private WalletInfo findWallet(String name) {
         for(WalletInfo w:this.walletInfos){
             if(w.getNom().equals(name)){
@@ -130,6 +164,9 @@ public class BarreNavigationController {
         return null;
     }
 
+    /**
+     * Mise à jour de la liste des portefeuilles
+     */
     public void add_wallet() {
         this.walletInfos=walletModele.getWalletInfo(this.user);
         this.displayWallet();

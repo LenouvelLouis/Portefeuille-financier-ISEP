@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class InscriptionController {
 
-    private UserModele user = new UserModele();
+    private UserModele user = new UserModele(); // Modèle de la table user
 
     @FXML
     TextField email_text;
@@ -36,8 +36,12 @@ public class InscriptionController {
     @FXML
     Label msg_error;
 
-    String email, nom, prenom, password, tel;
+    String email, nom, prenom, password, tel; // Variables pour stocker les données saisies
 
+    /**
+     * Méthode appelée lors du clic sur le bouton "Se connecter"
+     * @throws IOException
+     */
     @FXML
     protected void SeConnecterButtonClick() throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -51,35 +55,39 @@ public class InscriptionController {
         stage.setResizable(false);
     }
 
+    /**
+     * Méthode appelée lors du clic sur le bouton "Créer un compte"
+     * @throws IOException
+     */
     @FXML
     protected void CreationCompteButtonClick() throws IOException {
         email = email_text.getText();
-        nom = nom_text.getText();
+        nom = nom_text.getText(); // Récupération des données saisies
         prenom = prenom_text.getText();
         password = password_text.getText();
         tel = tel_text.getText();
 
-        if (!isChampNotEmpty()) {
+        if (!isChampNotEmpty()) { // Vérification que tous les champs sont remplis
             msg_display(Color.RED,"Veuillez saisir tous les champs");
             return;
         }
 
-        if (!isValidFormatEmail()) {
+        if (!isValidFormatEmail()) { // Vérification du format de l'adresse mail
             msg_display(Color.RED,"Adresse mail non valide");
             return;
         }
 
-        if (!isValidFormatNomPrenom()) {
+        if (!isValidFormatNomPrenom()) { // Vérification du format du nom et du prénom
             msg_display(Color.RED,"Nom ou prénom non valide");
             return;
         }
 
-        if (!isValidPhoneNumber()) {
+        if (!isValidPhoneNumber()) { // Vérification du format du numéro de téléphone
             msg_display(Color.RED,"Numéro de téléphone non valide");
             return;
         }
 
-        if (user.is_user_create(email)) {
+        if (user.is_user_create(email)) { // Vérification que le compte n'existe pas déjà
             msg_display(Color.RED,"Ce compte existe déjà");
             return;
         }
@@ -90,44 +98,67 @@ public class InscriptionController {
         // Hachage du mot de passe avec le sel
         password = hashPassword(password, salt);
 
-        user.create_user(new UserInfo(nom, prenom, tel, email, password, salt));
+        user.create_user(new UserInfo(nom, prenom, tel, email, password, salt)); // Création du compte
         msg_display(Color.GREEN,"Votre compte a bien été créé");
-        clearFormFields();
-        this.SeConnecterButtonClick();
+        clearFormFields(); // Réinitialisation des champs
+        this.SeConnecterButtonClick(); // Redirection vers la page de connexion
     }
 
+    /**
+     * Méthode permettant de hacher le mot de passe avec le sel
+     * @param passwordToHash Mot de passe à hacher
+     * @param salt Sel
+     * @return Mot de passe haché
+     */
     private String hashPassword(String passwordToHash, String salt) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest((salt + passwordToHash).getBytes());
-            return Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Erreur lors du hachage du mot de passe", e);
+            MessageDigest digest = MessageDigest.getInstance("SHA-256"); // Algorithme de hachage
+            byte[] hash = digest.digest((salt + passwordToHash).getBytes()); // Hachage du mot de passe avec le sel
+            return Base64.getEncoder().encodeToString(hash); // Encodage du mot de passe haché
+        } catch (NoSuchAlgorithmException e) { // Exception
+            throw new RuntimeException("Erreur lors du hachage du mot de passe", e); // Affichage de l'erreur
         }
     }
 
+    /**
+     * Méthode permettant de générer un sel
+     * @param length Longueur du sel
+     * @return Sel
+     */
     private String generateSalt(int length) {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[length];
+        SecureRandom random = new SecureRandom(); // Générateur de nombre aléatoire
+        byte[] salt = new byte[length]; // Tableau de bytes
         random.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt).substring(0, length);
+        return Base64.getEncoder().encodeToString(salt).substring(0, length); // Encodage du sel
     }
 
+    /**
+     * Méthode permettant de vérifier le format de l'adresse mail
+     * @return Vrai si le format est valide, faux sinon
+     */
     public boolean isValidFormatEmail() {
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(regex);
+        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; // Expression régulière
+        Pattern pattern = Pattern.compile(regex); // Création du pattern
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
+    /**
+     * Méthode permettant de vérifier le format du nom et du prénom
+     * @return Vrai si le format est valide, faux sinon
+     */
     public boolean isValidFormatNomPrenom() {
         String regex = "^[a-zA-Z ]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher_nom = pattern.matcher(nom);
         Matcher matcher_prenom = pattern.matcher(prenom);
-        return matcher_nom.matches() && matcher_prenom.matches();
+        return matcher_nom.matches() && matcher_prenom.matches(); // Vérification du format du nom et du prénom
     }
 
+    /**
+     * Méthode permettant de vérifier le format du numéro de téléphone
+     * @return Vrai si le format est valide, faux sinon
+     */
     public boolean isValidPhoneNumber() {
         String regex = "^[0-9]{10}$";
         Pattern pattern = Pattern.compile(regex);
@@ -135,10 +166,17 @@ public class InscriptionController {
         return matcher.matches();
     }
 
+    /**
+     * Méthode permettant de vérifier que tous les champs sont remplis
+     * @return Vrai si tous les champs sont remplis, faux sinon
+     */
     public boolean isChampNotEmpty() {
         return !email.isEmpty() && !nom.isEmpty() && !prenom.isEmpty() && !password.isEmpty() && !tel.isEmpty();
     }
 
+    /**
+     * Méthode permettant de réinitialiser les champs du formulaire
+     */
     private void clearFormFields() {
         email_text.clear();
         nom_text.clear();
@@ -147,6 +185,11 @@ public class InscriptionController {
         tel_text.clear();
     }
 
+    /**
+     * Méthode permettant d'afficher un message d'erreur
+     * @param color Couleur du message
+     * @param msg Message à afficher
+     */
     private void msg_display(Paint color, String msg)
     {
         msg_error.setTextFill(color);

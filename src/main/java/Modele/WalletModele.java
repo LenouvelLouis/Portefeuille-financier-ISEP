@@ -23,6 +23,10 @@ public class WalletModele {
         }
     }
 
+    /**
+     * Fonction qui vérifie si un wallet existe déjà
+     * @return boolean
+     */
     public boolean is_wallet_create(UserInfo u, String name) {
 
         try {
@@ -41,6 +45,11 @@ public class WalletModele {
             throw new RuntimeException("Error : WalletModele -> is_wallet_create : "+e.getMessage());
         }
     }
+
+    /**
+     * Fonction qui permet de créer un wallet
+     * @param user, name
+     */
     public void create_wallet(UserInfo user,String name) {
         try {
             if (this.conn == null) {
@@ -58,6 +67,11 @@ public class WalletModele {
     }
 
 
+    /**
+     * Fonction qui permet de récupérer les wallets d'un utilisateur
+     * @param u
+     * @return ArrayList<WalletInfo>
+     */
     public ArrayList<WalletInfo> getWalletInfo(UserInfo u){
         ArrayList walletInfoList = new ArrayList<WalletInfo>();
         try {
@@ -86,7 +100,10 @@ public class WalletModele {
         return walletInfoList;
     }
 
-
+    /**
+     * Fonction qui permet mettre à jour le totale d'un wallet
+     * @param walletInfo , v
+     */
     public void updateTotal(WalletInfo walletInfo, float v) {
         try {
             if (this.conn == null) {
@@ -103,6 +120,10 @@ public class WalletModele {
         }
     }
 
+    /**
+     * Fonction qui permet mettre à jour le totale action d'un wallet
+     * @param walletInfo , v
+     */
     public void updateTotaleActions(WalletInfo walletInfo, float v) {
         try {
             if (this.conn == null) {
@@ -119,6 +140,10 @@ public class WalletModele {
         }
     }
 
+    /**
+     * Fonction qui permet mettre à jour le totale crypto d'un wallet
+     * @param walletInfo , v
+     */
     public void updateTotaleCrypto(WalletInfo walletInfo, float v) {
         try {
             if (this.conn == null) {
@@ -135,6 +160,11 @@ public class WalletModele {
         }
     }
 
+    /**
+     * Fonction qui permet de récupérer le totale d'un wallet
+     * @param id
+     * @return float
+     */
     public float getTotale(int id) {
         try {
             if (this.conn == null) {
@@ -153,6 +183,11 @@ public class WalletModele {
         }
     }
 
+    /**
+     * Fonction qui permet de récupérer le totale action d'un wallet
+     * @param id
+     * @return float
+     */
     public float getTotaleAction(int id) {
         try {
             if (this.conn == null) {
@@ -171,6 +206,11 @@ public class WalletModele {
         }
     }
 
+    /**
+     * Fonction qui permet de récupérer le totale crypto d'un wallet
+     * @param id
+     * @return float
+     */
     public float getTotaleCrypto(int id) {
         try {
             if (this.conn == null) {

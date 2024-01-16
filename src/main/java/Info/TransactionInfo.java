@@ -3,6 +3,9 @@ package Info;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+/**
+ * Class qui permet de stocker les informations d'une transaction
+ */
 public class TransactionInfo {
     private int id_wallet;
 

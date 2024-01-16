@@ -2,6 +2,9 @@ package Info;
 
 import java.util.ArrayList;
 
+/**
+ * Class qui permet de stocker les informations d'un utilisateur
+ */
 public class WalletInfo {
 
     private int id;

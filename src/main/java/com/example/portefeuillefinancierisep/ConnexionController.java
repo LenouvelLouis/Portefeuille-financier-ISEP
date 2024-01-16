@@ -29,23 +29,27 @@ public class ConnexionController {
 
     String email, password;
 
+    /**
+     * Vérifie si l'utilisateur existe dans la base de données
+     * @throws IOException
+     */
     @FXML
     private void ConnexionButtonClick() throws IOException {
         email = email_text.getText();
         password = mdp_text.getText();
 
-        if (!isChampNotEmpty()) {
-            msg_display(Color.RED,"Veuillez saisir tous les champs");
+        if (!isChampNotEmpty()) { // Si les champs ne sont pas remplis
+            msg_display(Color.RED,"Veuillez saisir tous les champs"); // Affichage d'un message d'erreur
             return;
         }
 
-        String userSalt = user.getUserSalt(email);
-        String hashedPassword = hashPassword(password, userSalt);
+        String userSalt = user.getUserSalt(email); // Récupération du sel de l'utilisateur
+        String hashedPassword = hashPassword(password, userSalt); // Hachage du mot de passe saisi par l'utilisateur
         try{
-        if (user.checkUserPassword(email, hashedPassword)) {
-            UserInfo u = user.getUserInfo(email);
+        if (user.checkUserPassword(email, hashedPassword)) { // Si le mot de passe saisi correspond au mot de passe haché dans la base de données
+            UserInfo u = user.getUserInfo(email); // Récupération des informations de l'utilisateur
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource("barre-navigation-view.fxml"));
+            loader.setLocation(this.getClass().getResource("barre-navigation-view.fxml")); // Chargement de la barre de navigation
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             BarreNavigationController controller = loader.getController();
@@ -53,7 +57,7 @@ public class ConnexionController {
             controller.Affichage_Dashboard();
             stage.setTitle("Dashboard");
             stage.setScene(scene);
-            ((Stage) this.email_text.getScene().getWindow()).close();
+            ((Stage) this.email_text.getScene().getWindow()).close(); // Fermeture de la fenêtre de connexion
             stage.show();
             stage.setResizable(false);
         } else {
@@ -62,6 +66,11 @@ public class ConnexionController {
             msg_display(Color.RED,"Erreur de connexion avec la base de données");
         }
     }
+
+    /**
+     * Affichage de la page d'inscription
+     * @throws IOException
+     */
     @FXML
     protected void InscriptionButtonClick() {
         try {
@@ -69,9 +78,9 @@ public class ConnexionController {
             loader.setLocation(this.getClass().getResource("inscription-view.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
-            stage.setTitle("Inscription");
+            stage.setTitle("Inscription"); // Titre de la fenêtre
             stage.setScene(scene);
-            ((Stage) this.email_text.getScene().getWindow()).close();
+            ((Stage) this.email_text.getScene().getWindow()).close(); // Fermeture de la fenêtre de connexion
             stage.show();
             stage.setResizable(false);
         } catch (IOException e) {

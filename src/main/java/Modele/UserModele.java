@@ -19,6 +19,10 @@ public class UserModele {
         }
     }
 
+    /**
+     * Fonction qui permet de créer un utilisateur
+     * @param user
+     */
     public void create_user(UserInfo user) {
         try {
             if (this.conn == null) {
@@ -39,6 +43,11 @@ public class UserModele {
         }
     }
 
+    /**
+     * Fonction qui met à jour les informations d'un utilisateur
+     * @param user
+     * @return UserInfo
+     */
     public void updateUserInfo(UserInfo user){
         try {
             if (this.conn == null) {
@@ -58,6 +67,11 @@ public class UserModele {
         }
     }
 
+    /**
+     * Fonction qui permet de récupérer les informations d'un utilisateur
+     * @param mail
+     * @return UserInfo
+     */
     public UserInfo getUserInfo(String mail){
         try {
             if (this.conn == null) {
@@ -86,6 +100,12 @@ public class UserModele {
         }
         return null;
     }
+
+    /**
+     * Fonction qui permet de vérifier si un utilisateur existe
+     * @param mail
+     * @return boolean
+     */
     public boolean is_user_create(String mail) {
         try {
             if (this.conn == null) {
@@ -103,7 +123,11 @@ public class UserModele {
         }
     }
 
-
+    /**
+     * Fonction qui permet de récupérer le sel d'un utilisateur
+     * @param email
+     * @return String
+     */
     public String getUserSalt(String email) {
         try {
             if (this.conn == null) {
@@ -123,7 +147,11 @@ public class UserModele {
         }
         return null;
     }
-
+    /**
+     * Fonction qui permet de vérifier les identifiants d'un utilisateur
+     * @param email, hashedPassword
+     * @return boolean
+     */
     public boolean checkUserPassword(String email, String hashedPassword) {
         try {
             if (this.conn == null) {
@@ -145,6 +173,11 @@ public class UserModele {
         return false;
     }
 
+    /**
+     * Fonction qui permet de mettre à jour les fonds d'un utilisateur
+     * @param userId, amount
+     * @return int
+     */
     public void updateFunds(int userId, float amount) {
         try {
             if (this.conn == null) {

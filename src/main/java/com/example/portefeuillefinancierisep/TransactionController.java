@@ -32,17 +32,15 @@ public class TransactionController {
     Button vendre;
     private UserInfo user;
 
-    private TransactionModele transaction = new TransactionModele();
+    private TransactionModele transaction = new TransactionModele(); //lien vers le modele transaction
 
-    private WalletModele walletModele =new WalletModele();
+    private WalletModele walletModele =new WalletModele(); //lien vers le modele wallet
 
-    private UserModele userModele=new UserModele();
-    private ArrayList<TransactionTypeInfo> entreprise;
-    private ArrayList<TransactionTypeInfo> crypto;
+    private UserModele userModele=new UserModele(); //lien vers le modele user
+    private ArrayList<TransactionTypeInfo> entreprise; //liste des entreprise
+    private ArrayList<TransactionTypeInfo> crypto; //liste des crypto
 
-    private HashMap<String,HashMap<String,Float>> sellActionByWalletvalaible = new HashMap<>();
-
-    private Boolean realvalueDisplay = false;
+    private HashMap<String,HashMap<String,Float>> sellActionByWalletvalaible = new HashMap<>(); //wallet,action,value
 
     @FXML
     Button btnRealvalue;
@@ -59,16 +57,17 @@ public class TransactionController {
     TextField value;
 
     @FXML
-    TextField realvalue;
-
-    @FXML
     Label labelrealvalue;
     @FXML
     Label msg_error;
 
-    private final ArrayList<String> type = new ArrayList<>(Arrays.asList("actions", "crypto"));
-    private List<WalletInfo> w;
+    private final ArrayList<String> type = new ArrayList<>(Arrays.asList("actions", "crypto")); //liste des types
+    private List<WalletInfo> w; //liste des wallet
 
+    /**
+     * Initialisation de l'utilisateur
+     * @param u
+     */
     public void initializeUser(UserInfo u) {
         this.user=u;
         this.entreprise =transaction.getEntreprise();
@@ -82,6 +81,9 @@ public class TransactionController {
         this.value.setText("10");
     }
 
+    /**
+     * Affichage des actions disponibles pour la vente
+     */
     private void initSellActionByWallet() {
         for(WalletInfo w : this.w){
             ArrayList<TransactionInfo> transactionInfos = transaction.getTransactionByWallet(w.getId());
@@ -95,6 +97,9 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Récupération de l'historique des actions
+     */
     private Float historyValue(TransactionInfo t, ArrayList<TransactionInfo> transactionInfos, HashMap sellAction) {
         Float value =0f;
         for(TransactionInfo t2 : transactionInfos){
@@ -105,6 +110,9 @@ public class TransactionController {
         return value;
     }
 
+    /**
+     * Affichage de l'interface de transaction
+     */
     private void displayTransactionInterface(){
         if(this.w.isEmpty()){
             this.HideTransactionInterface();
@@ -118,11 +126,13 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Masquage de l'interface de transaction
+     */
     private void HideTransactionInterface(){
         this.libelle_type.setVisible(false);
         this.value.setVisible(false);
         this.btnRealvalue.setVisible(false);
-        this.realvalue.setVisible(false);
         this.labelrealvalue.setVisible(false);
         this.wallet.setVisible(false);
         this.listtype.setVisible(false);
@@ -131,31 +141,31 @@ public class TransactionController {
         this.walletmsg.setVisible(false);
     }
 
+    /**
+     * Affichage dU message d'erreur
+     */
     private void rezizeTransactionInterface(){
         msg_error.layoutYProperty().setValue(150);
     }
 
+    /**
+     * selection du Type
+     */
     public void selectType() {
         String nom = listtype.getValue();
-        if(nom.equals("actions")){
+        if(nom.equals("actions")){ //si le type est actions
             libelle_type.getItems().clear();
-            this.initEntreprise();
+            this.initEntreprise(); //initialisation des entreprises
         }
         else{
             libelle_type.getItems().clear();
-            this.initCrypto();
+            this.initCrypto(); //initialisation des crypto
         }
     }
 
-    public void displayRealValue(){
-        this.realvalueDisplay=!this.realvalueDisplay;
-        if(this.chekvalue()){
-            this.realvalue.setText(value.getText());
-            this.labelrealvalue.setVisible(realvalueDisplay);
-            this.realvalue.setVisible(realvalueDisplay);
-        }
-    }
-
+    /**
+     * Verifie si la valeur est un nombre
+     */
     private boolean chekvalue(){
         try{
             Float.parseFloat(value.getText());
@@ -166,6 +176,9 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Affichage des crypto
+     */
     private void initCrypto(){
         for(TransactionTypeInfo s : crypto){
             libelle_type.getItems().add(s.getName());
@@ -173,6 +186,9 @@ public class TransactionController {
         libelle_type.setValue(crypto.getFirst().getName());
     }
 
+    /**
+     * Affichage des entreprises
+     */
     private void initEntreprise(){
         for(TransactionTypeInfo s : entreprise){
             libelle_type.getItems().add(s.getName());
@@ -180,6 +196,9 @@ public class TransactionController {
         libelle_type.setValue(entreprise.getFirst().getName());
     }
 
+    /**
+     * Initialisation du type
+     */
     private void initType(){
         listtype.setValue(type.getFirst());
         for(String s : type){
@@ -187,6 +206,9 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Initialisation des wallets
+     */
     private void initWallet(){
         if(!this.w.isEmpty()){
             wallet.setValue(this.w.getFirst().getNom());
@@ -196,12 +218,15 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Acheter une action
+     */
     public void buy(ActionEvent actionEvent) {
-        if(!this.chekvalue()){
+        if(!this.chekvalue()){ //si la valeur n'est pas un nombre
             return;
         }
         Float buyValue = Float.parseFloat(value.getText());
-        if(this.user.getFond()-buyValue<0){
+        if(this.user.getFond()-buyValue<0){ //si les fonds sont insuffisants
             msg_display(Color.RED,"Fonds insufisants");
             return;
         }
@@ -209,18 +234,18 @@ public class TransactionController {
         WalletInfo walletInfo = this.findWalletByName(nomWallet);
         String typeInfo = listtype.getValue();
         String libele=libelle_type.getValue();
-        Timestamp date = new Timestamp(System.currentTimeMillis());
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele);
+        Timestamp date = new Timestamp(System.currentTimeMillis()); //date actuelle
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele); //création de la transaction
         try {
-            if(typeInfo.equals("actions")){
-                this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()+buyValue);
+            if(typeInfo.equals("actions")){ //si le type est actions
+                this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()+buyValue); //mise à jour du total des actions
             }
             if(typeInfo.equals("crypto")){
-                this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale_crypto()+buyValue);
+                this.walletModele.updateTotaleCrypto(walletInfo,walletInfo.getTotale_crypto()+buyValue); //mise à jour du total des crypto
             }
-            this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()+buyValue);
-            this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue);
-            this.transaction.addTransaction(t);
+            this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()+buyValue); //mise à jour du total
+            this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue); //mise à jour des fonds
+            this.transaction.addTransaction(t); //ajout de la transaction
             msg_display(Color.GREEN,"Transaction effectuée");
         }
         catch (RuntimeException e){
@@ -229,27 +254,30 @@ public class TransactionController {
 
     }
 
+    /**
+     * Vendre une action
+     */
     public void sell(ActionEvent actionEvent) {
-        if(!this.chekvalue()){
+        if(!this.chekvalue()){ //si la valeur n'est pas un nombre
             return;
         }
         Float sellValue = Float.parseFloat(value.getText());
         String nomWallet = wallet.getValue();
         WalletInfo walletInfo = this.findWalletByName(nomWallet);
         String typeInfo = listtype.getValue();
-        if(typeInfo.equals("actions") && walletInfo.getTotale_action()-sellValue<0){
+        if(typeInfo.equals("actions") && walletInfo.getTotale_action()-sellValue<0){ //si les fonds sont insuffisants
             msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
-        if(typeInfo.equals("crypto") && walletInfo.getTotale_crypto()-sellValue<0){
+        if(typeInfo.equals("crypto") && walletInfo.getTotale_crypto()-sellValue<0){ //si les fonds sont insuffisants
             msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
-        if(!this.checkSellAction(sellValue,nomWallet,typeInfo)){
+        if(!this.checkSellAction(sellValue,nomWallet,typeInfo)){ //si l'action n'est pas disponible
             this.initSellActionCombo();
-            this.comboBoxSellAction.setVisible(true);
+            this.comboBoxSellAction.setVisible(true); //affichage de la liste des actions disponibles
             this.lableSellAction.setVisible(true);
-            msg_display(Color.RED,"Vous ne pouvez pas vendre cette action");
+            msg_display(Color.RED,"Vous ne pouvez pas vendre cette action"); //affichage d'un message d'erreur
             return;
         }
         String libele=libelle_type.getValue();
@@ -272,6 +300,9 @@ public class TransactionController {
         }
     }
 
+    /**
+     * Affichage des actions disponibles pour la vente
+     */
     private void initSellActionCombo() {
         this.comboBoxSellAction.getItems().clear();
         String nomWallet = wallet.getValue();
@@ -286,6 +317,9 @@ public class TransactionController {
         this.comboBoxSellAction.setValue("Vos actions");
     }
 
+    /**
+     * Vérification si l'action est disponible
+     */
     private boolean checkSellAction(Float sellValue, String nomWallet, String typeInfo) {
         HashMap<String,Float> sellAction = this.sellActionByWalletvalaible.get(nomWallet);
         Float value = sellAction.get(libelle_type.getValue());
@@ -298,6 +332,9 @@ public class TransactionController {
         return true;
     }
 
+    /**
+     * Recupération du wallet par son nom
+     */
     public WalletInfo findWalletByName(String name){
         for (WalletInfo w :this.w){
             if(w.getNom().equals(name)){
@@ -307,6 +344,9 @@ public class TransactionController {
         return null;
     }
 
+    /**
+     * Affichage des messages d'erreur
+     */
     private void msg_display(Paint color, String msg)
     {
         msg_error.setTextFill(color);

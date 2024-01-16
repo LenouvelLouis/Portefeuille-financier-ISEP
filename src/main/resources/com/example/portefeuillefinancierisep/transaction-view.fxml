@@ -26,8 +26,6 @@
                <Font size="14.0" />
            </font>
        </Button>
-      <Button fx:id="btnRealvalue" layoutX="324.0" layoutY="304.0" mnemonicParsing="false" onAction="#displayRealValue" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Afiicher le montant réel " />
-      <TextField fx:id="realvalue" editable="false" layoutX="378.0" layoutY="253.0" visible="false" />
       <Label fx:id="labelrealvalue" layoutX="208.0" layoutY="257.0" text="Montant réel de la transaction :" textFill="WHITE" visible="false" />
       <TextField fx:id="value" layoutX="378.0" layoutY="209.0" promptText="Montant" />
       <ComboBox fx:id="wallet" layoutX="96.0" layoutY="115.0" prefHeight="25.0" prefWidth="150.0" promptText="Vos portefeuilles" AnchorPane.leftAnchor="96.0" />

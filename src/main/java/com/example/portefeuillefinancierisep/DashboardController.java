@@ -75,6 +75,9 @@ public class DashboardController {
         ArrayList<Float> actionsPercents = new ArrayList<>();
         ArrayList<Float> cryptosPercents = new ArrayList<>();
         for (WalletInfo walletInfo : walletInfos){
+            if(walletInfo.getTotale_action()==0 && walletInfo.getTotale_crypto()==0){
+                continue;
+            }
             Float actions =(walletInfo.getTotale_action()*100)/walletInfo.getTotale();
             Float cryptos =(walletInfo.getTotale_crypto()*100)/walletInfo.getTotale();
             actionsPercents.add(actions);

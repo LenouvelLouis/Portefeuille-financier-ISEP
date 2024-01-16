@@ -10,7 +10,6 @@ public class HomeApplication extends Application {
     /**
      * @param stage
      * @throws IOException
-     *
      * Cette fonction permet de lancer l'application
      */
     @Override

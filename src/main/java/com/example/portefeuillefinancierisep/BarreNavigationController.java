@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BarreNavigationController {
     @FXML
@@ -83,6 +85,8 @@ public class BarreNavigationController {
         controller.initializeUser(this.user);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
+
+
 
     /**
      * Affichage de la page de profil
@@ -171,4 +175,6 @@ public class BarreNavigationController {
         this.walletInfos=walletModele.getWalletInfo(this.user);
         this.displayWallet();
     }
+
+
 }

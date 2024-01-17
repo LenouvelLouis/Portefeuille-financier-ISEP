@@ -3,14 +3,20 @@ package com.example.portefeuillefinancierisep;
 import Info.UserInfo;
 import Info.WalletInfo;
 import Modele.WalletModele;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +34,38 @@ public class BarreNavigationController {
 
     private ArrayList<WalletInfo> walletInfos;
 
+    @FXML
+    private Label scrollingLabel;
+
+    @FXML
+    private Button buttonCours;
+
+    private String message = "        Bitcoin atteint un nouveau sommet historique, dépassant les attentes des investisseurs.              Les marchés des actions réagissent positivement aux dernières régulations sur les cryptomonnaies.              Une importante société de technologie blockchain annonce une percée innovante, stimulant les investissements dans le secteur.              Les actions de grandes entreprises de cryptomonnaies chutent suite à des inquiétudes réglementaires croissantes.     ";
+    private int charIndex = 0;
+
+    @FXML
+    private void initialize() {
+        startScrollingMessage();
+    }
+
+    private void startScrollingMessage() {
+        // Vous pouvez ajuster cette valeur pour changer la longueur du texte affiché
+        int displayLength = 25; // Par exemple, augmenter à 20 caractères
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), event -> {
+            String displayed;
+            if (charIndex + displayLength > message.length()) {
+                displayed = message.substring(charIndex) + message.substring(0, displayLength - (message.length() - charIndex));
+            } else {
+                displayed = message.substring(charIndex, charIndex + displayLength);
+            }
+            scrollingLabel.setText(displayed);
+            charIndex = (charIndex + 1) % message.length();
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
     @FXML
     public void Affichage_Add_Wallet() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("add-wallet-view.fxml"));
@@ -134,4 +172,18 @@ public class BarreNavigationController {
         this.walletInfos=walletModele.getWalletInfo(this.user);
         this.displayWallet();
     }
+
+    @FXML
+    public void openCoursView(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cours-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

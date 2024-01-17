@@ -6,12 +6,18 @@ import Info.WalletInfo;
 import Modele.TransactionModele;
 import Modele.WalletModele;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,6 +41,7 @@ public class DashboardController {
     Label Totale;
     @FXML
     LineChart<String, Float> chart;
+
     private UserInfo user;
     private ArrayList<WalletInfo> walletInfos = new ArrayList<>();
 
@@ -252,4 +259,7 @@ public class DashboardController {
         }
         return value;
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.portefeuillefinancierisep;
 
 import Info.TransactionInfo;
+import Info.TransactionTypeInfo;
 import Info.UserInfo;
 import Info.WalletInfo;
 import Modele.TransactionModele;
@@ -114,7 +115,7 @@ public class DashboardController {
                 continue;
             }
             float départ = transactionInfos.getFirst().getValue();
-            float arrivée = walletInfo.getTotale();
+            float arrivée = this.getPatrimoine(transactionInfos);
             float gain = ((arrivée - départ) / (float) départ)*100 ;
             gains.add(gain);
         }
@@ -143,6 +144,21 @@ public class DashboardController {
             Gain.setText("+ "+value + "%");
             Gain.setStyle("-fx-text-fill: green;");
         }
+    }
+
+    private float getPatrimoine(ArrayList<TransactionInfo> transactionInfos) {
+        float patrimoine = 0f;
+        for (TransactionInfo transactionInfo : transactionInfos) {
+            if(transactionInfo.getType().equals("crypto")){
+                TransactionTypeInfo t=walletModele.getCrypto(transactionInfo.getLibelle_type());
+                patrimoine += transactionInfo.getRealvalue()*(float)t.getValue();
+            }
+            else{
+                TransactionTypeInfo t=walletModele.getAction(transactionInfo.getLibelle_type());
+                patrimoine += transactionInfo.getRealvalue()*(float)t.getValue();
+            }
+        }
+        return patrimoine;
     }
 
     private boolean isOneTransaction() {
@@ -208,7 +224,8 @@ public class DashboardController {
         }
         Float totale = 0f;
         for (WalletInfo walletInfo : walletInfos) {
-            totale += walletInfo.getTotale();
+            ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            totale += this.getPatrimoine(transactionInfos);
         }
         Totale.setText(totale.toString() + " €");
     }
@@ -249,12 +266,26 @@ public class DashboardController {
 
     private Float historiqueWallet(TransactionInfo transactionInfo, ArrayList<TransactionInfo> transactionInfos) {
         if (transactionInfos.getFirst().equals(transactionInfo)) {
-            return transactionInfo.getValue();
+            TransactionTypeInfo t;
+            if(transactionInfo.getType().equals("crypto")){
+               t=walletModele.getCrypto(transactionInfo.getLibelle_type());
+            }
+            else{
+                t=walletModele.getAction(transactionInfo.getLibelle_type());
+            }
+            return transactionInfo.getRealvalue()*(float)t.getValue();
         }
         Float value = 0f;
         for (TransactionInfo transactionInfo1 : transactionInfos) {
             if (transactionInfo1.getDate().before(transactionInfo.getDate()) || transactionInfo1.equals(transactionInfo)) {
-                value += transactionInfo1.getValue();
+                if(transactionInfo1.getType().equals("crypto")){
+                    TransactionTypeInfo t=walletModele.getCrypto(transactionInfo1.getLibelle_type());
+                    value += transactionInfo1.getRealvalue()*(float)t.getValue();
+                }
+                else{
+                    TransactionTypeInfo t=walletModele.getAction(transactionInfo1.getLibelle_type());
+                    value += transactionInfo1.getRealvalue()*(float)t.getValue();
+                }
             }
         }
         return value;

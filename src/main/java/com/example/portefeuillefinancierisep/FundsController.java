@@ -22,7 +22,7 @@ public class FundsController {
     @FXML
     protected void handleAddFunds() {
         try {
-            float amount = this.u.getFond()+Float.parseFloat(fundsField.getText());
+            float amount = Float.parseFloat(fundsField.getText());
             int userId = this.u.getId();
             userModel.updateFunds(userId, amount);
             this.u.setFond(amount);

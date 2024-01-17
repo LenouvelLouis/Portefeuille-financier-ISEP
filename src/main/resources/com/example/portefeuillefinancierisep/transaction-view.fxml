@@ -32,7 +32,7 @@
       <ComboBox fx:id="comboBoxSellAction" layoutX="582.0" layoutY="209.0" prefWidth="150.0" visible="false" />
       <Label fx:id="lableSellAction" layoutX="584.0" layoutY="179.0" text="Action disponible à la vente" textFill="WHITE" visible="false" />
         <Label fx:id="labelrealvalue" layoutX="208.0" layoutY="257.0" text="Montant réel de la transaction :" textFill="WHITE" visible="false" />
-        <Button fx:id="btnRealvalue" layoutX="324.0" layoutY="304.0" mnemonicParsing="false" onAction="#displayRealValue" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Afiicher le montant réel " />
+        <Button fx:id="btnRealvalue" layoutX="324.0" layoutY="304.0" mnemonicParsing="false" onAction="#displayRealValue" style="-fx-background-radius: 90; -fx-background-color: #f5cba7;" text="Afficher le montant réel " />
         <TextField fx:id="realvalue" editable="false" layoutX="378.0" layoutY="253.0" visible="false" />
     </children>
 </AnchorPane>

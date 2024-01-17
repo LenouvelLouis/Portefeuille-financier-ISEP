@@ -10,16 +10,15 @@ import Modele.WalletModele;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.*;
 
 public class TransactionController {
+    @FXML
+    TextField realvalue;
     @FXML
     ComboBox comboBoxSellAction;
     @FXML
@@ -60,6 +59,8 @@ public class TransactionController {
     Label labelrealvalue;
     @FXML
     Label msg_error;
+
+    private boolean realvalueDisplay=false;
 
     private final ArrayList<String> type = new ArrayList<>(Arrays.asList("actions", "crypto")); //liste des types
     private List<WalletInfo> w; //liste des wallet
@@ -163,9 +164,41 @@ public class TransactionController {
         }
     }
 
-    /**
-     * Verifie si la valeur est un nombre
-     */
+
+    public void displayRealValue(){
+        this.realvalueDisplay=!this.realvalueDisplay;
+        String nameType =libelle_type.getValue();
+        String montant=value.getText();
+        Float value = 0f;
+        try {
+            value=Float.parseFloat(montant);
+        }catch (RuntimeException e){
+            msg_display(Color.RED,"Veuillez saisir une valeur numérique");
+            return;
+        }
+        TransactionTypeInfo t = this.findTransactionTypeByName(nameType);
+        if(this.chekvalue()){
+            Float cours = (float) t.getValue();
+            this.realvalue.setText(String.valueOf((value/cours)));
+            this.labelrealvalue.setVisible(realvalueDisplay);
+            this.realvalue.setVisible(realvalueDisplay);
+        }
+    }
+
+    private TransactionTypeInfo findTransactionTypeByName(String nameType) {
+        for(TransactionTypeInfo t : this.entreprise){
+            if(t.getName().equals(nameType)){
+                return t;
+            }
+        }
+        for(TransactionTypeInfo t : this.crypto){
+            if(t.getName().equals(nameType)){
+                return t;
+            }
+        }
+        return null;
+    }
+
     private boolean chekvalue(){
         try{
             Float.parseFloat(value.getText());
@@ -234,8 +267,10 @@ public class TransactionController {
         WalletInfo walletInfo = this.findWalletByName(nomWallet);
         String typeInfo = listtype.getValue();
         String libele=libelle_type.getValue();
-        Timestamp date = new Timestamp(System.currentTimeMillis()); //date actuelle
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele); //création de la transaction
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        this.displayRealValue();
+        Float realvalue = Float.parseFloat(this.realvalue.getText());
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele,realvalue);
         try {
             if(typeInfo.equals("actions")){ //si le type est actions
                 this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()+buyValue); //mise à jour du total des actions
@@ -282,7 +317,8 @@ public class TransactionController {
         }
         String libele=libelle_type.getValue();
         Timestamp date = new Timestamp(System.currentTimeMillis());
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,date,typeInfo,libele);
+        Float realvalue = Float.parseFloat(this.realvalue.getText());
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,date,typeInfo,libele, realvalue);
         try {
             if(typeInfo.equals("actions")){
                 this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()-sellValue);

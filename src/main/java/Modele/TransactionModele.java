@@ -2,7 +2,6 @@ package Modele;
 
 import Info.TransactionInfo;
 import Info.TransactionTypeInfo;
-import Info.UserInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,6 +30,34 @@ public class TransactionModele {
      * Fonction qui permet de récupérer les entreprises
      * @return ArrayList<TransactionTypeInfo>
      */
+    public static void updateCryptoPrice(String name, double price) {
+        try {
+            Connection conn = ConnectDB.ConnectMariaDB();
+            String sql = "UPDATE wallet_db.crypto SET value = ? WHERE nom = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setDouble(1, price);
+                pst.setString(2, name);
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : TransactionModele -> updateCryptoPrice : "+e.getMessage());
+        }
+    }
+
+    public static void updateActionPrice(String symbol, Number value) {
+        try {
+            Connection conn = ConnectDB.ConnectMariaDB();
+            String sql = "UPDATE wallet_db.entreprise SET value = ? WHERE nom = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setDouble(1, value.doubleValue());
+                pst.setString(2, symbol);
+                pst.executeUpdate();
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : TransactionModele -> updateActionPrice : "+e.getMessage());
+        }
+    }
+
     public ArrayList<TransactionTypeInfo> getEntreprise(){
         ArrayList<TransactionTypeInfo> transactionTypeInfoList = new ArrayList<TransactionTypeInfo>();
         try {
@@ -42,9 +69,9 @@ public class TransactionModele {
                 try (ResultSet rs = pst.executeQuery()) { // On exécute la requête
                     while (rs.next()){ // On parcours les résultats
                         String nom = rs.getString("nom");
-                        TransactionTypeInfo w = new TransactionTypeInfo(nom);
-                        transactionTypeInfoList.add(w); // On ajoute les résultats dans une liste
-                    }
+                        Double value = rs.getDouble("value");
+                        TransactionTypeInfo w = new TransactionTypeInfo(nom,value);
+                        transactionTypeInfoList.add(w);}
                 }
             }
         } catch (SQLException | RuntimeException e) { // Si il y a une erreur
@@ -68,7 +95,8 @@ public class TransactionModele {
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()){
                         String nom = rs.getString("nom");
-                        TransactionTypeInfo w = new TransactionTypeInfo(nom);
+                        Double value = rs.getDouble("value");
+                        TransactionTypeInfo w = new TransactionTypeInfo(nom,value);
                         transactionTypeInfoList.add(w);
                     }
                 }
@@ -87,13 +115,14 @@ public class TransactionModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type,real_value) VALUES (?, ?, ?, ?, ?,?)";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setInt(1, t.getId_wallet());
                 pst.setFloat(2, t.getValue());
                 pst.setTimestamp(3, t.getDate());
                 pst.setString(4,t.getType());
                 pst.setString(5,t.getLibelle_type());
+                pst.setFloat(6,t.getRealvalue());
                 pst.executeUpdate();
             }
         } catch (SQLException | RuntimeException e) {
@@ -117,13 +146,13 @@ public class TransactionModele {
                 pst.setInt(1, id);
                 try (ResultSet rs = pst.executeQuery()) {
                     while (rs.next()) {
-
                         int id_wallet = rs.getInt("id_wallet");
                         float value = rs.getFloat("value");
                         Timestamp date = rs.getTimestamp("date");
                         String type = rs.getString("type");
                         String libelle_type = rs.getString("libelle_type");
-                        TransactionInfo t = new TransactionInfo(id_wallet,value, date, type, libelle_type);
+                        Float realvalue = rs.getFloat("real_value");
+                        TransactionInfo t = new TransactionInfo(id_wallet,value, date, type, libelle_type, realvalue);
                         transactionInfos.add(t);
                     }
                 }

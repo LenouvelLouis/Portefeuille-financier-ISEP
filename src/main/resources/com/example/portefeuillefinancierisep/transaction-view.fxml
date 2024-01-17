@@ -32,5 +32,7 @@
       <Label fx:id="walletmsg" layoutX="232.0" layoutY="213.0" text="Veuillez saisir un montant :" textFill="WHITE" />
       <ComboBox fx:id="comboBoxSellAction" layoutX="582.0" layoutY="209.0" prefWidth="150.0" visible="false" />
       <Label fx:id="lableSellAction" layoutX="584.0" layoutY="179.0" text="Action disponible à la vente" textFill="WHITE" visible="false" />
+      <TextField fx:id="realvalue" editable="false" layoutX="378.0" layoutY="274.0" />
+      <Button onAction="#displayRealValue" layoutX="220.0" layoutY="274.0" mnemonicParsing="false" text="Button" />
     </children>
 </AnchorPane>

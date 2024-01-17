@@ -10,6 +10,18 @@ create or replace table entreprise
         primary key
 );
 
+CREATE TABLE evenements (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            description VARCHAR(255) NOT NULL,
+                            date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO evenements (description) VALUES ('bonjour1');
+INSERT INTO evenements (description) VALUES ('bonjour2');
+INSERT INTO evenements (description) VALUES ('bonjour3');
+INSERT INTO evenements (description) VALUES ('bonjour4');
+INSERT INTO evenements (description) VALUES ('bonjour5');
+
 INSERT INTO entreprise (nom) VALUES ('Total');
 INSERT INTO entreprise (nom) VALUES ('Cocacola');
 INSERT INTO entreprise (nom) VALUES ('Mcdonalds');

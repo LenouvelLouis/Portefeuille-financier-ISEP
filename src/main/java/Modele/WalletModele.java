@@ -1,5 +1,6 @@
 package Modele;
 
+import Info.TransactionTypeInfo;
 import Info.UserInfo;
 import Info.WalletInfo;
 
@@ -226,6 +227,46 @@ public class WalletModele {
             }
         } catch (SQLException | RuntimeException e) {
             throw new RuntimeException("Error : WalletModele -> getTotaleCrypto : "+e.getMessage());
+        }
+    }
+
+    public TransactionTypeInfo getCrypto(String libelleType) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT * FROM wallet_db.crypto WHERE nom = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, libelleType);
+                try (ResultSet rs = pst.executeQuery()) {
+                    rs.next();
+                    String nom = rs.getString("nom");
+                    Double value = rs.getDouble("value");
+                    return new TransactionTypeInfo(nom,value);
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> getCrypto : "+e.getMessage());
+        }
+    }
+
+    public TransactionTypeInfo getAction(String libelleType) {
+        try {
+            if (this.conn == null) {
+                this.initConnection();
+            }
+            String sql = "SELECT * FROM wallet_db.entreprise WHERE nom = ?";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, libelleType);
+                try (ResultSet rs = pst.executeQuery()) {
+                    rs.next();
+                    String nom = rs.getString("nom");
+                    Double value = rs.getDouble("value");
+                    return new TransactionTypeInfo(nom,value);
+                }
+            }
+        } catch (SQLException | RuntimeException e) {
+            throw new RuntimeException("Error : WalletModele -> getAction : "+e.getMessage());
         }
     }
 }

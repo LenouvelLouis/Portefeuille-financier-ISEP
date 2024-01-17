@@ -1,6 +1,5 @@
 package Info;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -15,12 +14,19 @@ public class TransactionInfo {
     private String type;
     private String libelle_type;
 
-    public TransactionInfo(int id_wallet, Float value, Timestamp date, String type, String libelle_type) {
+    private Float realvalue;
+
+    public TransactionInfo(int id_wallet, Float value, Timestamp date, String type, String libelle_type, Float realvalue) {
         this.id_wallet = id_wallet;
         this.value = value;
         this.date = date;
         this.type = type;
         this.libelle_type = libelle_type;
+        this.realvalue = realvalue;
+    }
+
+    public Float getRealvalue() {
+        return realvalue;
     }
 
     public int getId_wallet() {

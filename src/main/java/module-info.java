@@ -4,6 +4,8 @@ module com.example.portefeuillefinancierisep {
     requires java.sql;
     requires java.sql.rowset;
     requires org.mariadb.jdbc;
+    requires java.net.http;
+    requires org.json;
     opens com.example.portefeuillefinancierisep to javafx.fxml;
     exports com.example.portefeuillefinancierisep;
     exports Modele;

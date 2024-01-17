@@ -85,6 +85,9 @@ public class DashboardController {
         for (WalletInfo walletInfo : walletInfos){
             Float actions =(walletInfo.getTotale_action()*100)/walletInfo.getTotale();
             Float cryptos =(walletInfo.getTotale_crypto()*100)/walletInfo.getTotale();
+            if(actions.isNaN() || cryptos.isNaN()){
+                continue;
+            }
             actionsPercents.add(actions);
             cryptosPercents.add(cryptos);
         }

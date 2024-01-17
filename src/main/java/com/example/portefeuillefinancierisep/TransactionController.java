@@ -300,6 +300,13 @@ public class TransactionController {
         String nomWallet = wallet.getValue();
         WalletInfo walletInfo = this.findWalletByName(nomWallet);
         String typeInfo = listtype.getValue();
+        if(!this.checkSellAction(sellValue,nomWallet,typeInfo)){ //si l'action n'est pas disponible
+            this.initSellActionCombo();
+            this.comboBoxSellAction.setVisible(true); //affichage de la liste des actions disponibles
+            this.lableSellAction.setVisible(true);
+            msg_display(Color.RED,"Vous ne pouvez pas vendre cette action"); //affichage d'un message d'erreur
+            return;
+        }
         if(typeInfo.equals("actions") && walletInfo.getTotale_action()-sellValue<0){ //si les fonds sont insuffisants
             msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
@@ -308,13 +315,7 @@ public class TransactionController {
             msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
-        if(!this.checkSellAction(sellValue,nomWallet,typeInfo)){ //si l'action n'est pas disponible
-            this.initSellActionCombo();
-            this.comboBoxSellAction.setVisible(true); //affichage de la liste des actions disponibles
-            this.lableSellAction.setVisible(true);
-            msg_display(Color.RED,"Vous ne pouvez pas vendre cette action"); //affichage d'un message d'erreur
-            return;
-        }
+
         String libele=libelle_type.getValue();
         this.displayRealValue();
         Timestamp date = new Timestamp(System.currentTimeMillis());

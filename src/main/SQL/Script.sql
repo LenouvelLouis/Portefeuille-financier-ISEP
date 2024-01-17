@@ -1,39 +1,30 @@
 create or replace table crypto
 (
-    nom varchar(50) not null
-        primary key
+    nom   varchar(50)      not null
+        primary key,
+    value double default 0 null
 );
 
 create or replace table entreprise
 (
-    nom varchar(50) not null
-        primary key
+    nom   varchar(50)      not null
+        primary key,
+    value double default 0 null
 );
 
-CREATE TABLE evenements (
-                            id INT AUTO_INCREMENT PRIMARY KEY,
-                            description VARCHAR(255) NOT NULL,
-                            date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
-INSERT INTO evenements (description) VALUES ('bonjour1');
-INSERT INTO evenements (description) VALUES ('bonjour2');
-INSERT INTO evenements (description) VALUES ('bonjour3');
-INSERT INTO evenements (description) VALUES ('bonjour4');
-INSERT INTO evenements (description) VALUES ('bonjour5');
-
-INSERT INTO entreprise (nom) VALUES ('Total');
-INSERT INTO entreprise (nom) VALUES ('Cocacola');
-INSERT INTO entreprise (nom) VALUES ('Mcdonalds');
-INSERT INTO entreprise (nom) VALUES ('Nike');
-INSERT INTO entreprise (nom) VALUES ('Samsung');
-INSERT INTO crypto (nom) VALUES ('BNB');
-INSERT INTO crypto (nom) VALUES ('BTC');
-INSERT INTO crypto (nom) VALUES ('ETH');
-INSERT INTO crypto (nom) VALUES ('SOL');
-INSERT INTO crypto (nom) VALUES ('STETH');
-
-
+INSERT INTO entreprise (nom, value) VALUES ('Apple', 186.4);
+INSERT INTO entreprise (nom, value) VALUES ('Google', 132.59);
+INSERT INTO entreprise (nom, value) VALUES ('Tesla', 214.65);
+INSERT INTO crypto (nom, value) VALUES ('Binancecoin', 15.79);
+INSERT INTO crypto (nom, value) VALUES ('Bitcoin', 42675);
+INSERT INTO crypto (nom, value) VALUES ('Cardano', 0.528285);
+INSERT INTO crypto (nom, value) VALUES ('Chainlink', 69.51);
+INSERT INTO crypto (nom, value) VALUES ('Ethereum', 2540.14);
+INSERT INTO crypto (nom, value) VALUES ('Litecoin', 0.571183);
+INSERT INTO crypto (nom, value) VALUES ('Polkadot', 7.34);
+INSERT INTO crypto (nom, value) VALUES ('Ripple', 309.66);
+INSERT INTO crypto (nom, value) VALUES ('Stellar', 0.118963);
 
 create or replace table user
 (
@@ -69,43 +60,11 @@ create or replace table transaction
 (
     id_wallet    int                        not null,
     value        float                      null,
-    date         timestamp                      not null,
+    date         timestamp                  not null,
     type         enum ('actions', 'crypto') not null,
     libelle_type varchar(50)                not null,
+    real_value   float                      null,
+    value_cours  double                     null,
     constraint wallet_value_wallet_user_id_fk
         foreign key (id_wallet) references wallet_user (id)
 );
-INSERT INTO user (nom, prenom, tel, mail, h_mdp, salt) VALUES ('Lenouvel','Louis',9876543210,'Louis@gg.fr','AG28eWuHs9+rlejUiOtjv25WhXjf95+lEoVkN5RQP84=','8VgE/7F');
-INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('wallettest', 50, 1, 10, 40);
-INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('test', 1000, 1, 600, 400);
-INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('new', 200, 1, 100, 100);
-INSERT INTO wallet_user (name, totale, id_user, totale_action, totale_crypto) VALUES ('louis', 300, 1, 150, 150);
-
-
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 30, '2023-01-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -20, '2023-02-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (3, 50, '2023-03-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (3, -10, '2023-04-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (9, 1000, '2023-01-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (9, -400, '2023-02-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (9, 600, '2023-03-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (9, -200, '2023-04-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (10, 200, '2023-01-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (10, -100, '2023-02-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (10, 150, '2023-03-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (10, -50, '2023-04-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (11, 300, '2023-01-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (11, -150, '2023-02-01 00:00:00', 'actions', 'Total');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (11, 250, '2023-03-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (11, -100, '2023-04-01 00:00:00', 'crypto', 'BTC');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (16, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (16, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (16, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (16, 20, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (16, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (18, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (20, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (20, 10, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type) VALUES (20, -5, '2024-01-14 00:00:00', 'actions', 'Cocacola');
-
-

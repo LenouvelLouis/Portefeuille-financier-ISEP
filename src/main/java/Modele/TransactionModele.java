@@ -115,7 +115,7 @@ public class TransactionModele {
             if (this.conn == null) {
                 this.initConnection();
             }
-            String sql = "INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type,real_value) VALUES (?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO wallet_db.transaction (id_wallet, value, date, type, libelle_type,real_value,value_cours) VALUES (?, ?, ?, ?, ?,?,?)";
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setInt(1, t.getId_wallet());
                 pst.setFloat(2, t.getValue());
@@ -123,6 +123,7 @@ public class TransactionModele {
                 pst.setString(4,t.getType());
                 pst.setString(5,t.getLibelle_type());
                 pst.setFloat(6,t.getRealvalue());
+                pst.setDouble(7,t.getValue_cours());
                 pst.executeUpdate();
             }
         } catch (SQLException | RuntimeException e) {
@@ -152,7 +153,8 @@ public class TransactionModele {
                         String type = rs.getString("type");
                         String libelle_type = rs.getString("libelle_type");
                         Float realvalue = rs.getFloat("real_value");
-                        TransactionInfo t = new TransactionInfo(id_wallet,value, date, type, libelle_type, realvalue);
+                        Double value_cours = rs.getDouble("value_cours");
+                        TransactionInfo t = new TransactionInfo(id_wallet,value, date, type, libelle_type, realvalue,value_cours);
                         transactionInfos.add(t);
                     }
                 }

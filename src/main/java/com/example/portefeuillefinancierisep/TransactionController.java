@@ -93,7 +93,6 @@ public class TransactionController {
                 Float value = this.historyValue(t,transactionInfos,sellAction);
                 sellAction.put(t.getLibelle_type(),value);
             }
-
             this.sellActionByWalletvalaible.put(w.getNom(),sellAction);
         }
     }
@@ -270,7 +269,8 @@ public class TransactionController {
         Timestamp date = new Timestamp(System.currentTimeMillis());
         this.displayRealValue();
         Float realvalue = Float.parseFloat(this.realvalue.getText());
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele,realvalue);
+        TransactionTypeInfo cours = this.findTransactionTypeByName(libele);
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),buyValue,date,typeInfo,libele,realvalue,cours.getValue());
         try {
             if(typeInfo.equals("actions")){ //si le type est actions
                 this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()+buyValue); //mise à jour du total des actions
@@ -316,9 +316,11 @@ public class TransactionController {
             return;
         }
         String libele=libelle_type.getValue();
+        this.displayRealValue();
         Timestamp date = new Timestamp(System.currentTimeMillis());
         Float realvalue = Float.parseFloat(this.realvalue.getText());
-        TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,date,typeInfo,libele, realvalue);
+        TransactionTypeInfo cours = this.findTransactionTypeByName(libele);
+        TransactionInfo t = new TransactionInfo(walletInfo.getId(),-sellValue,date,typeInfo,libele, realvalue,cours.getValue());
         try {
             if(typeInfo.equals("actions")){
                 this.walletModele.updateTotaleActions(walletInfo,walletInfo.getTotale_action()-sellValue);

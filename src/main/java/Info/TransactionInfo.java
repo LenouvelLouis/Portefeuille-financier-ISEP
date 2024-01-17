@@ -16,15 +16,21 @@ public class TransactionInfo {
 
     private Float realvalue;
 
-    public TransactionInfo(int id_wallet, Float value, Timestamp date, String type, String libelle_type, Float realvalue) {
+    private double value_cours;
+
+    public TransactionInfo(int id_wallet, Float value, Timestamp date, String type, String libelle_type, Float realvalue, double value_cours) {
         this.id_wallet = id_wallet;
         this.value = value;
         this.date = date;
         this.type = type;
         this.libelle_type = libelle_type;
         this.realvalue = realvalue;
+        this.value_cours = value_cours;
     }
 
+    public double getValue_cours() {
+        return value_cours;
+    }
     public Float getRealvalue() {
         return realvalue;
     }

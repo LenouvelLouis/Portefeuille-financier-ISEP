@@ -184,6 +184,9 @@ public class BarreNavigationController {
             return;
         }
         String name =walletList.getValue();
+        if(name==null ||name.equals("Selectionner un portefeuille") ){
+            return;
+        }
         WalletInfo walletInfo = this.findWallet(name);
         ArrayList<WalletInfo> w = new ArrayList<>();
         w.add(walletInfo);

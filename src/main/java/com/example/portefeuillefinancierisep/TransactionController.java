@@ -201,7 +201,7 @@ public class TransactionController {
     private boolean chekvalue(){
         try{
             Float.parseFloat(value.getText());
-            return true;
+            return !value.getText().isEmpty();
         }catch (RuntimeException e){
             msg_display(Color.RED,"Veuillez saisir une valeur numérique");
             return false;
@@ -282,11 +282,16 @@ public class TransactionController {
             this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue); //mise à jour des fonds
             this.transaction.addTransaction(t); //ajout de la transaction
             msg_display(Color.GREEN,"Transaction effectuée");
-        }
+            this.clearForm();        }
         catch (RuntimeException e){
             msg_display(Color.RED,"Erreur lors de la transaction");
         }
 
+    }
+
+    private void clearForm() {
+        this.value.clear();
+        this.realvalue.clear();
     }
 
     /**
@@ -320,7 +325,6 @@ public class TransactionController {
             msg_display(Color.RED,"Fonds insufisants sur votre wallet");
             return;
         }
-
         String libele=libelle_type.getValue();
         this.displayRealValue();
         Timestamp date = new Timestamp(System.currentTimeMillis());
@@ -338,6 +342,7 @@ public class TransactionController {
             this.userModele.updateFunds(this.user.getId(), this.user.getFond() + sellValue);
             this.transaction.addTransaction(t);
             msg_display(Color.GREEN,"Transaction effectuée");
+            this.clearForm();
         }
         catch (RuntimeException e){
             msg_display(Color.RED,"Erreur lors de la transaction");

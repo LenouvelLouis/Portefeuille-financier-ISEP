@@ -81,10 +81,36 @@ public class DashboardController {
      */
     private void updateInfoWallet() {
         for (WalletInfo walletInfo : walletInfos) {
-            walletInfo.setTotale(walletModele.getTotale(walletInfo.getId()));
-            walletInfo.setTotale_action(walletModele.getTotaleAction(walletInfo.getId()));
-            walletInfo.setTotale_crypto(walletModele.getTotaleCrypto(walletInfo.getId()));
+            walletInfo.setTotale(this.getPatrimoine(walletInfo.getTransaction()));
+            walletInfo.setTotale_action(this.getPatrimoineAction(walletInfo.getTransaction()));
+            walletInfo.setTotale_crypto(this.getPatrimoineCrypto(walletInfo.getTransaction()));
         }
+    }
+
+    /**
+     * Méthode qui initialise le patrimoine en cryptomonnaies
+     */
+    private float getPatrimoineCrypto(ArrayList<TransactionInfo> transaction) {
+        float patrimoine = 0f;
+        for (TransactionInfo transactionInfo : transaction) {
+            if(transactionInfo.getType().equals("crypto")){
+                patrimoine += transactionInfo.getRealvalue()*(float)transactionInfo.getValue_cours();
+            }
+        }
+        return patrimoine;
+    }
+
+    /**
+     * Méthode qui initialise le patrimoine en actions
+     */
+    private float getPatrimoineAction(ArrayList<TransactionInfo> transaction) {
+        float patrimoine = 0f;
+        for (TransactionInfo transactionInfo : transaction) {
+            if(transactionInfo.getType().equals("actions")){
+                patrimoine += transactionInfo.getRealvalue()*(float)transactionInfo.getValue_cours();
+            }
+        }
+        return patrimoine;
     }
 
     private void displaywithoutWallet() {

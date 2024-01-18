@@ -61,6 +61,7 @@ public class HomeController {
     @FXML
     protected void InscriptionButtonClick() {
         loadCryptoData();
+        getAllStockPrices();
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource("inscription-view.fxml"));
@@ -76,6 +77,9 @@ public class HomeController {
         }
     }
 
+    /**
+     * Méthode qui permet de récupérer les données des cryptomonnaies
+     */
     private void loadCryptoData() {
         String apiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&ids=bitcoin,ethereum,ripple,litecoin,cardano,polkadot,binancecoin,chainlink,stellar";
 
@@ -89,6 +93,9 @@ public class HomeController {
                 .exceptionally(this::handleError);
     }
 
+    /**
+     * Méthode qui permet de mettre à jour les données des cryptomonnaies
+     */
     private void updateCryptoData(String responseBody) {
             Platform.runLater(() -> {
                 JSONArray jsonArray = new JSONArray(responseBody);
@@ -130,6 +137,9 @@ public class HomeController {
             });
     }
 
+    /**
+     * Méthode qui permet de récupérer les données des actions
+     */
     public String getStockData(String symbol) {
         HttpClient client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
@@ -156,7 +166,10 @@ public class HomeController {
 
     }
 
-    public Map<String, Double> getAllStockPrices() {
+    /**
+     * Méthode qui permet de mettre à jour les données des actions
+     */
+    public void getAllStockPrices() {
         Map<String, Double> prices = new HashMap<>();
         String[] symbols = {"AAPL", "GOOGL", "TSLA"};
 
@@ -166,7 +179,6 @@ public class HomeController {
                 try {
                     JSONObject jsonObject = new JSONObject(rawData);
                     if (!jsonObject.has("Time Series (Daily)")) {
-                        System.err.println("Time Series (Daily) not found for symbol: " + symbol);
                         continue;
                     }
                     JSONObject timeSeries = jsonObject.getJSONObject("Time Series (Daily)");
@@ -191,35 +203,10 @@ public class HomeController {
                 }
             }
         }
-        return prices;
     }
-
-    public double getCurrentStockPrice(String symbol) {
-        try {
-            String rawData = getStockData(symbol);
-            if (rawData != null) {
-                JSONObject jsonObject = new JSONObject(rawData);
-                if (!jsonObject.has("Time Series (Daily)")) {
-                    return -1;
-                }
-                JSONObject timeSeries = jsonObject.getJSONObject("Time Series (Daily)");
-
-                // Get the latest available date
-                String latestDate = timeSeries.keys().next();
-
-                // Get the latest close price directly
-                double latestClosePrice = timeSeries.getJSONObject(latestDate).getDouble("4. close");
-
-                System.out.println("Latest close price for " + symbol + ": " + latestClosePrice); // Add this line if needed
-                return latestClosePrice;
-            }
-            return -1;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
+    /**
+     * Méthode qui permet de gérer les erreurs
+     */
     private Void handleError(Throwable throwable) {
         Platform.runLater(() -> {
         });

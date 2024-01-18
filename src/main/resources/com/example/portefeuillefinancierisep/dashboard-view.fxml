@@ -29,7 +29,7 @@
          <children>
             <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #9B59B6; -fx-background-radius: 10;">
                <children>
-                  <Label layoutX="76.0" layoutY="78.0" text="Cypto" textFill="WHITE">
+                  <Label layoutX="76.0" layoutY="78.0" text="Crypto" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>

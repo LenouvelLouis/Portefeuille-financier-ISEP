@@ -61,11 +61,6 @@ public class UserInfo {
     public void setPrenom(String prenom) { this.prenom = prenom; }
     public void setTel(String tel) { this.tel = tel; }
     public void setMail(String mail) { this.mail = mail; }
-    public void setH_mdp(String h_mdp) { this.h_mdp = h_mdp; }
-    public void setSalt(String salt) { this.salt = salt; }
-    public void setWalletInfos(ArrayList<WalletInfo> walletInfos) {
-        this.walletInfos = walletInfos;
-    }
 
     public ArrayList<WalletInfo> getWalletInfos() {
         return walletInfos;
@@ -73,5 +68,9 @@ public class UserInfo {
 
     public void setFond(float amount) {
         this.fond = amount;
+    }
+
+    public void setWalletInfos(ArrayList<WalletInfo> walletInfo) {
+        this.walletInfos = walletInfo;
     }
 }

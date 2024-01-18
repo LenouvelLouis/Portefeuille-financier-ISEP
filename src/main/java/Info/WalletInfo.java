@@ -26,9 +26,6 @@ public class WalletInfo {
         return nom;
     }
 
-    public int getId_user() {
-        return id_user;
-    }
 
     public float getTotale() {
         return totale;
@@ -63,5 +60,13 @@ public class WalletInfo {
         this.totale = totale;
         this.totale_action = totale_action;
         this.totale_crypto = totale_crypto;
+    }
+
+    public void setTransaction(ArrayList<TransactionInfo> transactionByWallet) {
+        this.transactionInfos = transactionByWallet;
+    }
+
+    public ArrayList<TransactionInfo> getTransaction() {
+        return transactionInfos;
     }
 }

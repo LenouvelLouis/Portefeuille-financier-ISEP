@@ -61,12 +61,19 @@ public class DashboardController {
             this.msg_display(Paint.valueOf("red"), "Vous n'avez pas de portefeuille");
             return;
         }
+        this.initTransaction();
         this.updateInfoWallet();
         this.initDataPoints();
         this.iniTotale();
         this.initDate();
         this.initGain();
         this.initPercent();
+    }
+
+    private void initTransaction() {
+        for (WalletInfo walletInfo : walletInfos) {
+            walletInfo.setTransaction( transactionModele.getTransactionByWallet(walletInfo.getId()));
+        }
     }
 
     /**
@@ -128,7 +135,7 @@ public class DashboardController {
     private void initGain() {
         ArrayList<Float> gains = new ArrayList<>();
         for (WalletInfo walletInfo : walletInfos) { // Pour chaque portefeuille
-            ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            ArrayList<TransactionInfo> transactionInfos = walletInfo.getTransaction();
             if(transactionInfos.isEmpty()){ // Si le portefeuille est vide
                 continue;
             }
@@ -180,7 +187,7 @@ public class DashboardController {
      */
     private boolean isOneTransaction() {
         for(WalletInfo walletInfo : walletInfos) {
-            if(transactionModele.getTransactionByWallet(walletInfo.getId()).size() != 1) { // Si le portefeuille n'a pas qu'une transaction
+            if(walletInfo.getTransaction().size() != 1) { // Si le portefeuille n'a pas qu'une transaction
                 return false;
             }
         }
@@ -207,7 +214,7 @@ public class DashboardController {
      */
     private boolean isEmptyWallet() {
         for(WalletInfo walletInfo : walletInfos) {
-            if(!transactionModele.getTransactionByWallet(walletInfo.getId()).isEmpty()) {
+            if(!walletInfo.getTransaction().isEmpty()) {
                 return false;
             }
         }
@@ -220,7 +227,7 @@ public class DashboardController {
     private Timestamp getFirstDate() {
         Timestamp date = new Timestamp(System.currentTimeMillis());
         for (WalletInfo walletInfo : walletInfos) {
-            ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            ArrayList<TransactionInfo> transactionInfos = walletInfo.getTransaction();
             for (TransactionInfo transactionInfo : transactionInfos) {
                 if(transactionInfo.getDate().before(date)){ // Si la date de la transaction est avant la date actuelle
                     date = transactionInfo.getDate(); // On change la date
@@ -236,7 +243,7 @@ public class DashboardController {
     private Timestamp getLastDate() {
         Timestamp date =new Timestamp(0);
         for (WalletInfo walletInfo : walletInfos) {
-            ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            ArrayList<TransactionInfo> transactionInfos = walletInfo.getTransaction();
             for (TransactionInfo transactionInfo : transactionInfos) {
                 if(transactionInfo.getDate().after(date)){ // Si la date de la transaction est après la date actuelle
                     date = transactionInfo.getDate(); // On change la date
@@ -256,7 +263,7 @@ public class DashboardController {
         }
         Float totale = 0f;
         for (WalletInfo walletInfo : walletInfos) {
-            ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            ArrayList<TransactionInfo> transactionInfos = walletInfo.getTransaction();
             totale += this.getPatrimoine(transactionInfos); // On ajoute la valeur du portefeuille
         }
         Totale.setText(totale.toString() + " €"); // On affiche la valeur du portefeuille
@@ -287,7 +294,7 @@ public class DashboardController {
             chart.setTitle("Evolution des portefeuilles");
         }
         for (WalletInfo walletInfo : walletInfos) {
-            ArrayList<TransactionInfo> transactionInfos = transactionModele.getTransactionByWallet(walletInfo.getId());
+            ArrayList<TransactionInfo> transactionInfos = walletInfo.getTransaction();
             XYChart.Series<String, Float> series = new XYChart.Series<>(); // On crée une nouvelle série
             series.setName(walletInfo.getNom()); // On change le nom de la série
             for (TransactionInfo transactionInfo : transactionInfos) {

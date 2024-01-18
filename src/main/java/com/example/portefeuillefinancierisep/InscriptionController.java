@@ -2,6 +2,7 @@ package com.example.portefeuillefinancierisep;
 
 import Info.UserInfo;
 import Modele.UserModele;
+import Service.CheckDataService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,6 +36,8 @@ public class InscriptionController {
     TextField tel_text;
     @FXML
     Label msg_error;
+
+    private CheckDataService checkDataService = new CheckDataService(); // Service de vérification des données saisies
 
     String email, nom, prenom, password, tel; // Variables pour stocker les données saisies
 
@@ -72,17 +75,17 @@ public class InscriptionController {
             return;
         }
 
-        if (!isValidFormatEmail()) { // Vérification du format de l'adresse mail
+        if (!checkDataService.isValidFormatEmail(email)) { // Vérification du format de l'adresse mail
             msg_display(Color.RED,"Adresse mail non valide");
             return;
         }
 
-        if (!isValidFormatNomPrenom()) { // Vérification du format du nom et du prénom
+        if (!checkDataService.isValidFormatNomPrenom(nom,prenom)) { // Vérification du format du nom et du prénom
             msg_display(Color.RED,"Nom ou prénom non valide");
             return;
         }
 
-        if (!isValidPhoneNumber()) { // Vérification du format du numéro de téléphone
+        if (!checkDataService.isValidPhoneNumber(tel)) { // Vérification du format du numéro de téléphone
             msg_display(Color.RED,"Numéro de téléphone non valide");
             return;
         }
@@ -130,40 +133,6 @@ public class InscriptionController {
         byte[] salt = new byte[length]; // Tableau de bytes
         random.nextBytes(salt);
         return Base64.getEncoder().encodeToString(salt).substring(0, length); // Encodage du sel
-    }
-
-    /**
-     * Méthode permettant de vérifier le format de l'adresse mail
-     * @return Vrai si le format est valide, faux sinon
-     */
-    public boolean isValidFormatEmail() {
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; // Expression régulière
-        Pattern pattern = Pattern.compile(regex); // Création du pattern
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    /**
-     * Méthode permettant de vérifier le format du nom et du prénom
-     * @return Vrai si le format est valide, faux sinon
-     */
-    public boolean isValidFormatNomPrenom() {
-        String regex = "^[a-zA-Z ]+$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher_nom = pattern.matcher(nom);
-        Matcher matcher_prenom = pattern.matcher(prenom);
-        return matcher_nom.matches() && matcher_prenom.matches(); // Vérification du format du nom et du prénom
-    }
-
-    /**
-     * Méthode permettant de vérifier le format du numéro de téléphone
-     * @return Vrai si le format est valide, faux sinon
-     */
-    public boolean isValidPhoneNumber() {
-        String regex = "^[0-9]{10}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(tel);
-        return matcher.matches();
     }
 
     /**

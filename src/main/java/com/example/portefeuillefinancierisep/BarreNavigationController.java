@@ -85,7 +85,7 @@ public class BarreNavigationController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard-view.fxml"));
         AnchorPane anchorPane = loader.load();
         DashboardController controller = loader.getController();
-        controller.initializeUser(this.user,this.user.getWalletInfos());
+        controller.initializeUser(this.user,this.walletInfos);
         FenetreAffichage.getChildren().setAll(anchorPane);
     }
 
@@ -167,8 +167,8 @@ public class BarreNavigationController {
                 this.walletList.getItems().add("Aucun portefeuille");
                 return;
             }
-            this.walletList.getItems().clear();
             this.walletList.setValue("Selectionner un portefeuille");
+            this.walletList.getItems().clear();
             for(WalletInfo w:this.walletInfos){
                 this.walletList.getItems().add(w.getNom());
             }
@@ -211,6 +211,11 @@ public class BarreNavigationController {
      */
     public void add_wallet() {
         this.walletInfos=walletModele.getWalletInfo(this.user);
-        this.displayWallet();
+        this.walletList.getItems().clear();
+        for(WalletInfo w:this.walletInfos){
+            if(!this.walletList.getItems().contains(w.getNom())){
+                this.walletList.getItems().add(w.getNom());
+            }
+        }
     }
 }

@@ -302,8 +302,13 @@ public class TransactionController {
         String typeInfo = listtype.getValue();
         if(!this.checkSellAction(sellValue,nomWallet,typeInfo)){ //si l'action n'est pas disponible
             this.initSellActionCombo();
-            this.comboBoxSellAction.setVisible(true); //affichage de la liste des actions disponibles
+            String text =this.comboBoxSellAction.getItems().isEmpty()?"Aucune action disponible":"Autres actions disponibles";
+            if (!this.comboBoxSellAction.getItems().isEmpty()){
+                this.comboBoxSellAction.setVisible(true); //affichage de la liste des actions disponibles
+                this.lableSellAction.setText(text);
+            }
             this.lableSellAction.setVisible(true);
+            this.lableSellAction.setText(text);
             msg_display(Color.RED,"Vous ne pouvez pas vendre cette action"); //affichage d'un message d'erreur
             return;
         }

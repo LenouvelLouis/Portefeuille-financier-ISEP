@@ -4,6 +4,7 @@ import Info.UserInfo;
 import Info.WalletInfo;
 import Modele.UserModele;
 import Modele.WalletModele;
+import Service.CheckDataService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -56,6 +57,8 @@ public class ProfileController {
     Label labelTotale;
     @FXML
     TextField mail_text;
+
+    private CheckDataService checkDataService = new CheckDataService(); // Service de vérification des données saisies
     private BarreNavigationController barreNavigationController; // Controleur de la barre de navigation
 
     /**
@@ -122,17 +125,17 @@ public class ProfileController {
             msg_display(Color.RED,"Veuillez saisir tous les champs");
             return;
         }
-        if (!isValidFormatNomPrenom()) { // Vérification du format du nom et du prénom
+        if (!checkDataService.isValidFormatNomPrenom(nom,prenom)) { // Vérification du format du nom et du prénom
             msg_display(Color.RED,"Nom ou prénom non valide");
             return;
         }
 
-        if (!isValidPhoneNumber()) { // Vérification du format du numéro de téléphone
+        if (!checkDataService.isValidPhoneNumber(tel)) { // Vérification du format du numéro de téléphone
             msg_display(Color.RED,"Numéro de téléphone non valide");
             return;
         }
 
-        if (!isValidFormatEmail()) { // Vérification du format de l'adresse mail
+        if (!checkDataService.isValidFormatEmail(mail)) { // Vérification du format de l'adresse mail
             msg_display(Color.RED,"Adresse mail non valide");
             return;
         }
@@ -178,38 +181,6 @@ public class ProfileController {
             }
         }
         return null;
-    }
-
-
-    /**
-     * Méthode de vérification du format du nom et du prénom
-     */
-    public boolean isValidFormatNomPrenom() {
-        String regex = "^[a-zA-Z ]+$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher_nom = pattern.matcher(nom);
-        Matcher matcher_prenom = pattern.matcher(prenom);
-        return matcher_nom.matches() && matcher_prenom.matches();
-    }
-
-    /**
-     * Méthode de vérification du format du numéro de téléphone
-     */
-    public boolean isValidPhoneNumber() {
-        String regex = "^[0-9]{10}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(tel);
-        return matcher.matches();
-    }
-
-    /**
-     * Méthode de vérification du format de l'adresse mail
-     */
-    public boolean isValidFormatEmail() {
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(mail);
-        return matcher.matches();
     }
 
     /**

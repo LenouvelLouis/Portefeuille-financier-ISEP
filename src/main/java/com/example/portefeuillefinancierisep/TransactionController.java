@@ -31,6 +31,7 @@ public class TransactionController {
     Button vendre;
     private UserInfo user;
 
+
     private TransactionModele transaction = new TransactionModele(); //lien vers le modele transaction
 
     private WalletModele walletModele =new WalletModele(); //lien vers le modele wallet
@@ -281,6 +282,7 @@ public class TransactionController {
             this.walletModele.updateTotal(walletInfo,walletInfo.getTotale()+buyValue); //mise à jour du total
             this.userModele.updateFunds(this.user.getId(),this.user.getFond()-buyValue); //mise à jour des fonds
             this.transaction.addTransaction(t); //ajout de la transaction
+            this.user.setFond(this.user.getFond()-buyValue);
             msg_display(Color.GREEN,"Transaction effectuée");
             this.clearForm();        }
         catch (RuntimeException e){
@@ -342,6 +344,7 @@ public class TransactionController {
             this.userModele.updateFunds(this.user.getId(), this.user.getFond() + sellValue);
             this.transaction.addTransaction(t);
             msg_display(Color.GREEN,"Transaction effectuée");
+            this.user.setFond(this.user.getFond()+sellValue);
             this.clearForm();
         }
         catch (RuntimeException e){
